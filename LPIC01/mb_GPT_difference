@@ -1,0 +1,17 @@
+* MBR (Master Boot Record)
+
+Max 4 primary partitions (or 3 primary + 1 extended → unlimited logical partitions).
+Max disk size: 2 TB.
+Stores bootloader in the first sector of the disk.
+Old standard, works with BIOS systems.
+Not suitable for modern large disks or UEFI systems.
+
+* GPT (GUID Partition Table)
+
+Supports up to 128 partitions (no need for extended/logical).
+Max disk size: 9.4 ZB (zettabytes) – extremely large.
+Stores multiple copies of partition table for redundancy.
+Needs UEFI firmware, not legacy BIOS.
+Requires 64-bit OS and hardware to fully use UEFI/GPT.
+Better data recovery, more reliable, modern standard.
+Needed when disk size > 2 TB.

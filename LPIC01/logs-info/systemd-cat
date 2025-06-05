@@ -1,0 +1,38 @@
+What is systemd-cat?
+- systemd-cat is a command that lets you send log messages directly to systemd-journald (the system journal) from standard input (stdin).
+- Think of it like logger, but specifically for systemd journal and more script/pipe-friendly.
+
+# Basic Usage
+$ echo "Hello from my script" | systemd-cat
+This logs the message "Hello from my script" to the journal.
+
+You can view it using:
+$ journalctl -t your_program_name
+
+Key Options
+
+------------------------------------------------------------------------
+Option				Description
+------------------------------------------------------------------------
+-t <tag>			Set a custom tag for the log (default: systemd-cat)
+-p <priority>		Set log priority (like info, err, warning)
+-u <unit>			Associate log with a systemd unit
+------------------------------------------------------------------------
+
+Example :
+
+$ echo "Disk almost full!" | systemd-cat -t disk_checker -p warning
+
+- Adds the message to the journal
+- With tag: disk_checker
+- Priority: warning
+
+------------------------------------------------
+Feature				Value
+------------------------------------------------
+Tool				systemd-cat
+Purpose				Send logs into journald
+Input				From stdin or script output
+Common Use			Inside scripts for logging
+Alternative To		logger
+------------------------------------------------

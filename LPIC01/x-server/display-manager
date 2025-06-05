@@ -1,0 +1,51 @@
+A Display Manager is the program that shows you the login screen when your system starts.
+
+It lets you:
+
+1. Choose your username
+2. Enter your password
+3. Pick your Desktop Environment (like GNOME, KDE, XFCE)
+4. Then it starts your graphical session
+
+---------------------------
+Name	Used By
+---------------------------
+GDM	GNOME
+SDDM	KDE Plasma
+LightDM	XFCE, MATE, others
+LXDM	LXDE
+XDM	Very basic, old X11
+---------------------------
+
+How It Works Step-by-Step
+
+1. System boots up
+2. Display manager starts (gdm, sddm, etc.)
+3. It shows you the GUI login screen
+4. You log in
+5. It starts the X Server (if not already running)
+6. Then it starts your Window Manager + Desktop Environment
+
+Display Manager vs X Server vs Desktop
+
+-------------------------------------------------------------
+Part			What it does
+-------------------------------------------------------------
+Display Manager		Login screen and user session control
+X Server		Draws things on screen, handles input
+Desktop Environment	Your desktop (icons, panels, apps)
+-------------------------------------------------------------
+
+In Simple Words:
+
+Display Manager 	= Login gate
+X Server 		= Drawing engine
+Desktop Environment 	= Your room after login
+
+
+
+
+
+
+
+

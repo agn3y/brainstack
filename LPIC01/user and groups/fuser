@@ -1,0 +1,4 @@
+use man fuser to know about it in more detail
+
+$ fuser /home/agn3y
+$ fuser -v /home/agn3y

@@ -1,0 +1,7 @@
+[*] Uptime 
+
+$ uptime			# shows how long it has been since system is up for
+
+[*] Free :
+
+$ free				# let you see how much RAM is free use flags such as -g, -m

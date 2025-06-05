@@ -1,0 +1,7 @@
+Use sudo su to change to super user
+
+$ sudo su
+
+Use sudo - to change back to normal user
+
+$ sudo -agn3y 

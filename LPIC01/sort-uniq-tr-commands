@@ -1,0 +1,33 @@
+[*] Sort :
+
+Basic Usage:
+
+$ sort filename
+$ sort -k 2 filename 	// sort column 2
+$ sort -u fielname   	// filter and dont repeat 
+
+This sorts lines alphabetically.
+
+-------------------------------------------
+Option		What it does
+-------------------------------------------
+-r		Reverse order
+-n		Numeric sort (1, 2, 10...)
+-k 2		Sort by column 2
+-u		Remove duplicates (unique)
+------------------------------------------
+
+[*] uniq :
+
+- only filter if duplicated lines are next to each other
+
+$ sort filename | uniq
+
+[*] tr :
+
+- translate command
+
+$ cat filename.txt | tr [:lower:] [:upper:]
+$ cat file.txt | tr [:lower:] [:upper:]
+
+

@@ -1,0 +1,19 @@
+Globbing means using wildcard characters (like *, ?, and []) in the shell (like Bash) to match filenames or paths without typing each one manually.Such as,
+
+$ ls -l *name    // will list all files ending with "name"
+$ ls -l *.txt    // will list all files ending with ".txt"
+$ ls -l name*    // will list all files starting with "name"
+$ ls -l name     // will list all files exactly matching "name"
+$ ls -l name?    // will list all files starting with "name" and one extra character at the end
+$ ls -l [nN]ame  // will list all files which are named with either "name" or "Name"
+
+suppose there are this files
+
+file1.txt file2.txt file3.txt file4.txt file5.txt File2.doc File2.sh
+
+here we can use bracket like
+$ ls file[1-4].txt  // will list all txt file from 1 - 4
+
+we can include both uppecase and lowercase
+$ ls -l [fF]ile  // will list all files which are named with either "file" or "File"
+

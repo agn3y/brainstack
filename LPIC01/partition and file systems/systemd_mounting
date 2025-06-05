@@ -1,0 +1,22 @@
+Useful Commands for Mount Info
+
+$ lsblk -f				# Shows all block devices (like hard drives and USBs), their filesystems, and mount points
+$ blkid					# Shows details of block devices, including their UUIDs (unique IDs)
+
+Checking and Controlling Mount Points with systemd
+
+$ sudo systemctl status /				# Shows the status of the root ( / ) mount point
+$ sudo systemctl stop "mount_point"		# Example: sudo systemctl stop "/home/agn3y/mount"				# This will unmount that location
+$ sudo systemctl start "mount_point"	# This will mount that location again
+
+What Happens Behind the Scenes?
+
+When you use systemctl start or stop on a mount point, systemd automatically creates a special unit file in:
+
+/run/systemd/generator/
+
+These unit files tell systemd:
+
+What device or partition to mount (like /dev/sda1)
+Where to mount it (like /home, /mnt/usb, etc.)
+That’s how the system knows what to mount and where when it starts up or when you run a command.

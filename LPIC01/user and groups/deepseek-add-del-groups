@@ -1,0 +1,69 @@
+groups Command
+$ groups							# Only lists groups that the current or specified user belongs to. Does NOT show all system groups.
+
+Group Management Commands
+
+1. Create a New Group
+$ sudo groupadd -g 1009 negros		# -g 1009: Assigns a custom Group ID (GID).
+
+negros: Name of the new group.
+
+2. Verify Group Creation
+$ cat /etc/group | grep "negros"
+
+Example Output:
+
+negros:x:1009:
+
+First column: negros → Group name.
+Second column: x → Password placeholder (actual hashed password stored in /etc/gshadow).
+Third column: 1009 → Group ID (GID).
+Fourth column: (Empty) → List of members (usernames separated by commas).
+
+3. Delete a Group
+$ sudo groupdel negros
+Fails if the group is a primary group for any user.
+Fix: Reassign users to another group first.
+
+# getent Command
+$ getent group
+- Queries the system's group database (includes local + LDAP/NSS groups).
+- Alternative to cat /etc/group (more reliable in networked environments).
+
+Example Output:
+
+root:x:0:
+sudo:x:27:alice
+negros:x:1009:bob,charlie
+
+Common Errors & Fixes
+
+1. groupdel: cannot remove the primary group of user 'bob'
+
+Solution: Change Bob’s primary group first:
+$ sudo usermod -g newgroup bob
+$ sudo groupdel negros
+
+2. groupadd: group 'negros' already exists
+
+Solution: Use -f to force a unique GID:
+$ sudo groupadd -g 1010 -f negros
+
+---------------------------------------------------------------
+Command							Purpose
+---------------------------------------------------------------
+groups							List current user’s groups
+groups username					List groups for a specific user
+sudo groupadd -g GID name		Create a new group
+sudo groupdel name				Delete a group
+getent group					List all system groups
+cat /etc/group					Check local group database
+---------------------------------------------------------------
+
+Need to Manage Group Members?
+
+Add a user to a group:
+$ sudo usermod -aG negros bob
+
+Remove a user from a group:
+$ sudo gpasswd -d bob negros

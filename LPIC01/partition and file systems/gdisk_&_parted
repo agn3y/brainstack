@@ -1,0 +1,24 @@
+[*] gdisk - Interactive GUID partition table
+
+$ sudo gdisk /dev/sdd		# selects partition
+
+use  ?  for help
+
+and then the further process is same as fdisk
+
+we can use L = list of partition type supported
+
+[*] parted
+
+$ goarted /dev/sdd		# target partition
+
+then use
+
+help to see list of help
+
+if you want help for the list of command that you got from using help before,
+you can use help NAME_OF_COMMAND and you will get help manual for that command in particular
+it's more than fdisk and gdisk  
+
+$ sudo parted -l		# list all partition
+

@@ -1,0 +1,14 @@
+# Use this to display language
+$ echo $LANG
+
+# Use locale to see information 
+# This command is located in /bin
+# Most important variable from locale is LC_ALL
+$ locale 
+
+# to make systemwide changes we can make changes in
+# etc/default/local
+
+# Also use date command
+$ man date
+

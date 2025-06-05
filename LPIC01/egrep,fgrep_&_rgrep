@@ -1,0 +1,82 @@
+egrep - extended global regular expression parser
+
+[1] grep – basic search tool
+
+🔸Searches for text patterns in files using basic regex.
+
+🔸 Use When:
+You just need simple matching.
+You don’t need |, +, ?, or ().
+
+🔸 Example:
+
+$ grep "error" log.txt
+
+[2] egrep – extended grep
+
+🔸 Same as grep -E. Supports extended regex (ERE).
+
+Can use:
+
+| → OR
+
++ → One or more
+
+? → Zero or one
+
+() → Grouping
+
+🔸 Use When:
+You want more powerful matching.
+
+You use |, +, ?, () in your pattern.
+
+🔸 Example:
+
+$ egrep "cat|dog" pets.txt
+
+Or (modern way):
+
+$ grep -E "cat|dog" pets.txt
+
+[3] fgrep – fixed grep
+🔸 What:
+Same as grep -F. No regex at all. Matches text exactly as typed.
+
+🔸 Use When:
+Your pattern has special characters like . or * and you want them to be treated as plain text.
+
+You want faster searching (no regex).
+
+🔸 Example:
+
+fgrep "x.y" file.txt
+
+✅ Will match lines with x.y (not "x followed by anything followed by y")
+
+🧠 4. rgrep – recursive grep
+🔸 What: Same as:
+
+$ grep -r "pattern" folder/
+
+It searches in all files inside folders (recursively).
+
+🔸 Use When:
+You want to search inside many files in folders.
+
+🔸 Example:
+
+$ rgrep "password" /etc/
+
+✅ Will search for the word password in all files under /etc/.
+
+🔍 Summary Table:
+
+--------------------------------------------------------------------------------------
+Command		Meaning			    Supports Regex?			Use For
+--------------------------------------------------------------------------------------
+grep		Basic grep		    Yes (basic)				Simple text search
+egrep		Extended grep		Yes (extended)			`
+fgrep		Fixed grep			❌ No regex				Exact match, faster, safe
+rgrep		Recursive grep		Yes						Search through folders/files
+-------------------------------------------------------------------------------------

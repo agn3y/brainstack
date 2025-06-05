@@ -1,0 +1,13 @@
+we can make use of lsof which means listing open files
+
+we can use
+
+$ man lsof
+
+we can also use command to see particular users listing open file
+
+$ lsof -u agn3y
+
+to list something using identification we can make use of -i flag which for example
+
+$ lsof -i 

@@ -1,0 +1,32 @@
+GPG - gnu privacy guard
+Data integrity and Higher security
+
+First install rng-tools using sudo apt install rng-tools.
+
+To generate gpg keys use
+
+$ gpg --gen-key or gpg --full-generate-key 
+
+Suppose we want to use this what we can do is
+
+$ gpg -r yourbutt@gmail.com --encrypt file.txt 
+ 
+To decrypt it we can use
+
+$ gpg --decrypt file.txt.gpg 
+
+To create your public key we can use
+
+$ gpg --export yourbutt@gmail.com > mypubkey.pub
+
+How to create a digital signature for a file
+
+$ gpg --detach-sign file.txt 
+
+now we can send both sign file and original file to receiver
+
+The receiver can verify flies integrity by using
+
+$ gpg --verify file.txt.sign file.txt 
+
+if all went good it will show everything good and good signature.

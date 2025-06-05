@@ -1,0 +1,92 @@
+🧱 Linux Disk & Partition Basics (Easy Language)
+
+In Linux, we manage storage devices like SATA, PATA, and SSD drives.
+
+Just like Windows, Linux also has partitions on disks. These are found in the /dev directory.
+
+🕹️ Drive Types and Naming
+
+🧓 Older Systems – PATA Drives
+
+/dev/hda → First PATA (IDE) drive
+/dev/hda1 → First partition on hda
+/dev/hdb → Second drive, and so on
+
+💽 Newer Systems – SATA / SSD
+/dev/sda → First SATA/SSD drive
+
+/dev/sda1, /dev/sdb1 → Partitions
+
+⚡ New Generation – NVMe SSDs
+/dev/nvme0n1 → NVMe SSD disk
+
+/dev/nvme0n1p1, p2 → Partitions on NVMe
+
+📊 Disk Checking Commands
+1. parted – Partition Manager
+
+To see manual:
+
+$ man parted
+
+To list partitions:
+
+$ sudo parted -l
+
+Shows: Disk size, partition type (GPT/MBR), file system (ext4, fat32), and boot flags.
+
+2. /proc/partitions – System File
+
+$ cat /proc/partitions
+
+Shows a list of all block devices and partitions read by the kernel. Useful for raw device info.
+
+3. df – Disk Free Space
+
+$ df -h
+
+Shows how much space is used and free.
+
+-h means human-readable (like GB, MB).
+
+Useful for checking disk usage on mounted file systems.
+
+Example output:
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       250G   20G  230G   8% /
+
+4. blkid – Show Block Devices Info
+
+$ sudo blkid
+
+Shows UUIDs, file system types (ext4, vfat), and partition labels.
+
+Useful when editing /etc/fstab or identifying partitions.
+
+Example output:
+
+/dev/sda1: UUID="1234-ABCD" TYPE="vfat"
+/dev/sda2: UUID="abcd-1234-efgh-5678" TYPE="ext4"
+
+🧠 Summary Table
+
+------------------------------------------------------------------------------------
+Drive Type			Example Disk		Example Partition
+------------------------------------------------------------------------------------
+PATA (old)			/dev/hda			/dev/hda1, /dev/hdb1
+SATA / SSD			/dev/sda			/dev/sda1, /dev/sdb1
+NVMe SSD (new)		/dev/nvme0n1		/dev/nvme0n1p1
+-------------------------------------------------------------------------------------
+
+✅ Useful Disk Commands Summary
+
+-------------------------------------------------------------------------------------------
+Command						Purpose
+-------------------------------------------------------------------------------------------
+man parted					See help for parted tool
+sudo parted -l					List disks and partition info
+cat /proc/partitions				Show partition data from system kernel
+df -h						Show disk usage (space used and free)
+sudo blkid					Show UUIDs and file systems of partitions
+--------------------------------------------------------------------------------------------

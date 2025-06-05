@@ -1,0 +1,12 @@
+we have various command for hashing
+
+md5sum
+
+$  md5sum filename
+
+it iwll generate a hash if we want to send this file without someone adding malicious code we can check its hash
+
+sane way we can use 
+
+$ sha256sum filename
+$ sha512sum filemame 

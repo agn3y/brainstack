@@ -1,0 +1,101 @@
+🔍 How Linux Locates Shared Libraries
+
+When a program runs, Linux looks for its required .so files in this order:
+
+1. LD_LIBRARY_PATH environment variable (TEMPORARY override)
+
+You can tell Linux to search a custom path first by setting:
+
+export LD_LIBRARY_PATH=/custom/path
+
+✅ Used for testing, custom builds, etc.
+
+2. /etc/ld.so.cache file (MAIN lookup)
+
+This is a pre-built cache created by ldconfig
+
+It tells the dynamic linker where the .so files are
+
+ldconfig -p  # See cached libraries
+
+Example output:
+
+libm.so.6 (libc6,x86-64) => /lib/x86_64-linux-gnu/libm.so.6
+
+3. Default standard library paths
+
+Linux looks in standard folders like:
+
+/lib
+/usr/lib
+/lib64
+/usr/lib64
+
+✅ These paths are built into the system.
+
+4. /etc/ld.so.conf + /etc/ld.so.conf.d/*.conf
+
+These files tell Linux about extra library paths
+
+ldconfig reads these files and updates the cache
+
+Example:
+
+cat /etc/ld.so.conf
+
+Might show:
+
+include /etc/ld.so.conf.d/*.conf
+
+Then check:
+
+ls /etc/ld.so.conf.d/
+
+You’ll see .conf files like:
+
+x86_64-linux-gnu.conf
+mylibs.conf
+
+Each file contains directory paths like /opt/mylibs.
+
+🛠 Example: Adding a New Library Location
+
+Let’s say you installed a custom library into:
+
+/opt/mylibs/libcool.so
+
+To make it work system-wide:
+
+Add path:
+
+$ echo "/opt/mylibs" | sudo tee /etc/ld.so.conf.d/mylibs.conf
+
+Update the cache:
+
+$ sudo ldconfig
+
+✅ Now Linux knows where to find libcool.so.
+
+🧪 Bonus: Find libraries used by a program
+
+ldd /usr/bin/ls
+
+Output:
+
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1
+
+Now you know what is needed and where Linux found them.
+
+📌 Summary Table
+
+----------------------------------------------------------------------------------------------
+Step		Path / Command							Use
+----------------------------------------------------------------------------------------------
+1			$LD_LIBRARY_PATH						Temporary override for custom library path
+2			/etc/ld.so.cache (ldconfig -p)			Fast library lookup cache
+3			/lib, /usr/lib, etc.					Default system library paths
+4			/etc/ld.so.conf, /etc/ld.so.conf.d/		Add custom search paths
+			sudo ldconfig							Rebuilds cache after adding paths
+			ldd ./binary							Lists which libraries a binary uses
+----------------------------------------------------------------------------------------------

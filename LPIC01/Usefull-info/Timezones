@@ -1,0 +1,24 @@
+UTC - cordinated universal time
+
+# To determine which zonen is we are on
+$ date
+
+# To show utc time
+$ date -u
+
+# There is a specific command we can use timedatectl
+$ man timedatectl
+
+# To list all availale timezones
+$ timedatectl list-timezones
+
+# To set TimeZone
+$ timedatectl set-timezone Asia/Kolkata
+
+# One important file which could be helpfll
+$ /etc/localtime   # it's just a symlink which points too
+$ /usr/share/zonesinfo
+$ /etc/timezone		# Holds timezone information for many zones But not for all systems
+
+# we can also use this one commannd
+$ man tzselect

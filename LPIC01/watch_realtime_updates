@@ -1,0 +1,11 @@
+To see real time update in some file like a log file we can use tail command
+
+Open 2 terminal 
+
+In terminal 1 open log file using
+$ tail -f /var/log/dnf.log
+
+And in terminal 2 we can run 
+$ sudo dnf search tree
+
+we can observer realtime changes there in terminal 1

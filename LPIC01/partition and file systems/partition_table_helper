@@ -1,0 +1,8 @@
+--------------------------------------------------------------
+Tool		Use Case			Works with
+--------------------------------------------------------------
+fdisk		Basic partitioning		✅ MBR only
+gdisk		GPT version of fdisk		✅ GPT only
+parted		Advanced tool			✅ MBR + GPT
+gparted		GUI version of parted		✅ MBR + GPT
+--------------------------------------------------------------

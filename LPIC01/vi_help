@@ -1,0 +1,255 @@
+Basic Navigation Commands:
+h – Move left (1 character).
+
+j – Move down (1 line).
+
+k – Move up (1 line).
+
+l – Move right (1 character).
+
+w – Move to the beginning of the next word.
+
+e – Move to the end of the current or next word.
+
+b – Move backward to the previous word.
+
+0 – Move to the beginning of the line.
+
+$ – Move to the end of the line.
+
+gg – Go to the beginning of the document.
+
+G – Go to the end of the document.
+
+{ – Move to the previous paragraph.
+
+} – Move to the next paragraph.
+
+Ctrl-f – Move one page forward.
+
+Ctrl-b – Move one page backward.
+
+Ctrl-d – Scroll down half a page.
+
+Ctrl-u – Scroll up half a page.
+
+Ctrl-e – Scroll down one line.
+
+Ctrl-y – Scroll up one line.
+
+Editing Commands:
+i – Enter insert mode before the cursor.
+
+I – Enter insert mode at the beginning of the line.
+
+a – Enter insert mode after the cursor.
+
+A – Enter insert mode at the end of the line.
+
+o – Open a new line below the current line and enter insert mode.
+
+O – Open a new line above the current line and enter insert mode.
+
+r – Replace a single character under the cursor.
+
+R – Replace multiple characters (enter overwrite mode).
+
+x – Delete a single character under the cursor.
+
+X – Delete a character before the cursor.
+
+dw – Delete a word.
+
+d$ – Delete from the cursor to the end of the line.
+
+d0 – Delete from the cursor to the beginning of the line.
+
+dd – Delete the current line.
+
+dG – Delete from the current line to the end of the document.
+
+dgg – Delete from the current line to the beginning of the document.
+
+yy – Yank (copy) the current line.
+
+y$ – Yank from the cursor to the end of the line.
+
+yw – Yank the current word.
+
+p – Paste the last yanked or deleted text after the cursor.
+
+P – Paste the last yanked or deleted text before the cursor.
+
+u – Undo the last action.
+
+Ctrl-r – Redo the last undone action.
+
+. – Repeat the last edit command.
+
+c – Change (replace) text from the cursor forward.
+
+C – Change (replace) text from the cursor to the end of the line.
+
+Visual Mode Commands:
+v – Enter visual mode (character selection).
+
+V – Enter visual mode (line selection).
+
+Ctrl-v – Enter block visual mode (column selection).
+
+y – Yank (copy) the selected text.
+
+d – Delete the selected text.
+
+c – Change the selected text.
+
+> – Indent the selected text.
+
+< – Un-indent the selected text.
+
+Search and Replace:
+/pattern – Search for pattern forward in the document.
+
+?pattern – Search for pattern backward in the document.
+
+n – Move to the next match of the search.
+
+N – Move to the previous match of the search.
+
+:%s/old/new/g – Replace all occurrences of old with new in the entire document.
+
+:s/old/new/g – Replace all occurrences of old with new in the current line.
+
+:s/old/new/gc – Replace all occurrences of old with new, with confirmation for each replacement.
+
+File Operations:
+:w – Save (write) the file.
+
+:w filename – Save the file as filename.
+
+:q – Quit vi.
+
+:q! – Quit vi without saving changes.
+
+:wq – Save and quit vi.
+
+:x – Same as :wq (save and quit).
+
+:e filename – Open filename in the editor.
+
+:r filename – Read the contents of filename into the current document.
+
+:w filename – Write the current document to filename.
+
+:!command – Run a shell command (! is used to escape to the shell).
+
+:sh – Open a shell inside vi.
+
+:qall – Quit all open files.
+
+:wa – Write all files.
+
+:e! – Reopen the current file, discarding changes.
+
+Window and Split Commands:
+:split – Split the window horizontally into two.
+
+:vsplit – Split the window vertically into two.
+
+Ctrl-w w – Switch between windows.
+
+Ctrl-w h – Move to the left window.
+
+Ctrl-w j – Move to the bottom window.
+
+Ctrl-w k – Move to the top window.
+
+Ctrl-w l – Move to the right window.
+
+:resize – Resize the current window.
+
+:vertical resize – Resize the current vertical split window.
+
+Ctrl-w = – Make all windows equal size.
+
+Undo and Redo Commands:
+u – Undo the last change.
+
+Ctrl-r – Redo the last undone change.
+
+:earlier 5m – Go back 5 minutes in the undo history.
+
+:later 5m – Go forward 5 minutes in the undo history.
+
+Command-line Mode Commands:
+:set number – Display line numbers.
+
+:set nonumber – Hide line numbers.
+
+:set relativenumber – Show relative line numbers.
+
+:set tabstop=4 – Set tab width to 4 spaces.
+
+:set shiftwidth=4 – Set indentation width to 4 spaces.
+
+:set expandtab – Convert tabs to spaces.
+
+:set noexpandtab – Use actual tab characters.
+
+:set autoindent – Enable automatic indentation.
+
+:set smartindent – Enable smart indentation.
+
+:set wrap – Enable line wrapping.
+
+:set nowrap – Disable line wrapping.
+
+:set showmatch – Highlight matching parentheses and brackets.
+
+:set hlsearch – Highlight search results.
+
+:set incsearch – Show search results as you type.
+
+:set ignorecase – Ignore case when searching.
+
+:set smartcase – Use case-sensitive search if uppercase letters are used in the pattern.
+
+:set mouse=a – Enable mouse support.
+
+:set cursorline – Highlight the current line.
+
+:set list – Show invisible characters like spaces and tabs.
+
+:set nocursorline – Turn off cursor line highlighting.
+
+:set relativenumber – Show relative line numbers.
+
+Other Commands and Settings:
+:help – Open help documentation.
+
+:help command – Get help for a specific command.
+
+:map – Show all key mappings.
+
+:unmap – Unmap a key.
+
+Ctrl-c – Exit insert mode.
+
+Ctrl-[ – Exit insert mode (same as Esc).
+
+:normal command – Run a normal mode command while in command-line mode.
+
+:normal! command – Run a normal mode command in an "un-interrupted" way.
+
+Advanced Commands:
+:argdo command – Execute a command on all files in the argument list.
+
+:bufdo command – Execute a command on all open buffers.
+
+:tabnew – Open a new tab.
+
+:tabnext – Switch to the next tab.
+
+:tabprevious – Switch to the previous tab.
+
+:tabnew filename – Open a file in a new tab.

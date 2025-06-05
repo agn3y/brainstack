@@ -1,0 +1,7 @@
+aptitude is a packet manager such as apt-get and yum
+
+we can use install ,remove and purge and search
+
+$ sudo aptitude 
+
+will take you to graphical user interface

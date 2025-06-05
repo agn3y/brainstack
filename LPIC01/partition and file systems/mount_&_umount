@@ -1,0 +1,72 @@
+📦 Mounting and Unmounting Partitions in Linux
+
+Step 1: Check Available Partitions
+
+This command lists all partitions along with their filesystems, UUIDs, mount points, and labels.
+$ lsblk -f
+
+Step 2: Mounting a Partition
+
+Mount using device name:
+$ sudo mount -t ext4 /dev/sdc1 /your/target/directory
+
+Mount using UUID:
+$ sudo mount -U "UUID" /your/target/directory
+
+Step 3: Unmounting a Partition
+
+Unmount using device name:
+$ sudo umount /dev/sdc1
+
+Unmount using mount path:
+$ sudo umount /your/target/directory
+
+[⚠]Important:
+These changes are temporary. After a system reboot, mounted partitions will be lost unless configured to auto-mount.
+
+📁 Auto-Mount with /etc/fstab
+
+When the system boots (regardless of the bootloader, e.g., GRUB or LILO), the root filesystem is mounted first. Then, the system runs:
+This command mounts all filesystems listed in /etc/fstab, except those marked with noauto.
+$ mount -a
+
+✍️ /etc/fstab Format (Fields):
+
+<file_system> <mount_point> <type> <options> <dump> <pass>
+
+new entry :
+/dev/sdc1   /home/agn3y/mount ext3 default 0 0
+
+1. dump
+
+Used by the dump backup utility.
+
+0 = Ignore (no backup).
+1 = Backup enabled.
+
+2. pass
+
+Used by fsck to decide the order of filesystem checks during boot.
+0 = Do not check.
+1 = First priority (usually / root filesystem).
+2 = Checked after the root filesystem.
+
+tune2fs and Filesystem Check Frequency
+
+Use tune2fs to set how often fsck checks a filesystem:
+$ sudo tune2fs -c <mount_count> -i <interval> /dev/sdXn
+
+Example:
+
+Checks every 10 mounts or every 7 days, whichever comes first.
+$ sudo tune2fs -c 10 -i 7d /dev/sdc1
+
+[⚙️] Common Mount Options
+
+defaults → Uses default settings: rw, suid, dev, exec, auto, nouser, async
+noauto → Will not mount automatically with mount -a
+
+user → Allows non-root users to mount
+nouser → Only root can mount (default)
+ro → Mount as read-only
+rw → Mount as read-write

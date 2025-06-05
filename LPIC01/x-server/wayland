@@ -1,0 +1,51 @@
+[*] What is Wayland?
+- Wayland is a new display system that tries to replace X11 (also known as Xorg or X Window System).
+
+[*] Main Differences
+
+----------------------------------------------------------------------------------------------------------
+Feature						X11 (Xorg)							Wayland
+----------------------------------------------------------------------------------------------------------
+Architecture				Client → X Server → Display			Client → Direct to Display (no middleman)
+Rendering					Server-side + Client-side			Only client-side rendering
+Speed						Slower due to middleman				Faster (lower latency)
+Security					Less secure							More secure (but depends on compositor)
+Network Support				Yes, built-in						No built-in remote display (yet)
+Compatibility				Works with old apps					Many older apps may not work properly
+----------------------------------------------------------------------------------------------------------
+
+[*] Why People Still Use X11?
+
+1. Old Applications
+- Many old apps, toolkits, and games are built for X11.
+
+2. Better Remote Access
+- X11 supports remote desktop over SSH using DISPLAY. Wayland doesn't support this easily.
+
+3. Driver Compatibility
+- Some graphics drivers (especially from NVIDIA) work better with X11.
+
+4. Window Managers
+- Some popular desktop environments (like XFCE) work better or only with X11.
+
+[*] Why Use Wayland?
+
+1. Modern Design
+- It's cleaner, simpler, and designed for current systems.
+
+2. Low Latency
+- It gives better performance on local systems.
+
+3. Less Code
+- Easier to maintain and debug.
+
+[*] About WAYLAND_DISPLAY and DISPLAY
+
+- DISPLAY=:0 → Used by X11 to know where to send the graphics.
+- WAYLAND_DISPLAY=wayland-0 → Same idea, used in Wayland.
+
+[*] Summary in Simple Words
+
+- X11 is old but stable, works everywhere, especially over network or with old software.
+- Wayland is new and clean, good for local use with modern software.
+- Right now, both are used, but Wayland is slowly replacing X11.

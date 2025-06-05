@@ -1,0 +1,69 @@
+Full Linux Boot Process (Step-by-Step with POST)
+
+0. POST (Power-On Self-Test)
+
+Happens right after you power on.
+Done by BIOS/UEFI firmware.
+
+Checks hardware: CPU, RAM, keyboard, etc.
+
+If everything is okay, it moves to the boot device (like SSD or USB).
+
+1. BIOS / UEFI
+
+Low-level software on your motherboard.
+
+Chooses the boot device (like HDD, SSD).
+
+Hands over control to the bootloader.
+
+BIOS = older
+UEFI = modern and more powerful
+
+2. Bootloader (like GRUB)
+
+Loads and runs the Linux kernel file from disk.
+
+Also loads initrd (temporary root filesystem for early setup).
+
+3. Kernel
+
+Loaded into RAM.
+
+Initializes:
+
+Memory
+CPUs
+Drivers (for storage, USB, etc.)
+
+Mounts the root file system.
+
+Starts the first process: init or systemd
+
+4. init / systemd (PID 1)
+
+Manages all startup services.
+
+Starts:
+
+Network
+Display Manager
+Logging
+File mounting
+
+➡️ It decides the mode of the system (CLI or GUI)
+
+5. Runlevel / systemd Target
+
+Defines system type:
+
+multi-user.target = no GUI (server style)
+
+graphical.target = with GUI (desktop)
+
+6. Login Prompt
+
+You get terminal or desktop screen.
+
+After login, you can use your system.
+

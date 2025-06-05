@@ -1,0 +1,23 @@
+We have two types of clock on any computer
+1. Software clock
+2. Hardware clock
+
+hardware clock stays on even if pc is shut down.
+
+# We can use this command to mess around with this hardware clock
+$ man hwclock
+
+# TO see hardware clock time
+$ sudo hwclock
+
+- We have automatic synchronization of hardware clock with the system clock
+
+# Stop system clock sync with hardware clock
+$ systemctl stop systemd-timesync
+
+# To make them sync we can use
+$ sudo hwclock -s 	or 
+$ sudo hwclock --hctosys
+
+# To set tiem in particular format
+$ sudo date +%T -s "18:12:00"

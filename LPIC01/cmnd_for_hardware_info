@@ -1,0 +1,41 @@
+1. lspci – List PCI Devices
+Shows devices connected to the PCI bus (like internal hardware)
+
+Example output:
+
+00:1f.2 SATA controller: Intel Corporation ...
+01:00.0 VGA compatible controller: NVIDIA ...
+
+Devices shown: graphics cards, network cards, sound cards, SATA controllers, etc.
+
+$ lspci
+
+2. lsblk – List Block Devices
+
+Shows storage devices (block-level): hard drives, SSDs, USB drives, etc.
+
+Example output:
+
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 500G  0 disk 
+└─sda1   8:1    0 500G  0 part /
+
+Use this to check what drives are connected and mounted.
+
+Use it like:
+
+$ lsblk
+
+3. lsusb – List USB Devices
+
+Shows all devices connected to USB ports
+
+Example output:
+
+Bus 001 Device 002: ID 046d:c534 Logitech USB Receiver
+Bus 002 Device 003: ID 0781:5567 SanDisk USB Flash Drive
+
+Use it like:
+
+$ lsusb
+

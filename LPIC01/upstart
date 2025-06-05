@@ -1,0 +1,52 @@
+What is Upstart?
+
+Upstart is a program in Linux that starts, stops, and manages other programs (like services) when the system boots, runs, or shuts down.
+
+Think of Upstart like a manager at a factory:
+
+When the factory (your computer) starts,
+The manager (Upstart) checks a list of workers (programs like network, Bluetooth, etc.)
+And starts them one by one.
+Later, it can also stop or restart them if needed.
+
+Why was Upstart created?
+
+Before Upstart, Linux used a very old system called SysVinit.
+But SysVinit was slow and didn’t handle events well (like "USB plugged in" or "network connected").
+So, Ubuntu and some other systems started using Upstart because:
+It is faster.
+It can react to events (like network up, hardware change).
+It handles parallel starts (can run many things at once).
+
+How does Upstart work?
+
+Upstart listens for events. For example:
+
+"startup" → start some services.
+"filesystem mounted" → start other services.
+"network is up" → start network apps.
+
+Each service has a .conf file in /etc/init/. Example:
+
+$ /etc/init/ssh.conf
+
+This file tells Upstart:
+
+When to start
+What command to run
+What events to wait for
+
+Example inside a .conf file:
+
+$ start on filesystem and net-device-up IFACE=eth0
+$ stop on runlevel [016]
+
+$ exec /usr/sbin/sshd -D
+
+Is Upstart still used?
+
+No, most modern Linux systems stopped using Upstart.
+
+Now, they use systemd, which is faster and more powerful.
+
+But older Ubuntu versions like Ubuntu 14.04 used Upstart by default.

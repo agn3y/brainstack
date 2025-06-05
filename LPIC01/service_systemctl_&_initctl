@@ -1,0 +1,49 @@
+Main Difference (Super Simple Table):
+
+-----------------------------------------------------------------------------------------------------------------------------
+Command		Works With		        Used In (OS)				Purpose				    |
+-----------------------------------------------------------------------------------------------------------------------------
+systemctl	systemd				New Linux (Ubuntu 16+, CentOS 7+)	Modern service manager		    |
+service		SysVinit or wrapper		All Linux (old and new)			Simple way to start/stop services   |
+initctl		Upstart				Ubuntu 9 to 14 (older)			Upstart-specific service controller |
+-----------------------------------------------------------------------------------------------------------------------------
+
+1. systemctl (used with systemd) : modern Linux command
+
+Works with systemd
+Used on: Ubuntu 16+, CentOS 7+, Fedora, etc.
+Controls services, reboots, shutdowns, etc.
+
+Examples:
+
+systemctl start ssh
+systemctl stop apache2
+systemctl restart nginx
+systemctl status docker
+systemctl enable mysql
+
+2. service (simple wrapper command) : old-school command, still works
+
+Works with SysVinit, Upstart, and even systemd
+Acts like a wrapper. It figures out which backend to call.
+
+Examples:
+
+service ssh start
+service apache2 stop
+service docker restart
+
+Not as powerful as systemctl, but easy to use.
+
+3. initctl (for Upstart) : only for Upstart systems
+
+Works only on Ubuntu versions that use Upstart (Ubuntu 9.10 to 14.10)
+Talks to the Upstart init daemon
+
+Examples:
+
+initctl start ssh
+initctl stop cron
+initctl status network-interface
+
+Won’t work on modern Linux because they use systemd.

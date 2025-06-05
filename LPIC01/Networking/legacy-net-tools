@@ -1,0 +1,15 @@
+Information about legacy network tools
+
+Install if not already
+$ sudo apt install net-tools
+
+$ route 
+Shows routing table
+
+Change ip
+$ sudo ifconfig ensp03 192.168.0.99 netmask 255.255.255.0
+
+we can up and down interfaces 
+$ sudo ifconfig ensp03 down | up
+
+

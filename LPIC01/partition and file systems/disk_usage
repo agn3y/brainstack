@@ -1,0 +1,14 @@
+[*] df and du:
+# du displays disk usage by directory while df displays disk uasge by partition
+
+du - disk usage
+
+$ du -sh dir					# shows disk usage with summary and human readable format
+$ du -h --max-depth 2 dir			# use max depth 2 to look for max depth of 2 dir
+$ du --max-depth 2 dir | sort -n		# go to 2 max depth for specified dir and sort them by number which is eventuakky their size
+
+df
+
+$ df			# disk usage
+$ df -h
+

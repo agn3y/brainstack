@@ -1,0 +1,7 @@
+to see inode of any file or directory
+
+$ ls -i
+
+to navigate to last directory we can use 
+
+$ cd - 

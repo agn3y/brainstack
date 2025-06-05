@@ -1,0 +1,77 @@
+User Groups
+
+- A user can belong to multiple groups, not just their primary group.
+- The primary group is defined in /etc/passwd (4th column, GID).
+- Secondary groups are stored in /etc/group.
+
+Creating a New User
+
+Basic Method (Not Recommended)
+$ sudo useradd username  
+
+Issues:
+
+- No home directory (/home/username) is created.
+- No default shell or custom UID is assigned.
+
+Preferred Method (Full Control)
+$ sudo useradd -u 1234 -d /home/customdir -m -s /bin/bash -c "User's Description" username  
+
+Options Explained
+
+--------------------------------------------------------------------------
+Flag		Meaning	Example
+--------------------------------------------------------------------------
+  -u		Assigns a custom User ID (UID)	-u 1234
+  -d		Specifies home directory path	-d /home/unclejipanipiladijiye
+  -m		Creates the home directory (required for -d to work)	-m
+  -s		Sets the login shell	-s /bin/bash (or /usr/sbin/nologin)
+  -c		Adds a description/comment	-c "Admin Account"
+--------------------------------------------------------------------------
+
+Example:
+
+$ sudo useradd -u 1005 -d /home/devuser -m -s /bin/bash -c "Developer Account" devuser  
+
+Setting/Changing Password
+$ sudo passwd username  
+
+- Prompts for a new password.
+- Never use plaintext passwords in commands (e.g., passwd username "mypass" is unsafe).
+
+Changing User’s Login Shell
+Restrict User from Logging In
+$ sudo chsh -s /usr/sbin/nologin username  	# Prevents shell access  
+$ sudo chsh -s /bin/false username          # Completely disables login  
+
+Allow Login Again
+$ sudo chsh -s /bin/bash username  
+
+Deleting a User
+Normal Deletion (Keeps Home Directory)
+$ sudo userdel username  
+
+Force Deletion (Removes Home Dir & Mail Spool)
+$ sudo userdel --force username  			# Warning: --force is irreversible!
+
+Listing All Users
+$ users          							# Shows currently logged-in users  
+$ cut -d: -f1 /etc/passwd   				# Lists ALL system users  
+$ getent passwd  							# Better alternative (includes LDAP users if configured)  
+
+Bonus: Adding User to Secondary Groups
+$ sudo usermod -aG group1,group2 username  	# -aG = Append to Groups (keeps existing groups).
+
+Example:
+
+$ sudo usermod -aG sudo,docker devuser  	# Adds to sudo & docker groups  
+
+-------------------------------------------------------------------------------------------
+Command																Purpose
+-------------------------------------------------------------------------------------------
+useradd -m -d /home/customdir -s /bin/bash username					Proper user creation
+passwd username														Set password
+chsh -s /bin/bash username											Change shell
+userdel --force username											Delete user + home dir
+getent passwd														List all users
+-------------------------------------------------------------------------------------------

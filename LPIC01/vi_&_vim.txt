@@ -1,0 +1,30 @@
+$ vimtutor	# easy help manual
+
+j			# takes you to the next line
+k			# takes you to the prev line
+l			# moves cursor to right
+h		    # moves cursor to left
+gg			# takes you to the first line
+shift g		# takes you to the last line
+dd 			# deletes the entire line
+u			# to undo something
+nj			# combine number with j to go to that line
+nk			# combine number with k to go to that line
+d3j			# delete next 3 lines
+. 			# to perform the last action / command	
+ciw 		# entire word has been removed , if we go to any word and press . it will br replced with the word that we entered now 
+ci"			# removed entire word contained in "", after we can use . how we was using it before
+v 			# visual mode
+ctrl +v 	# visual block mode
+dip			# delete inner paragraph
+yy 			# to copy line
+p			# to print copied line
+yip			# copy entire paragraph
+
+
+:wq							# exit vim
+:q!							# quit without saving
+:set number 				# sets number
+:set relativenumber			# reduces maths and show relative line number from your current line
+:%!							# we can access shell using this [:%! grep -v "word"]
+:%s/word/substituteword/g	# works like search and replace % for current file, word - which we are finding, substitutewrod -word that would be replaced with, g - global

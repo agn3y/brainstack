@@ -1,0 +1,140 @@
+What is CUPS?
+- CUPS (Common UNIX Printing System) is a modular printing system used in Linux, UNIX, and macOS to manage printers and handle print jobs.
+- It allows computers to act as print servers, supporting both local and network printers.
+- CUPS is the default printing system on many Linux distros and macOS.
+
+What Does CUPS Do?
+
+-------------------------------------------------------------------------------------------------------	
+Feature							Description
+-------------------------------------------------------------------------------------------------------
+Print Job Management			Accepts, queues, processes, and sends print jobs to printers
+Printer Configuration			Automatically detects or manually configures local and network printers
+Driver Support					Supports PPD (PostScript Printer Description) files and filters
+Web Interface					Offers a GUI through web browser at http://localhost:631
+Network Printing				Supports printing to/from remote systems using IPP, LPD, SMB, etc.
+Authentication					Uses system accounts for access control
+-------------------------------------------------------------------------------------------------------
+
+📁 Key Directories and Files
+
+------------------------------------------------------------------------------------
+Path											Purpose
+------------------------------------------------------------------------------------
+/etc/cups/										Main CUPS configuration directory
+/etc/cups/cupsd.conf							Main config file for the CUPS daemon
+/etc/cups/printers.conf							Printer definitions
+/etc/cups/classes.conf							Printer classes (groups)
+/var/spool/cups/								Print job queue (raw job files)
+/var/log/cups/									Log files for CUPS activity
+/usr/lib/cups/ or /usr/libexec/cups/			Backend filters and support binaries
+------------------------------------------------------------------------------------
+
+Supported Protocols
+- CUPS supports many printing protocols:
+
+1. IPP (Internet Printing Protocol) – Default protocol, secure and modern
+2. LPD/LPR – Older UNIX print protocol
+3. SMB – Used for Windows network printers (via Samba)
+4. AppSocket (JetDirect) – Used for HP network printers
+
+Daemon and Services
+---------------------------------------------------------------
+Component	Description
+---------------------------------------------------------------
+cupsd	Main CUPS daemon (handles web interface, jobs, configs)
+Systemd service: cups.service	Controls the cupsd daemon
+Legacy init: /etc/init.d/cups	For SysVinit systems
+---------------------------------------------------------------
+
+CLI Commands for CUPS
+
+----------------------------------------------------
+Command			Use
+----------------------------------------------------
+lp				Print a file (lp file.txt)
+lpq				Check the print queue
+lprm		    Remove jobs from queue
+lpstat		    Show status of printers and jobs
+cancel	        Cancel print jobs
+lpadmin			Add or modify printer configuration
+cupsctl		    Configure global CUPS settings
+---------------------------------------------------
+
+UPS Web Interface
+URL: http://localhost:631
+
+Functions:
+
+- Add/edit/delete printers
+- Manage print jobs
+- Set default printer
+- View logs
+- Configure server settings
+
+You may need to allow web admin access in /etc/cups/cupsd.conf.
+
+Security and Access
+CUPS can restrict:
+
+- Who can print
+- Who can access the web interface
+
+Access is controlled via:
+
+- /etc/cups/cupsd.conf
+- (<Location />, <Location /admin>, etc.)
+
+Supports:
+
+- IP-based restrictions
+- User-based restrictions
+- SSL/TLS encryption (via IPP over HTTPS)
+
+Package Names
+
+------------------------------------------------------------------
+Distro					Package
+------------------------------------------------------------------
+Ubuntu/Debian			cups, cups-bsd, cups-client, cups-common
+RHEL/CentOS/Fedora		cups, cups-client, cups-libs, cups-filters
+------------------------------------------------------------------
+
+To install:
+
+$ sudo apt install cups        # Debian-based
+$ sudo dnf install cups        # Fedora/RHEL
+
+CUPS Logs
+
+-----------------------------------------------------------
+File	Info
+-----------------------------------------------------------
+/var/log/cups/access_log	Web interface access logs
+/var/log/cups/error_log	Errors, warnings, debug info
+/var/log/cups/page_log	Page print tracking by user and job
+-----------------------------------------------------------
+
+Use cupsctl --debug-logging to enable detailed logs.
+
+----------------------------------------------------------------------------
+Feature				Description
+----------------------------------------------------------------------------
+What is it?			Modern, network-aware print server for UNIX-like systems
+Protocols			IPP (default), LPD, SMB, JetDirect
+Interface			CLI tools, Web GUI (localhost:631)
+Daemon				cupsd
+Log 				/var/log/cups/
+Configuration		/etc/cups/
+Jobs location		/var/spool/cups/
+Use in scripts		lp, lpstat, cancel, lpadmin
+----------------------------------------------------------------------------
+
+Quick Example: Add Network Printer
+
+$ lpadmin -p HP_Network_Printer -E -v ipp://192.168.1.100/ipp/print -m everywhere
+
+-p: Printer name
+-E: Enable the printer
+-v: URI of the printer (using IPP)
+-m: Use "everywhere" model (driverless printing)

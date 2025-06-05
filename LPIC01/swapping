@@ -1,0 +1,126 @@
+What is Swapping ?
+
+information about swapping can be found at /proc/swaps && /etc/fstab
+
+Swapping is a memory management technique where the kernel moves inactive pages from physical memory (RAM) to a swap space (usually on disk) to free up RAM for active processes.
+
+Key Concepts:
+
+1. Pages:
+
+Memory is divided into fixed-size blocks called pages (commonly 4 KB).
+
+The Page Frame is the physical block in RAM.
+
+The Page Table tracks where each page is (in RAM or on disk).
+
+2. Swap Space:
+
+Located on a disk (HDD/SSD).
+
+Can be a dedicated partition or a swap file.
+
+Managed by the Linux Virtual Memory Manager (VMM).
+
+3. Swapping Out & In:
+
+Swapping out = moving less-used pages from RAM to swap space.
+
+Swapping in = bringing a page back to RAM when needed.
+
+When Does Swapping Happen?
+
+When RAM is full or near full.
+
+The kernel uses a page replacement algorithm (like LRU - Least Recently Used).
+
+Only inactive or low-priority pages are swapped out.
+
+📊 Tools to Monitor:
+
+free -m            # Shows RAM and swap usage
+vmstat 1           # Shows memory and swap activity
+top / htop         # Real-time swap usage
+cat /proc/swaps    # Detailed swap info
+
+Swapiness (swap tendency):
+
+Controlled by /proc/sys/vm/swappiness
+
+Value between 0-100
+
+0 = Avoid swapping, prefer RAM
+
+100 = Aggressive swapping
+
+$ cat /proc/sys/vm/swappiness
+ 
+Downsides of Swapping:
+
+Disk is slower than RAM → performance drops.
+
+Excessive swapping leads to thrashing (CPU spends more time moving pages than running processes).
+
+Benefits:
+
+Prevents out-of-memory (OOM) crashes.
+
+Enables memory overcommitment.
+
+Supports hibernation.
+
+* swapon — Activate Swap
+
+This command is used to enable swap on a device (partition or file).
+
+Syntax:
+
+swapon [options] [swap device or file]
+
+$ sudo swapon /swapfile
+
+This turns on the /swapfile so the system can start using it.
+
+🔍 To see current swap usage:
+
+$ swapon -s     # Shows active swap spaces (short output)
+
+Or:
+
+free -h       # Shows RAM and swap memory usage
+
+swapoff — Deactivate Swap
+
+This command is used to disable a swap space. After this, Linux stops using that swap area.
+
+$ swapoff [options] [swap device or file]
+
+Example:
+
+$ sudo swapoff /swapfile
+This disables the use of /swapfile.
+
+When to Use
+ 
+Use swapon when:
+
+You create a new swap file/partition.
+
+You reboot and want to activate swap manually.
+
+You want to temporarily add more swap.
+
+Use swapoff when:
+
+You want to remove swap safely.
+
+You want to delete or resize a swap file.
+
+You are testing performance without swap.
+
+Important Notes
+
+You must have root (sudo) to use swapon or swapoff.
+
+If you remove swap permanently, also remove its entry from /etc/fstab.
+

@@ -1,0 +1,20 @@
+[*] touch command :
+
+Use touch command with options like 
+
+$ touch -a "filename"
+$ touch -d "16 FEB" "filename" OR 
+$ touch -d "23 JANUARY 2025" "filename"
+
+To change access time (not modification time)
+$ touch -at [YYYYMMDDTSTM] "filename"  // TS : seconds TM : Minutes
+
+to see the changes we can use
+$ stat "filename"
+
+
+[*] file command :
+
+tell type of file
+
+$ file filename

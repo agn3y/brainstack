@@ -1,0 +1,61 @@
+Two Main Types of Interactive Shells:
+
+1. Interactive Login Shell
+
+You get this when:
+
+You login from a terminal like SSH
+You login via TTY (Ctrl+Alt+F2... on Linux)
+You use su - or bash -l
+
+Config files it reads:
+
+/etc/profile (global)
+~/.bash_profile, ~/.bash_login, or ~/.profile (user-specific; reads only first one it finds)
+
+Check shell type:
+$ echo $0
+
+If it shows:
+
+-bash
+
+`That means login shell (notice the dash -).
+
+2. Interactive Non-login Shell
+
+You get this when:
+You open a terminal using Ctrl+Alt+T on desktop
+You run a terminal app in GUI
+
+Config file it reads:
+
+~/.bashrc
+
+Check shell type:
+
+$ echo $0
+
+If it shows:
+
+bash			# That means non-login shell (no dash -).
+
+🛠 Global Configuration for Login Shell:
+
+/etc/profile → Main config file for all users
+
+/etc/profile.d/ → Contains many small scripts that /etc/profile loads
+
+Used for setting PATH, environment variables, etc.
+
+-----------------------------------------------------------------------------------------
+Shell Type						$0 output		Reads Config Files
+-----------------------------------------------------------------------------------------
+Interactive Login Shell			-bash			/etc/profile, ~/.bash_profile (or others
+Interactive Non-login			bash			~/.bashrc
+-----------------------------------------------------------------------------------------
+
+
+we can use alias to set custom commands.such as,
+
+alias avp = echo "Ayush Jhantu"

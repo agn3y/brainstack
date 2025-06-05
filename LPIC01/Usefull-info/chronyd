@@ -1,0 +1,7 @@
+improved than NTPD
+keep accurate time on busy and conjusted networks
+syncronize faster
+
+# the file for this is located at 
+# /etc/chrony/chrom.conf
+

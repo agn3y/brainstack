@@ -1,0 +1,33 @@
+Default Permissions and umask in Linux
+
+When a new file or folder is created in Linux, it gets some default permissions:
+1. Files: 0666 (read and write for everyone)
+2. Folders: 0777 (read, write, and execute for everyone)
+
+But these are not the final permissions.
+They are reduced by a value called the umask (user file-creation mode mask).
+
+Check the Current umask
+
+You can see your current umask by running:
+$ umask
+
+For example, if you see:
+
+0022
+
+That means:
+
+1. Subtract 0022 from the default values
+2. New files get: 0666 - 0022 = 0644 → read/write for owner, read-only for others
+3. New folders get: 0777 - 0022 = 0755 → full access for owner, read/execute for others
+
+Change the umask
+$ umask 0022
+
+-------------------------------------------------------------
+Type	Default		With umask 0022			Final Permission
+-------------------------------------------------------------
+File	0666		0666 - 0022				0644
+Folder	0777		0777 - 0022				0755
+-------------------------------------------------------------

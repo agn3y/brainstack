@@ -1,0 +1,5 @@
+To change and see hostname we can use
+
+$ hostname
+
+$ hostnamectl set-hostname "agn3y"

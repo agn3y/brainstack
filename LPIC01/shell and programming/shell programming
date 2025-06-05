@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Quick example of assigning a variable
+NAME="AGNEY_PATEL"
+echo $NAME
+
+# Change variable value
+NAME="agn3y"
+echo $NAME
+
+# Take input from user
+echo "Please enter your name: "
+read NAME
+echo "The name you entered is: $NAME"
+
+# Including conditional logic
+echo "What would you like to eat?"
+echo -e "1. VADAPAV\n2. PAVBHAJI"
+read CHOICE
+
+if [[ $CHOICE == 1 ]]; then
+    echo "You Have Chosen VADAPAV"
+elif [[ $CHOICE == 2 ]]; then
+    echo "You Have Chosen PAVBHAJI"
+else
+    echo "Invalid choice"
+fi
+
+# if, elif and else logic
+echo "Kaisan ba?"
+echo -e "1. Bihari\n2. Bhojpuri"
+read CHOICE2
+
+if [[ $CHOICE2 == 1 ]]; then
+    echo "Bihari selected"
+elif [[ $CHOICE2 == 2 ]]; then
+    echo "Mai ke chodo"
+else
+    echo "Invalid selection"
+fi
+
+
+# for loop and while loop
+# if the condition we want to imply is infinite in such cases we can use while loop
+# if the condition we want to imply is extended to a particular parameter we should use for loop
+
+for num in {1..10}; do 
+    echo "This is Number $num"
+done
+
+# another way to use for loop
+
+for ((num=1; num < 25; num++)); do 
+	echo "Printed number is $num"		
+	if [[ $num == 12 ]]; then				
+	    echo "12 was here"	
+	fi				
+done
+
+
+# using while loop
+
+echo "guess the number"
+	read GUESS
+	ANSWER=5
+while((GUESS!=ANSWER)); do
+echo "Better luck Next time"
+	read GUESS
+done
+echo "You guessed it right"

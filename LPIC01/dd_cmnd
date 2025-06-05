@@ -1,0 +1,8 @@
+dd - desk dump
+
+It allows you to copy whole partitions , bit by bit
+to copy partitions
+
+$ dd if=/dev/sda1 of=/dev/sdb1
+
+we can make bootable drive with this

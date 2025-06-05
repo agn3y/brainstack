@@ -1,0 +1,34 @@
+What is modinfo?
+
+modinfo = "module info"
+
+It shows detailed information about a kernel module (.ko file)
+
+You can use it to:
+
+Check who made the module
+Know what version it is
+See the license (GPL, etc.)
+Find the file path
+View module parameters (settings you can change)
+
+Basic Usage
+
+modinfo <module_name>
+
+Example:
+
+modinfo usb_storage
+
+This might output something like:
+
+vbnet
+Copy
+Edit
+filename:       /lib/modules/6.1.0/kernel/drivers/usb/storage/usb-storage.ko
+version:        1.0
+license:        GPL
+description:    USB Mass Storage driver for Linux
+author:         Linux USB Team
+depends:        
+retpoline:      Y

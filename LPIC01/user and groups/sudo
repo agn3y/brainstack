@@ -1,0 +1,17 @@
+To change to super user we can use
+
+$ sudo su
+
+To change back to normal user we can use
+
+$ sudo - agn3y
+
+Do not run system as root user.
+
+To make normal user as root user we can make changes in sudoers file. which ultimately results normal user have same abilities as root user. However, note that root user will have the upmost power over system.
+
+We can locate sudoers file at /etc/sudoers.
+
+This file must be modified using visudo.
+
+

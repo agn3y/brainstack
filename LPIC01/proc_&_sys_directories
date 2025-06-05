@@ -1,0 +1,39 @@
+---------------------------------------
+* /proc and /sys – Virtual Directories
+---------------------------------------
+
+Both /proc and /sys are called virtual directories.
+
+They do not exist on the physical hardware (like your hard drive).
+
+Instead, when the system boots up, the Linux kernel creates them in memory.
+
+These directories give you real-time information about your system and allow the system (and you) to interact with the kernel and hardware.
+
+--------------------------------
+/proc – Process and Kernel Info
+--------------------------------
+
+This directory gives info about the running system, processes, and kernel settings.
+
+Examples:
+
+/proc/cpuinfo → Shows details about your CPU
+
+/proc/meminfo → Shows memory (RAM) usage
+
+/proc/[PID] → Each process has its own folder here
+
+-------------------------------
+/sys – Hardware and Device Info
+-------------------------------
+
+This is used to interact with kernel modules and hardware.
+
+More structured than /proc, and more focused on devices.
+
+Examples:
+
+/sys/class/net/ → Info about network interfaces (like eth0, lo)
+
+/sys/block/ → Info about block devices (like your hard drive)

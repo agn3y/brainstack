@@ -1,0 +1,13 @@
+It involves the Asymetric encryption.
+
+we can create ssh keys using
+
+$ ssh-keygen -t rsa 
+
+which will be located at .ssh
+
+now to copy it to a particular host we can use
+
+$ ssh-copy-id -i id_rsa.pub agn3y@10.10.10.1 
+
+enter password and Boom done !

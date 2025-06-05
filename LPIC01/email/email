@@ -1,0 +1,25 @@
+We have multiple smaller programmes which handles particular tasks in context of email
+
+Linux email aechutecture is broken down into 3 components:
+
+1.MTA - mail transfer agent. transfers all incoming mail to MDA. ut can communicate with other MTA's
+ 
+2.MDA - mail delivery agent. delivers mess that it receives from MTA and moves them to users inbox 
+
+3.MUA - main user agent. it don't receive any messages actually, just read messages which are already stored on server
+
+When we send email we use SMTP
+
+Example of MTA :
+
+1. sendmail (OG)
+2. Postfix  (Simple and Secure)
+3. EXiM     (more flexible compared to other)
+4. QMail    (simpler then sendmail,better and secure)
+
+Example of MDA :
+
+1. Binmail 	# command for this is mail
+
+# One important location to remember
+#  /var/spool/mail

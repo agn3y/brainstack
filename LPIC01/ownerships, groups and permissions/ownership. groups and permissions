@@ -1,0 +1,85 @@
+### 🧠 Linux is a Multi-User OS — What Does That Mean?
+# $ groups		# list all the groups user is part of
+
+Linux is built for many users to work on the same system. Every file or folder (directory) in Linux has an **owner**, belongs to a **group**, and has **permissions**. These permissions control **who can do what** with that file or folder.
+
+To see these details, we use the command:
+
+$ ls -l
+
+This lists files with lots of useful info, like this:
+
+drwxr-xr-x 3 root root 9392 Mar 13 19:23 Downloads
+
+🔍 The First Section: `drwxr-xr-x`
+
+This part shows two things:  
+1. **What type of file it is**  
+2. **What permissions are set**
+
+The **very first letter** tells us the **type**:
+- `d` means this is a **directory** (a folder)
+- `-` means it’s a **normal file**
+- `l` means it’s a **link** (shortcut)
+
+The next 9 characters are broken into 3 groups of 3:
+
+rwx r-x r-x
+ ^   ^   ^
+ |   |   └── Other users (everyone else)
+ |   └────── Group users (same group as owner)
+ └────────── Owner (the user who created it)
+
+Each group tells **what kind of access** that user group has:
+- `r` means **read** (can see the file or open the folder)
+- `w` means **write** (can change the file or add files inside the folder)
+- `x` means **execute** (can run the file if it's a program, or enter the folder)
+
+So in our example `drwxr-xr-x`, we understand:
+- It's a **directory** (because it starts with `d`)
+- The **owner** can read, write, and enter the folder (`rwx`)
+- The **group** can read and enter, but not write (`r-x`)
+- **Other users** can also read and enter, but not write (`r-x`)
+
+### 📦 Next Comes: Link Count, Owner, and Group
+
+After the permissions part, we see:
+
+3 root root
+
+Here's what these mean:
+
+- `3` → This is the **number of links** to this directory (usually includes the folder itself, `.` and its parent, `..`, and any subdirectories).
+- `root` (first one) → This is the **owner** of the directory.
+- `root` (second one) → This is the **group** the folder belongs to.
+
+So this folder belongs to the `root` user and also to the `root` group.
+
+### 📏 Then Comes: File Size
+
+After that, we see:
+
+9392
+
+This number is the **size** of the file or folder in **bytes**. In the case of folders, this size is not always meaningful to the user—it’s the amount of space taken to store metadata about the contents.
+
+🕓 Finally: Date, Time, and Name
+
+The last part of the output is:
+
+Mar 13 19:23 Downloads
+
+This tells us **when** the file or folder was last **modified**, and what its **name** is.
+
+- `Mar 13 19:23` → last time someone changed or touched it.
+- `Downloads` → the name of the file/folder.
+
+### ✅ Final View
+
+Now, when you look at this:
+
+drwxr-xr-x 3 root root 9392 Mar 13 19:23 Downloads
+
+You should be able to say:
+
+> This is a **folder** named "Downloads". It is owned by the **user** `root` and belongs to the **group** `root`. The **owner** has full permissions. The **group** and **others** can only read and enter it, but not change it. It was last changed on March 13 at 19:23 and has a size of 9392 bytes.

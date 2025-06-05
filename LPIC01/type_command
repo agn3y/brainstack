@@ -1,0 +1,7 @@
+Type command let us know wether a command is internal or external
+
+$ type echo
+
+if the command is external it will show path of that commands binary 
+
+$ type tree

@@ -1,0 +1,76 @@
+[*]File Location & Content
+
+This file is located at:
+/etc/passwd
+
+Example line in the file:
+root:x:0:0:root:/root:/bin/bash
+
+First column: root → Username
+Second column: x → Password placeholder (actual hashed password stored in /etc/shadow)
+Third column: 0 → UID (User ID)
+0 = root, 1–999 = system users, 1000+ = regular users.
+Fourth column: 0 → GID (Group ID)
+Fifth column: root → Description/Comment (optional info about the user)
+Sixth column: /root → Home directory
+Seventh column: /bin/bash → Default login shell
+- If set to /sbin/nologin or /bin/false, the user cannot log in.
+
+[*] Special Directory: /etc/skel
+Purpose: Template directory for new user home folders.
+
+Files/directories here are copied to new users' $HOME when created with:
+$ sudo useradd -m username  # -m ensures home dir is created
+
+Example:
+
+$ sudo touch /etc/skel/welcome.txt  # Add a file to skel
+$ sudo useradd -m testuser          # Create user
+$ ls /home/testuser                 # Check if welcome.txt exists
+
+Correction:
+
+Files are only copied if -m flag is used or CREATE_HOME=yes is set in /etc/login.defs.
+
+Configuration File: /etc/default/useradd
+
+Purpose: Default settings for useradd command.
+
+Key Parameters:
+
+plaintext
+SHELL=/bin/bash       # Default shell  
+HOME=/home            # Parent dir for home directories  
+SKEL=/etc/skel        # Template directory  
+GROUP=100             # Default group ID  
+Important Note:
+
+This file is not the only config! /etc/login.defs also controls:
+
+- UID/GID ranges.
+- Password expiration policies.
+- Whether home directories are created by default (CREATE_HOME yes/no).
+
+Common Pitfalls & Fixes
+
+1. Manual edits to /etc/passwd
+
+Avoid : Directly editing the file (can corrupt user data).
+Use	  : usermod, vipw (safe edit tool), or useradd.
+
+2. /etc/skel files not copying
+Fix: Always use -m with useradd or set CREATE_HOME=yes in /etc/login.defs.
+
+3. Password column shows x
+Understand: Passwords are in /etc/shadow. Use passwd username to change them.
+
+Quick Reference Commands :
+
+# View /etc/passwd with column headers (for clarity)  
+awk -F: 'BEGIN {printf "%-15s %-5s %-5s %-20s %-15s %-15s\n", "User", "UID", "GID", "Description", "Home", "Shell"} {printf "%-15s %-5s %-5s %-20s %-15s %-15s\n", $1, $3, $4, $5, $6, $7}' /etc/passwd | head -n 5  
+
+# Check default useradd settings  
+cat /etc/default/useradd  
+
+# Force home dir creation for existing users  
+sudo mkhomedir_helper username  

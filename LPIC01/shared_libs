@@ -1,0 +1,188 @@
+🧠 What are Shared Libraries in Linux?
+
+Think of shared libraries like tools in a toolbox. Instead of every program carrying its own tools (code), they share common tools from a shared place.
+
+✅ Why use shared libraries?
+
+Save memory (no duplicate code)
+
+Make executables smaller
+
+Easier to update (fix bugs in one place)
+
+📦 Shared Library Files
+
+Shared libraries usually have .so extension:
+
+libm.so      → Math library
+libc.so.6    → C standard library
+libpthread.so → Thread handling
+
+They are stored in folders like:
+
+/lib
+/lib64
+/usr/lib
+/usr/lib64
+
+You can check all your shared libraries with:
+
+$ ls /lib /lib64 /usr/lib /usr/lib64
+
+🧰 Important Shared Library Commands
+
+🔍 ldd – check shared libraries used by a program
+
+$ ldd /bin/ls
+
+Example output:
+
+linux-vdso.so.1 =>  (0x00007fffabcde000)
+libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+
+This shows:
+
+Which shared libraries the binary uses
+Where they are located
+
+💡 Use this if:
+
+You want to debug missing libraries
+Check if a binary is linked correctly
+
+📍 Where does Linux look for shared libraries?
+
+Linux uses these places:
+
+Default library paths:
+-> /lib, /usr/lib, /lib64, /usr/lib64
+
+Set by LD_LIBRARY_PATH (temporary)
+
+You can see current library path:
+
+$ echo $LD_LIBRARY_PATH
+
+Set it (for this session only):
+
+$ export LD_LIBRARY_PATH=/my/custom/libs:$LD_LIBRARY_PATH
+
+🛠 ldconfig – updates the library cache
+
+If you add a new .so file, run this to refresh the system cache:
+
+$ sudo ldconfig
+
+It reads /etc/ld.so.conf and /etc/ld.so.conf.d/*
+
+🗃 Config Files
+
+🔹 /etc/ld.so.conf
+
+Main file that tells Linux where to look for shared libraries.
+
+Example content:
+
+$ include /etc/ld.so.conf.d/*.conf
+
+🔹 /etc/ld.so.conf.d/
+
+You can add custom .conf files here.
+
+Example:
+
+$ echo "/opt/mylibs" | sudo tee /etc/ld.so.conf.d/mylibs.conf
+$ sudo ldconfig
+
+Now Linux will search /opt/mylibs too for libraries.
+
+🧪 Simple Real-Life Example
+
+Let’s say you have a binary named myapp and you want to know what libraries it uses:
+
+$ ldd ./myapp
+
+Output:
+
+libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+
+🧠 What is ldconfig?
+
+ldconfig is a command that:
+
+✅ Updates the shared library cache
+✅ Helps the system find .so files quickly
+✅ Reads config files like /etc/ld.so.conf and /etc/ld.so.conf.d/*.conf
+
+🛠 Why is it needed?
+
+When you install or add a new shared library (like libfoo.so) into a custom directory (e.g., /opt/mylibs), the system won’t know about it until you run:
+
+$ sudo ldconfig
+
+This updates a file called:
+
+/etc/ld.so.cache
+
+That file contains fast access to all shared libraries.
+
+🔍 How ldconfig works (Step-by-Step):
+
+Reads:
+
+/etc/ld.so.conf
+
+Files inside /etc/ld.so.conf.d/
+
+Scans all directories listed there
+
+Finds .so files
+
+Creates or updates the binary cache file:
+
+/etc/ld.so.cache
+
+Creates symbolic links for versions like:
+
+libmylib.so.1 → libmylib.so
+
+✅ Common ldconfig commands
+
+🔸 Just update cache (normal usage):
+
+$ sudo ldconfig
+
+🔸 Add new directory to search path permanently:
+
+$ echo "/opt/mylibs" | sudo tee /etc/ld.so.conf.d/mylibs.conf
+$ sudo ldconfig
+
+✅ Now /opt/mylibs is included in the cache.
+
+🔸 Run ldconfig on a custom directory only:
+
+$ sudo ldconfig /custom/path
+
+🔸 Print current cache (debug mode):
+
+$ ldconfig -p
+
+Shows all known libraries like:
+
+libc.so.6 (libc6,x86-64) => /lib/x86_64-linux-gnu/libc.so.6
+libm.so.6 (libc6,x86-64) => /lib/x86_64-linux-gnu/libm.so.6
+
+🧪 Real Example:
+
+Let’s say you downloaded a custom library to /opt/mylibs/:
+
+/opt/mylibs/libcoolmath.so
+
+To use it:
+
+$ echo "/opt/mylibs" | sudo tee /etc/ld.so.conf.d/coolmath.conf
+$ sudo ldconfig
+
+Now all programs can use libcoolmath.so system-wide.

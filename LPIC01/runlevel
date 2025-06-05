@@ -1,0 +1,24 @@
+to chek runlevel we can use
+
+$ runlevel
+
+expected output : 
+
+N 3 
+
+N = beacuse there was no runlevel used before and bydefault system boots in runlevel 3 there's why that's N
+3 = current run level
+
+use init / telinit command to change runlevel
+
+$ init 0 (powerof)
+
+use of telinit is recommended to change runlevels
+
+$ telinit 0
+
+use 
+
+$ init --help 
+
+to identify  which runlevel do what

@@ -1,0 +1,60 @@
+[*] Step-by-step Commands with Explanation:
+
+1. Check what dependencies the .rpm file needs
+
+$ rpm -qp --requires tree.rpm
+
+-q = query
+
+-p = package file (not installed yet)
+
+--requires = show what it needs
+
+2. 🔍 Find those dependencies (you must download them manually)
+earch and download the missing .rpm packages from trusted sites like:
+
+https://rpmfind.net
+
+https://pkgs.org
+
+3. 📦 Install the dependencies first
+
+$ sudo rpm -ivh dependency1.rpm dependency2.rpm ...					//Install them before installing your main package.
+
+4. ✅ Finally, install your main package
+
+$ sudo rpm -ivh tree.rpm
+
+Now it should work without errors!
+
+
+-----------------------------
+[*] Optional Useful Commands
+-----------------------------
+
+[*] List files in a .rpm package (to see what it installs)
+
+$ rpm -qlp tree.rpm
+
+[*]Check if a dependency is already installed
+
+$ rpm -q package-name
+
+[*] Install everything together (dependencies + main)
+
+$ sudo rpm -ivh dep1.rpm dep2.rpm tree.rpm
+
+This is useful if you have all .rpm files ready in one folder.
+
+[*] Summary Table
+
+---------------------------------------------------------------------------
+Command								What it does
+---------------------------------------------------------------------------
+rpm -qp --requires file.rpm			Show what the package needs
+rpm -q packagename					Check if a package is already installed
+rpm -ivh file.rpm					Install an RPM file
+rpm -qlp file.rpm					List files inside an RPM
+rpm -Uvh file.rpm					Upgrade or install RPM
+rpm -e packagename					Remove a package
+---------------------------------------------------------------------------

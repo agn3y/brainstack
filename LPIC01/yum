@@ -1,0 +1,127 @@
+[*] What is yum?
+
+yum = Yellowdog Updater, Modified
+cahce for pkg is located at - /etc/yum.repos.d/
+
+Used in Red Hat-based Linux systems like:
+
+CentOS
+Red Hat Enterprise Linux (RHEL)
+Fedora (older versions)
+
+[*] What can yum do?
+
+yum is a package manager, like a helper tool to manage software on your Linux system
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Task					Example									Meaning
+---------------------------------------------------------------------------------------------------------------------------------------
+Install software		yum install nano						Installs the text editor "nano"
+Update software			yum update nano							Updates the "nano" package
+Remove software			yum remove nano							Deletes the "nano" package
+List packages			yum list installed or yum list					Shows installed or all packages
+Search packages			yum search firefox						Looks for packages related to "firefox"
+---------------------------------------------------------------------------------------------------------------------------------------
+
+[*] Where does yum get packages from?
+
+From repositories (repos) – online servers with many .rpm packages.
+
+$ yum install wget
+
+yum goes to the repo.
+Finds the package for wget.
+Downloads and installs it.
+Also installs any needed dependencies (extra packages it needs to work).
+
+[*] Simple Analogy:
+
+Think of yum like a Play Store.
+You search for apps (packages), press install, it fetches and installs.
+It even installs needed things in the background (like Google Play Services).
+
+[*] Another Example:
+
+$ yum install httpd
+
+This installs Apache Web Server
+Also installs any missing pieces it needs (like apr, apr-util, etc.)
+
+[*] What is yumdownloader?
+
+yumdownloader is part of the yum-utils package.
+It does only one job: download the .rpm file for a package, but does NOT install it.
+
+[*] Why use yumdownloader?
+
+-----------------------------------------------------------------------------------------
+Situation				Reason
+-----------------------------------------------------------------------------------------
+No internet on another machine		Download .rpm here, copy and install it there
+Manual install				You want to inspect or control how it’s installed
+Backup					Save the .rpm file to reuse later
+-----------------------------------------------------------------------------------------
+
+[*] How to install yumdownloader?
+
+$ yum install yum-utils
+
+[*] Example to download:
+
+This downloads the .rpm file for nano in your current directory.
+$ yumdownloader nano
+
+It will look like this:
+
+nano-2.3.1.el7.x86_64.rpm
+
+[*] How to install that downloaded .rpm?
+
+$ rpm -ivh nano-2.3.1.el7.x86_64.rpm
+
+OR use yum to install from local file:
+
+$ yum localinstall nano-2.3.1.el7.x86_64.rpm
+
+[*] Bonus: Download with dependencies (optional)
+
+By default, yumdownloader does not download dependencies.
+
+To download package + all dependencies:
+
+$ yumdownloader --resolve nano
+
+[*] Summary Table:
+
+---------------------------------------------------------------------------------
+Tool			Does What?					Installs?
+---------------------------------------------------------------------------------
+yum			Fetches and installs packages + deps		Yes
+yumdownloader		Only downloads RPM package files		No
+---------------------------------------------------------------------------------
+
+Extra things:
+
+we can user serach to find info about pckgs
+
+$ sudo dnf search nano
+
+and to find more info about it 
+
+$ yum info "pkg name"
+$ yum info "nano.x86_64"
+
+which package provides the nano program
+$ yum provides nano
+
+to see dependency list 
+$ yum deplist nano
+
+to download yumdownloader
+$ yum install yum-utils
+
+use yumdownloader to only download rpm 
+$ sudo yumdownloader nano
+
+to download pkg with its dependencies
+$ sudo yumdownloader --resolve nano // none of them will install it will only download

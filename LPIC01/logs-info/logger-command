@@ -1,0 +1,107 @@
+#####################################################################################################################
+
+Note:
+
+this command related to journaling please read that file first
+also, it is used to insert custom logs into log file
+
+#####################################################################################################################
+
+What is the logger Command?
+
+- logger is a Linux command-line utility used to manually send messages to the system log (Syslog or systemd-journald).
+
+It is most useful for:
+- Writing custom log messages from scripts or terminal
+- Logging automation events
+- Testing log system behavior
+- Sending logs to /var/log/* files (via rsyslog or syslog-ng)
+
+How It Works
+
+When you run logger, it sends the message to the system logging daemon:
+- If using rsyslog or syslog-ng, the message goes through /dev/log.
+- If using systemd, it gets recorded by journald.
+
+The message can include:
+
+- Timestamp (automatically added)
+- Hostname
+- Process name
+- Facility (like auth, user, etc.)
+- Priority/severity (like info, error, warning)
+
+Basic Example
+$ logger "This is a test log"
+
+This sends a log with:
+
+Facility: user (default)
+Severity: notice (default)
+Message: "This is a test log"
+
+You can see the message using:
+
+$ journalctl -t logger
+
+Or:
+
+$ tail /var/log/syslog      # Ubuntu/Debian
+$ tail /var/log/messages    # CentOS/RHEL
+
+Logger Options
+
+-----------------------------------------------------------------------------------------------------------------------------
+Option						Meaning										    Example
+-----------------------------------------------------------------------------------------------------------------------------
+-t <tag>					Tag name (shows as program name)				logger -t backup_script "Backup complete"
+-p <facility>.<level>		Set the syslog facility and priority		    logger -p auth.warning "Login failed"
+-f <file>					Read message from a file					    logger -f /path/to/file.log
+-i							Include PID in the log						    logger -i "Started job"
+-s							Output message to STDERR as well as log			logger -s "Low disk space"
+-n <host>					Send message to remote syslog server (UDP)		logger -n 192.168.1.10 -P 514 "Test from client"
+--rfc3164					Use classic syslog format						logger --rfc3164 "Legacy format message"
+--rfc5424	                Use modern syslog format						logger --rfc5424 "Structured log"
+-----------------------------------------------------------------------------------------------------------------------------
+
+Example with Tag and Priority
+$ logger -t myscript -p local3.error "Disk failure on /dev/sda"
+
+- Tag: myscript
+- Facility: local3
+- Severity: error
+- Message: "Disk failure on /dev/sda"
+
+You can configure rsyslog or syslog-ng to filter local3.error messages into a specific file.
+
+Remote Logging Example
+$ logger -n 10.0.0.5 -P 514 -d -t REMOTE_TEST "Log from client"
+
+Sends log to remote syslog server at 10.0.0.5, UDP port 514
+# For this to work, the syslog server must allow remote logging over UDP or TCP.
+
+Where Does the Log Go?
+
+That depends on the system setup:
+
+---------------------------------------------------------------
+System					Location
+---------------------------------------------------------------
+systemd (journald)		journalctl view
+rsyslog					Files in /var/log/ (e.g. messages)
+syslog-ng				Based on config (e.g. /var/log/custom)
+---------------------------------------------------------------
+
+You can filter logs by tag using:
+
+$ journalctl -t myscript
+
+---------------------------------------------------------------
+Feature					Details
+---------------------------------------------------------------
+Purpose					Send custom logs to system logging
+Default Facility	    user
+Default Level			notice
+Used by					Shell scripts, automation, testing logs
+Works with				journald, rsyslog, syslog-ng
+---------------------------------------------------------------

@@ -1,0 +1,80 @@
+All the modern linux systems runs on Systemd
+
+we have $ systemctl command for to control utilities 
+
+What is systemd?
+
+systemd is a program in Linux that manages how the system starts and controls services (like a web server, database, etc.). It's the first thing that runs after the Linux kernel boots up.
+
+Think of it like the main controller of your Linux system.
+
+Simple Example:
+
+Let’s say your computer is a restaurant.
+
+systemd is the manager.
+When the restaurant opens (computer boots), the manager:
+
+Turns on the lights (starts the display service)
+Starts the kitchen (starts the database service)
+Opens the door (starts the network)
+Keeps checking if everything is working
+Can restart or stop anything if there is a problem
+
+What can systemd do?
+
+Here are some simple things you can do with systemd:
+
+Start a service:
+
+sudo systemctl start nginx
+
+Stop a service:
+sudo systemctl stop nginx
+
+Restart a service:
+
+sudo systemctl restart nginx
+
+Check if a service is running:
+
+sudo systemctl status nginx
+
+Make a service start automatically on boot:
+
+sudo systemctl enable nginx
+
+Stop a service from starting at boot:
+
+sudo systemctl disable nginx
+
+What is a unit file?
+
+A unit file is a small file that tells systemd how to run a service.
+
+For example, the file nginx.service tells systemd:
+
+How to start nginx
+
+When to start it
+
+What to do if it crashes
+
+These files are usually stored in:
+
+/etc/systemd/system/
+
+/lib/systemd/system/
+
+Why use systemd?
+
+Before systemd, Linux used older systems like SysVinit. They were slower and harder to manage. systemd is:
+
+Faster to boot
+
+Easier to use
+
+Can restart services if they crash
+
+Better at handling many things at once
+

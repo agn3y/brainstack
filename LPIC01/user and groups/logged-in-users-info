@@ -1,0 +1,28 @@
+[*] There is a file named utmp which actually shows currently logged in users in system
+Location :  /var/run/utmp
+
+[*]If above mentioned file is not available in system, look for wtmp. which is located at 
+Location : /var/run/wtmp
+
+[*] At last look for file named btmp
+Location : /var/log/btmp
+
+We cannot directly open and read this file. However, there is who command which ultimately read information from utmp 
+
+$ man who 
+
+To find more information about this command
+
+We can also make use of last command
+
+$ man last
+
+works with utmp
+
+last command which works with btmp
+
+$ lastb 
+
+we can also make use of 
+
+$ man lastb

@@ -1,0 +1,40 @@
+cpio - copy files to and from archives
+
+we can use this when we are copying somethimg specific, uniq or important 
+
+$ ls | cpio -ov > filename.cpio		# finame.cpio has result of ls
+$ mv filename.cpio /tmp			# mv to tmp
+$ cpio -iv < filename.cpio		# more like decompressing
+
+Example :  
+
+$ find . -type f -name "*.txt" | cpio -ov > veryspecific.cpio
+
+Done in pc :
+
+Input :
+
+[21:41] agn3y@localhost [~/experimental]  $ ls | cpio -ov > mylsbackup.cpio
+archive.tar
+experimental
+lpicpage.txt
+mobilr.tar.gz
+cpio: File mylsbackup.cpio grew, 4608 new bytes not copied
+mylsbackup.cpio
+receivederror.txt
+result.txt
+22 blocks
+
+Output :
+
+[21:43] agn3y@localhost [/tmp]  $ cpio -iv < mylsbackup.cpio 
+archive.tar
+experimental
+lpicpage.txt
+mobilr.tar.gz
+cpio: mylsbackup.cpio not created: newer or same age version exists
+mylsbackup.cpio
+receivederror.txt
+result.txt
+22 blocks
+

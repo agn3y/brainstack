@@ -1,0 +1,47 @@
+* udev
+
+udev = device manager in Linux
+
+It creates/removes files in /dev/ when you plug/unplug hardware (USB, HDD, etc.)
+
+It uses rules (conditions) to decide what to do when a device is connected
+
+* udevadm
+
+udevadm = tool to talk to udev
+
+🔄 How They Work Together (Step by Step)
+
+--------------------------
+Example: You Plug in a USB
+--------------------------
+
+🔌 USB is plugged in
+
+→ Kernel sees it and tells udev
+
+* udev receives the event
+
+→ It checks its rules to decide what to do
+→ It may create /dev/sdb, mount it, etc.
+
+* udevadm can monitor this:
+
+$ udevadm monitor
+
+→ Output :
+
+KERNEL[xxxx.xxxx] add /devices/usb...
+UDEV  [xxxx.xxxx] add /devices/usb...
+
+* You want info about the device
+
+$ udevadm info --query=all --name=/dev/sdb
+
+Shows everything udev knows (like ID_VENDOR, ID_MODEL, etc.)
+
+🧪 You change a rule and want to test it
+
+$ udevadm trigger
+
+Tells udev to reapply the rules

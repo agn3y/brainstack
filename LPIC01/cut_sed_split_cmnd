@@ -1,0 +1,23 @@
+[*] cut : 
+
+targetting columns
+$ cut -f 2,3 filename  // display only 2 and 3 column
+
+targetring columns when there is something between 
+$ cut -d "," -f 2 filename  // list only 2 column and will remove "," no change in original file
+
+[*} sed : stream editor
+
+$ sed 's/devops/ayushkepapa/g' filename
+- This will take devops and reaplace it with ayushkepapa everywhere in file
+- s means substitute and g means global or globally
+- It will not mpdify the original file
+
+to modify original file
+$ sed -i 's/enineer/Automation/g' filename
+
+[*] split :
+
+split file into pieces
+
+$ split -x 1 filename

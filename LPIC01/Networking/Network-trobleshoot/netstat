@@ -1,0 +1,11 @@
+`netstat` shows network connections, ports, and statistics. It helps check open ports, active connections, and troubleshoot network issues quickly.
+use $ netstat -r to see kenerl ip tables
+
+$ netstat -atp 
+- a for all
+- t for tcp connection 
+- p for program id and prcoess itself
+
+However, it is deprecated now.
+
+we use ss now.

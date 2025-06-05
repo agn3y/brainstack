@@ -1,0 +1,83 @@
+Technical Definition of Inode:
+
+An inode (Index Node) is a data structure in a Linux filesystem (like ext3/ext4) that stores metadata about a file.
+
+Every file and directory on a Linux system is represented by an inode.
+Think of it like a struct in C that holds file info, but not the file name or content.
+
+🔹 What’s inside an inode (technically)?
+
+Inode structure holds:
+
+----------------------------------------------------------------------------
+Field						What it means
+----------------------------------------------------------------------------
+inode number				Unique ID for the inode (like a file’s identity)
+user ID (UID)	    		Who owns the file
+group ID (GID)				Group owner
+file mode (permissions)		Read, write, execute (e.g., 755)
+timestamps					Created, modified, accessed times
+file size					How big the file is
+block pointers				Pointers to where the actual data is
+link count					How many names (hard links) point to it
+----------------------------------------------------------------------------
+
+Simple Example (Real-world style):
+
+Let’s say you create a file:
+
+$ echo "hello" > shun.txt
+
+Here’s what happens:
+
+A name shun.txt is stored in the current directory.
+A new inode is created, say inode number 123456.
+
+The inode stores:
+
+Owner (your user ID)
+Permissions (like 644)
+Size (5 bytes)
+Timestamps
+Disk block address where "hello" is stored
+
+Now if you rename the file:
+
+$ mv shun.txt hero.txt
+
+The inode (123456) remains the same.
+Only the name in the directory is changed.
+So hero.txt still points to inode 123456.
+
+Hard Link Example (proof inode is key):
+
+$ ln hero.txt twin.txt
+
+This creates a hard link. Now:
+
+$ ls -li
+
+You will see:
+
+123456 -rw-r--r-- 2 shun hero.txt
+123456 -rw-r--r-- 2 shun twin.txt
+
+Both files have same inode number, because they are the same file in the filesystem with two names.
+Deleting one doesn’t delete the data, because inode still exists.
+
+Summary (one line):
+
+Inode is the real file in Linux.
+File name is just a label pointing to that inode.
+
+
+
+
+
+
+
+
+
+
+
+

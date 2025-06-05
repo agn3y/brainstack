@@ -1,0 +1,265 @@
+# OSI Model (Open Systems Interconnection Model)
+
+The OSI Model is a 7-layer framework used to understand and design how data moves from one computer to another over a network. Each layer has a specific job. Data passes from top to bottom at the sender and bottom to top at the receiver.
+
+Layer 7: Application Layer
+
+Purpose : Interface between user and network. Provides services to applications.
+
+What it does :
+
+  * Email, file transfer, web browsing.
+  * Sends user commands to the lower layers.
+
+Protocols :
+
+  * HTTP, HTTPS → Web browsing
+  * FTP → File transfer
+  * SMTP, IMAP, POP3 → Email
+  * DNS → Domain name to IP
+
+Data unit : Data
+
+#####
+
+Layer 6: Presentation Layer
+
+Purpose : Makes data readable for the application layer.
+
+What it does :
+
+  * Translates, encrypts, or compresses data.
+  * Example: JPEG, MP4, TLS encryption.
+
+Protocols :
+
+  * SSL/TLS (used for HTTPS)
+  * Encoding: ASCII, JPEG, MP3, MPEG
+
+Data unit : Data
+
+#####
+
+Layer 5: Session Layer
+
+Purpose : Manages sessions (start, maintain, end communication).
+
+What it does :
+
+  * Handles logins, authentication.
+  * Keeps sessions alive.
+  
+Protocols :
+NetBIOS, RPC, PPTP
+
+Data unit : Data
+
+#####
+
+Layer 4: Transport Layer
+
+Purpose : Reliable or unreliable data transfer.
+
+What it does :
+
+  * Breaks data into **segments**.
+  * Adds port numbers.
+  * Handles retransmission, error recovery.
+
+Key Concepts :
+
+Ports : Identify app (e.g., port 80 = HTTP).
+
+TCP (Transmission Control Protocol)**:
+Reliable (handshake, resend lost data).
+
+UDP (User Datagram Protocol) :
+Fast but no guarantee (used for streaming, DNS).
+
+Protocols :
+TCP, UDP
+
+Data unit : Segment (TCP) / Datagram (UDP)
+
+#####
+
+Layer 3: Network Layer
+
+Purpose : Routing data between devices on different networks.
+
+What it does :
+
+  * Adds **IP address**.
+  * Finds the best path for data.
+  * Handles packet delivery.
+
+Protocols :
+
+  * IP (IPv4, IPv6)
+  * ICMP (ping)
+  * ARP (Address Resolution Protocol)
+  * OSPF, BGP (routing)
+
+Devices :
+
+Routers work at this layer.
+
+Data unit : Packet
+
+#####
+
+Layer 2: Data Link Layer
+
+Purpose : Node-to-node delivery, error detection, and physical addressing.
+What it does :
+
+- Adds **MAC address**.
+- Detects errors in frame (CRC).
+- Divided into 2 sub-layers:
+
+LLC (Logical Link Control) : Flow control, error check.
+MAC (Media Access Control) : MAC addressing, access to physical medium.
+
+Protocols :
+
+Ethernet, PPP, Frame Relay, HDLC
+
+Devices :
+Switches, NICs operate here.
+
+Data unit : Frame
+
+#####
+
+Layer 1: Physical Layer
+
+Purpose : Transmits raw bits over physical medium.
+
+What it does :
+
+- Converts 1s and 0s to electrical, light, or radio signals.
+- Includes cables, connectors, voltage levels.
+
+Devices :
+
+Hubs, repeaters, cables.
+
+Data unit : Bits
+
+### 🔄 OSI Summary Table:
+
+| Layer | Name         | Unit    | Key Devices/Protocols   |
+| ----- | ------------ | ------- | ----------------------- |
+| 7     | Application  | Data    | HTTP, FTP, DNS          |
+| 6     | Presentation | Data    | JPEG, SSL/TLS           |
+| 5     | Session      | Data    | NetBIOS, PPTP           |
+| 4     | Transport    | Segment | TCP, UDP, Ports         |
+| 3     | Network      | Packet  | IP, ICMP, Routers       |
+| 2     | Data Link    | Frame   | Ethernet, MAC, Switches |
+| 1     | Physical     | Bits    | Hubs, Cables, Repeaters |
+
+
+### 🌐 TCP/IP Model
+
+TCP/IP is the real-world model used on the internet. It has **4 layers**. It is simpler than OSI but works similarly.
+
+---
+
+## **🔹 Layer 1: Network Interface (Link Layer)**
+
+* Combines OSI layers 1 (Physical) and 2 (Data Link).
+* Handles:
+
+  * Hardware addressing (MAC).
+  * Transmission over wires/wireless.
+* Protocols: Ethernet, Wi-Fi, ARP
+* Device: Switches, NICs
+* Data unit: **Frame**
+
+---
+
+## **🔹 Layer 2: Internet Layer**
+
+* Matches OSI Layer 3 (Network Layer).
+* Adds IP headers.
+* Routes packets across networks.
+* Protocols:
+
+  * IP (IPv4/IPv6)
+  * ICMP, ARP, OSPF, BGP
+* Device: Routers
+* Data unit: **Packet**
+
+---
+
+## **🔹 Layer 3: Transport Layer**
+
+* Same as OSI Layer 4.
+* Adds **ports**.
+* Ensures data delivery.
+* Protocols:
+
+  * TCP (reliable), UDP (fast)
+* Data unit: **Segment / Datagram**
+
+---
+
+## **🔹 Layer 4: Application Layer**
+
+* Combines OSI Layers 5, 6, 7.
+* Handles:
+
+  * User interfaces, data formatting, sessions.
+* Protocols:
+
+  * HTTP, HTTPS, FTP, SSH, DNS, SMTP
+* Data unit: **Data**
+
+---
+
+### 🔄 TCP/IP Summary Table:
+
+| Layer         | OSI Equivalent  | Data Unit | Examples             |
+| ------------- | --------------- | --------- | -------------------- |
+| Application   | OSI Layers 5-7  | Data      | HTTP, FTP, DNS, SSH  |
+| Transport     | OSI Layer 4     | Segment   | TCP, UDP             |
+| Internet      | OSI Layer 3     | Packet    | IP, ICMP, ARP        |
+| Network Intf. | OSI Layer 1 + 2 | Frame     | Ethernet, Wi-Fi, MAC |
+
+---
+
+# 📚 Key Differences Between OSI and TCP/IP
+
+| OSI Model                         | TCP/IP Model                  |
+| --------------------------------- | ----------------------------- |
+| 7 layers                          | 4 layers                      |
+| Theoretical model                 | Practical/real-world model    |
+| Session/Presentation layers exist | Merged into Application Layer |
+| Developed by ISO                  | Developed by DoD/ARPA         |
+
+---
+
+# 🧠 Memory Tricks:
+
+* **OSI Layer Names (Top to Bottom)**:
+
+  * "**All People Seem To Need Data Processing**"
+* **TCP/IP Layer Names (Bottom to Top)**:
+
+  * "**N I T A**": Network, Internet, Transport, Application
+
+---
+
+# 🧩 Segment/Packet/Frame/Bits Summary:
+
+| Layer       | Name            | Data Unit   |
+| ----------- | --------------- | ----------- |
+| Application | HTTP, DNS, etc. | **Data**    |
+| Transport   | TCP/UDP         | **Segment** |
+| Network     | IP              | **Packet**  |
+| Data Link   | Ethernet, Wi-Fi | **Frame**   |
+| Physical    | Cable, radio    | **Bits**    |
+
+---
+
+Would you like me to convert this into a downloadable PDF or provide practice questions with diagrams too?

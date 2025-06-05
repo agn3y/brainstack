@@ -1,0 +1,37 @@
+When we are working with XFS file systems we can use this command.
+
+first we need to install
+$ sudo apt install xfsprogs
+
+then we can use xfs_repair
+$ man xfs_repair
+
+Example :
+
+Create a partition and install xfs on it
+
+$ sudo fdisk /dev/sdc
+select n then p
+hit enter multiple times
+Bammm, you have created a partition and now install xfs on it
+
+$ sudo mkfs.xfs /dev/sdc1
+
+Bam we have installed xfs fs on partition
+
+Now we can use this command.
+$ sudo xfs_repair -n /dev/sdc1
+
+we can also use
+$ sudo xfs_db /dev/sdc1		# it will open an interactive promp we can use 'help' here
+
+In the interactive terminal we can use list which  we have got from using 'help' interactive terminal and we need more help what we can do is we can use help in front of that command and get more info about it 
+
+such as 
+
+xfs_db  > uuid
+
+There is also another command 
+
+$ man xfs_fsr
+

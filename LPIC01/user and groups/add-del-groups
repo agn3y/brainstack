@@ -1,0 +1,26 @@
+# groups only lists the groups that the current or specified user belongs to / part of.
+$ groups
+
+# To create group
+$ sudo groupadd -g 1009 negros
+
+# -g for group id 
+# negros is name of group 
+
+# To check wether group is created or not 
+$ cat /etc/group | grep "group_name"
+
+Output :
+
+root:x:0:
+
+First column suggests group name
+Second suggests password
+Third suggests group_id
+fourth column lists member which are part of that particular group
+
+# To delete a group
+$ sudo groupdel username
+
+
+# getent - allows us to query a database

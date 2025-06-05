@@ -1,0 +1,2 @@
+If we create a file named nologin in /etc/ no user except root user will be allowed to enter into the system.
+If we reboot the system we can login.However, it is necessary for the system to reboot if its not possible then consider that you have locked yourself out.

@@ -1,0 +1,40 @@
+What Happens When You Plug in a USB (Hot Plug Event)
+
+Device is Plugged In
+
+You plug a USB device (example: USB drive).
+
+* Kernel Detects It
+
+The Linux Kernel sees the new hardware.
+
+It generates an event (called a udev event).
+
+Kernel Sends Event to udev
+
+udev is a user-space daemon that manages devices.
+
+It listens for hardware changes (like USB insert/remove).
+
+* udev Matches Rules
+
+udev checks your system’s rules files in:
+
+/etc/udev/rules.d/
+/lib/udev/rules.d/
+
+These rules tell Linux what to do with the new device.
+
+* File Appears in /dev/
+
+If everything is good, udev will create a device file like:
+
+/dev/sdb
+/dev/ttyUSB0
+
+* Optionally Triggers Actions
+
+It can auto-mount the USB.
+
+Or run a custom script (if you define it in udev rules).
+

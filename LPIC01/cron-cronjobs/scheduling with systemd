@@ -1,0 +1,168 @@
+ What is Scheduling?
+
+- Scheduling means: you want to run a script or command automatically at a certain time (like daily, weekly, etc.).
+- In Linux, we often use cron for this. But we can also use systemd timers, which are more modern and flexible.
+
+What is systemd?
+
+systemd is a system manager used in Linux to:
+
+- Start/stop services
+- Manage processes
+- And yes, schedule tasks using "timers"
+
+Important Concepts
+
+When using systemd for scheduling, we use two files:
+
+1. Service file (.service) → says what to do
+2. Timer file (.timer) → says when to do it
+
+Example: Run a script every day
+
+Let’s say you have a script:
+/home/shun/backup.sh
+
+1. Create the Service File
+Path: /etc/systemd/system/backup.service
+
+[Unit]
+Description=Daily Backup Script
+
+[Service]
+Type=oneshot
+ExecStart=/home/shun/backup.sh
+
+- This tells systemd: run that script once when told.
+
+2. Create the Timer File
+Path: /etc/systemd/system/backup.timer
+
+[Unit]
+Description=Run backup daily
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+This says: run the backup.service once every day.
+
+3. Enable and Start the Timer
+
+$ sudo systemctl daemon-reload           # Reload systemd after creating files
+$ sudo systemctl enable backup.timer     # Enable the timer (run at boot)
+$ sudo systemctl start backup.timer      # Start the timer now
+
+Check Status or Logs
+
+$ sudo systemctl status backup.timer
+$ sudo journalctl -u backup.service
+
+Timer Options (Instead of daily)
+
+----------------------------------------------------
+Value							Meaning
+----------------------------------------------------
+OnCalendar=hourly				every hour
+OnCalendar=daily	    	    every day (midnight)
+OnCalendar=weekly	    		every week
+OnCalendar=*-*-* 12:00:00		every day at 12 PM
+----------------------------------------------------
+
+Test it without waiting
+
+You can test the service without the timer:
+
+$ sudo systemctl start backup.service
+
+### How to List, Add, or Remove systemd Timers and Services
+
+1. To List all timers
+$ systemctl list-timers
+
+To see all, even inactive ones:
+
+$ systemctl list-timers --all
+
+2. Add a new timer + service
+You just do these steps:
+
+1. Create .service file (e.g., myjob.service)
+2. Create .timer file (e.g., myjob.timer)
+3. Reload systemd:
+
+$ sudo systemctl daemon-reload
+
+Enable + start the timer:
+
+$ sudo systemctl enable myjob.timer
+$ sudo systemctl start myjob.timer
+
+3. Remove (or stop) a timer
+
+Let’s say your timer is called myjob.timer.
+
+Stop it:
+$ sudo systemctl stop myjob.timer
+
+Disable it (remove from autostart):
+$ sudo systemctl disable myjob.timer
+
+Delete timer + service files:
+$ sudo rm /etc/systemd/system/myjob.timer
+$ sudo rm /etc/systemd/system/myjob.service
+
+Reload systemd:
+$ sudo systemctl daemon-reload
+
+# To check if a timer or service is active, use:
+
+$ systemctl status myjob.timer
+$ systemctl status myjob.service
+
+
+### Working style :
+
+What needs to be done → is defined in the .service file
+When to run it → is defined in the .timer file
+
+-------------------------------------------------------------------
+File Type		Purpose			    Example
+-------------------------------------------------------------------
+ .service		What to do	        Run a script, command, etc.
+ .timer	    	When to do it		Daily, weekly, or specific time
+-------------------------------------------------------------------
+
+Easy Example:
+
+- You want to run /home/shun/myscript.sh every day at 6:00 AM.
+
+1. shun-task.service
+
+[Unit]
+Description=Run myscript.sh
+
+[Service]
+Type=oneshot
+ExecStart=/home/shun/myscript.sh
+
+2. shun-task.timer
+
+[Unit]
+Description=Daily job at 6 AM
+
+[Timer]
+OnCalendar=*-*-* 06:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+Then:
+
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable shun-task.timer
+$ sudo systemctl start shun-task.timer

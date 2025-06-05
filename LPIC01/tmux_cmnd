@@ -1,0 +1,9 @@
+Allows user  to have multiple terminal windows
+
+$ tmux new 
+
+ctrl + b + %			# devide terminal Vertical
+Ctrl + b, then "		# device terminal Horizontal
+ctrl + b + &			# close all terminal
+Ctrl + b, then Arrow Key	# switch between terminals
+

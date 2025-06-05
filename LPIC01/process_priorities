@@ -1,0 +1,26 @@
+In Linux, every process has a nice value between:
+
+Range : [-20  to  +19]
+
+" LOWER NICE VALUE → HIGHER PRIORITY TO USE CPU "
+
+-------------------------------------------
+Nice alue	Priority	Who gets CPU first?
+-------------------------------------------
+-20			very high	Runs first
+00			Norrmal		Default
++19			Very low	Runs later
+-------------------------------------------
+
+Example :
+
+{*} kicking of a new programme :
+
+$ nice -n 3 sleep 200&
+$ htop 					# use F7 and filter sleep we can see nice level is 5
+$ nice sleep 299		# bydefault nice value will be 10 here
+
+{*} to modify existing programmes nice value :
+
+$ nice -n 5 sleep 200&  # starts the process with nice value of 5
+$ sudo renice -10 -p PID  				

@@ -1,0 +1,35 @@
+### TAR and GZIP Commands (Copy-Paste Friendly)
+
+Create a `.tar` archive
+
+$ tar -cvf archive.tar file_or_folder
+$ tar -cvzf archive.tar file_folder
+
+Extract `.tar` archive
+
+$ tar xvf archive.tar
+
+Compress `.tar` using gzip
+
+$ gzip archive.tar
+
+Uncompress `.tar.gz`
+
+$ gzip -d archive.tar.gz
+
+or
+
+$ gunzip archive.tar.gz
+
+-----------------------
+
+Create `.tar.gz` directly
+
+$ tar czvf archive.tar.gz file_or_folder
+
+Extract `.tar.gz` directly
+
+$ tar xzvf archive.tar.gz
+
+
+

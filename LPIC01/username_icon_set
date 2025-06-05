@@ -1,0 +1,17 @@
+Here’s a list of the commands you'll need to set a user icon in Rocky Linux with XFCE:
+
+1. Navigate to the folder where the image is stored:
+$ cd ~/Downloads
+
+2. Copy the image to the correct folder (icons directory):
+$ sudo cp Tyler.jpg /var/lib/AccountsService/icons/agn3y
+
+3. Create or edit the user configuration file:
+$ sudo vi /var/lib/AccountsService/users/agn3y
+
+4. Add the following content to the file (replace agn3y with your username):
+Icon=/var/lib/AccountsService/icons/Tyler.jpg
+
+5. Then save changes and Reboot:
+$ sudo reboot
+

@@ -1,0 +1,123 @@
+-------------------------
+Non-Technical Explanation
+-------------------------
+
+#DNS - Domain Name System
+
+# Use nslookup to find ip of website
+
+$ nslookup google.com
+
+# We can also use modern way of doing this
+$ host google.com
+
+# We can use another command
+$ dig google.com
+
+# To look for configuration file of this 
+$ /etc/resolv.conf
+
+# We can also add our own manual entries to DNS 
+# Go to /etc/hosts
+# If we add following contrent to the file 
+
+142.251.220.46 laluyadav			# it will ping to google when we use
+$ ping laluyadav
+
+# Whenever someone type any domainname in browser it will go through this hosts file and if that domainname is defined in hosts file it will redirect to that ip address otherwise it sends request to the DNS ip address and redirect to that particular website.
+
+# Something very important 
+# We can change mode of operation (the way request go through hosts and then dns)
+# There is a particular file located at /etc/nsswitch.conf 
+# Open nsswitch.conf and focus on line which has "hosts"
+# In hosts line the very first column includes file and in last column dns is specified 
+# That kinda says go through hosts file first and then at last use dns to resolve issue
+# Below there is original file content which we are discussing about 
+
+hosts:      files dns myhostname
+
+
+
+----------------------
+Technical Exaplanation
+----------------------
+
+You've provided an excellent summary of **DNS resolution in Linux**! Your understanding is mostly correct, but let me refine a few points for clarity and completeness.
+
+1. DNS Lookup Commands
+
+- `nslookup google.com` 	→ Legacy DNS query tool (deprecated in some distros).  
+- `host google.com` 		→ Simpler, modern alternative.  
+- `dig google.com` 			→ Advanced DNS tool (shows full DNS response).  
+- All three commands query DNS** (bypassing `/etc/hosts` unless `+search` or `-a` flags are used in `dig`/`host`).
+
+2. /etc/resolv.conf
+
+- Contains **DNS server IPs** (e.g., `8.8.8.8`).  
+- Can be **overwritten by DHCP/NetworkManager** unless made immutable (`chattr +i`).  
+
+3. /etc/hosts
+
+- Manual IP-hostname mappings (e.g., `142.251.220.46 laluyadav`).  
+- Pings/DNS queries for `laluyadav` will resolve to `142.251.220.46` (Google).  
+- Browser behavior :  
+  - Checks `/etc/hosts` first → if no match, queries DNS.  
+
+[*] Minor Correction :  
+- /etc/hosts` does not "redirect" — it’s a static lookup table.  
+- No HTTP/HTTPS redirection (that’s handled by web servers, not DNS).  
+
+4. `/etc/nsswitch.conf`
+
+- Controls lookup order for hostnames (and other services).  
+- The line:  
+  
+  hosts: files dns myhostname
+
+- `files` → `/etc/hosts`  
+- `dns` → DNS servers from `/etc/resolv.conf`  
+- `myhostname` → System’s own hostname (optional).  
+
+Your interpretation is correct :  
+- Linux checks `/etc/hosts` first , then falls back to DNS.  
+
+Minor Clarification :  
+- If `files` is removed , `/etc/hosts` is ignored.  
+- If `dns` is removed , DNS queries won’t work (only `/etc/hosts` applies).  
+
+5. Practical Implications
+
+- Blocking a site :  
+
+$ echo "127.0.0.1 facebook.com" | sudo tee -a /etc/hosts
+
+- `facebook.com` will **fail to resolve** (or loopback to your machine).  
+
+- Local development :  
+ 
+echo "127.0.0.1 myapp.local" | sudo tee -a /etc/hosts
+  
+- `myapp.local` points to your local machine.  
+
+---
+
+Common Pitfalls :
+ 
+1. `/etc/hosts` vs. DNS**  
+- If a site works in browser but not `ping`, check if the browser is caching DNS.  
+- Use `curl -v example.com` to see resolution in real-time.  
+
+2. DNS Caching
+- Systemd-resolved (`systemd-resolve --flush-caches`) or `nscd` may cache DNS.  
+
+3. NetworkManager Overrides 
+- If `resolv.conf` keeps resetting, configure DNS in:  
+
+$ nmcli con mod "Your-Connection" ipv4.dns "8.8.8.8"
+
+
+Want to test your setup further? Try:  
+
+getent hosts google.com  # Uses nsswitch order
+strace ping google.com   # Debugs lookup steps
+

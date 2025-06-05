@@ -1,0 +1,13 @@
+Use ps command to list all process
+
+$ ps -ef
+
+or we can use pstree
+
+$ pstree
+$ pstree -p
+
+or we can use top
+
+$ top 
+$ htop

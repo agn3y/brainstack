@@ -1,0 +1,16 @@
+The /dev directory contains special files that represent hardware devices and virtual devices in your system.
+
+In Linux, everything is a file — even your hardware.
+
+So your keyboard, hard disk, USB stick, etc. all have a file inside /dev.
+
+These files let software talk to the hardware
+
+For example:
+
+When a program writes to /dev/sda, it's writing to your hard disk.
+
+Reading from /dev/tty gets input from your terminal.
+
+Writing to /dev/null throws data away (like a trash can).
+

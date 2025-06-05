@@ -1,0 +1,27 @@
+When we create jobs, they might consume more memory than expected, which can break the system. To prevent a process from harming the system, we can send signals such as kill, hibernate, etc.
+
+In such cases we can use signals to manage such processes
+
+$ kill -l          # Lists all available signals
+
+bydefault kill uses 15 as default switch, we can also write above give command as
+
+$ kill -"SIGNANAME"	PID		# Sends signals "NAME"
+$ kill -15 PID     			# Sends signal 15 (SIGTERM) — a polite request to stop
+$ kill -9  PID     			# Sends signal  9 (SIGKILL) — forcefully stops the process
+
+{*} killsll :
+
+# need to be carefull while using this command
+
+$ killall -l 		# list all possible signals
+
+Example :
+
+Suppose there is a particular process which will take time to get execute but you are about to leave but you need to logout your pc for security purposes in such cases when we logout there is a specific signal which is sent to all actively running processes which is 
+
+[ SIGHUP ] - signal hang up    # logout signal
+
+in such cases we can use nohup command
+
+$ nohup sleep 450 		# the process will run even if user is logged out	

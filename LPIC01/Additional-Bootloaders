@@ -1,0 +1,12 @@
+systemd-bootloader
+
+it can load any uefi image
+
+Uboot - bootloader
+SYSLINUX - it include 5 boot loader programmes in it 
+
+[1] SYSLINUX - specially for microsoft AT file system
+[2] EXYlinux - also known as mini bootloader, it can boot ext2, ext3, ext4, btrfs file system
+[3] ISOlinux - boot from live cd/dvd 
+[4] PXElinux - related to pxe boot (boot from network)
+[5] MEMDISK - utility for older DOS systems

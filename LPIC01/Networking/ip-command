@@ -1,0 +1,14 @@
+To mess around with ip 
+$ sudo ip addr add 192.168.0.70/24 dev enp0s3 
+-To change ip and also remember dev name can defer and depend on ones situation
+
+Use del to delete connection
+$ sudo ip addr del 192.168.0.70/24  dev enp0s3
+
+To set ip to parrticular connection
+- First add ip how described above then turn down connection and get it back up
+$ sudo ip link set ensp03 down
+
+- Up the connection
+$ sudo ip link set ensp03 up
+

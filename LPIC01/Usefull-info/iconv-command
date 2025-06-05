@@ -1,0 +1,11 @@
+# This command allows us to change particular files encoding from one to another
+
+# To list all known charactersets
+$ iconv -l
+
+# Change from one characterset to aonther
+$ iconv -f UTF-8 -t ASCII example.txt -o newfile.txt
+
+# This would convert file encodind which originall was in utf-8 to ascii.
+# However, if there is particular charcter which cannot be displayed using ascci the opration will not be permitted
+# One thing untill unless any special character which will require anything other than ASCII BYDEFAULT when we use file command with file it will show us that the encoding which was use is  ASCII

@@ -1,0 +1,72 @@
+special permissions:
+
+[1] suid 4
+[2] sgid 2 
+[3] sticky bit 1
+
+
+[*] SUID (Set User ID)
+
+1. This is used on program files.
+2. It makes the program run as the file’s owner, not the person who runs it.
+
+Easy Example:
+
+1. A file is owned by root.
+2. A normal user runs that file.
+
+➡️ If SUID is set, the file runs with root power.
+
+$ chmod u+s myfile
+$ chmod 4755  myfile3 				
+# here actually we always have 4 values to be set on a file but for special permission it is always 0 by default but when we specify number we can make use of this special permission
+and set permission using octal digit
+
+You will see:
+
+-rwsr-xr-x 1 root root myfile
+
+- s in the first part (user area) = SUID
+
+[*] SGID (Set Group ID)
+
+1. This is used on files or folders.
+2. It makes the file/folder use the group’s power or set same group for new files inside.
+
+On Folders:
+
+1. If you set SGID on a folder,
+2. Any new file inside will get the same group as the folder.
+
+Example:
+
+$ chmod g+s myfolder
+
+You will see:
+
+drwxrwsr-x 2 root staff myfolder
+
+- s in the second part (group area) = SGID
+
+[*] Sticky Bit
+
+Used only on folders.
+It means: only the person who made the file can delete it, even if others can write in the folder.
+
+$ chmod +t myfolder
+$ chmod o+t myfolder
+$ chmod 1755 myfolder
+
+Your will see:
+
+drwxrwxrwt 2 root root /tmp
+
+t in the last part = Sticky Bit
+
+----------------------------------------------------------------------------------------------------------
+Name			Used On					What It Does									Symbol
+----------------------------------------------------------------------------------------------------------
+SUID			Files					Run as file’s owner (not user running it)		s in user area
+SGID			Files & Folders			Use group or set same group on new files		s in group area
+Sticky Bit		Folders					Only file owner can delete inside folder		t in others area
+----------------------------------------------------------------------------------------------------------

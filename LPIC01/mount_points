@@ -1,0 +1,11 @@
+We already learned about mounting and their respective directory which are /media and /mnt. though, we can mount our disk anywhere we want but it will raise security concerns and
+it is also not recommended
+
+the command that we can use to mount a fs or drive is
+
+$ man mount 
+$ mount
+
+we can see information about that at 
+
+$ cat /proc/mounts

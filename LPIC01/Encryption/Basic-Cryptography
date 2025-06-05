@@ -1,0 +1,9 @@
+we can use many method for encryption.
+
+GPG keys, SSH keys
+
+There are two types of Encryption.
+[1] Symetric   - more faster, same key for encryption and decryption  
+[2] Asymetric  - slower, two key public and private for encryption and decryption
+
+

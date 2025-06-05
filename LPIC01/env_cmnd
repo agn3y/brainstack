@@ -1,0 +1,31 @@
+[*] env Command – Shows Environment Variables
+
+[*] This command shows only exported (global) environment variables.
+$ env
+
+
+[*] What is an Exported Variable?
+There are two types of environment variables:
+
+[*] Local Environment Variable
+Limited to the current terminal session only.
+
+[*] Global Environment Variable
+Accessible by any process or terminal started from the current one.
+
+[*] How to Create a Global Variable
+
+$ export MYNAME="baba bihari"
+This makes MYNAME available to all child processes (like scripts or new shells).
+
+[*] How to Remove the Variable
+
+$ unset MYNAME
+
+Don't use $ when unsetting. Use the variable name only.
+
+[*] See All Variables (Local + Global)
+
+This shows both local and exported variables.
+$ set
+

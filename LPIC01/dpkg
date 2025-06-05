@@ -1,0 +1,83 @@
+DPKG - debian binary package
+
+$ cd /var/cache/apt/archives
+
+🧱 What is dpkg?
+
+dpkg stands for Debian Package.
+It is the basic tool used in Debian-based systems (like Ubuntu, Kali Linux) to manage .deb files (Debian software packages).
+
+Think of .deb like a zip file that contains a software app.
+
+dpkg is low-level. That means it works directly with .deb files.
+It does not automatically download packages or handle dependencies like apt does.
+
+✅ Basic dpkg Commands
+
+1. 📦 Install a .deb package
+
+You need to download the .deb file first.
+
+$ sudo dpkg -i filename.deb
+
+Example:
+
+$ sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+2. ❌ Remove a package
+
+$ sudo dpkg -r packagename
+
+Example:
+
+$ sudo dpkg -r google-chrome-stable
+
+Note: This removes the software but keeps config files.
+
+3. ❌ Remove completely (with config files)
+
+$ sudo dpkg -P packagename
+
+4. 📃 List all installed packages
+
+$ dpkg -l
+
+You can scroll through or use grep to find something:
+
+$ dpkg -l | grep chrome
+
+5. 🧾 Check details of a specific package
+
+$ dpkg -s packagename
+
+This shows version, description, status, etc.
+
+6. 📁 List files installed by a package
+
+$ dpkg -L packagename
+
+It shows all the files and where they are installed on your system.
+
+7. 🔍 Find which package owns a file
+
+$ dpkg -S /path/to/file
+
+🔧 Fixing broken installs
+
+Sometimes, dpkg gives errors about missing dependencies. You can fix them with:
+
+$ sudo apt -f install
+
+This tells apt to fix and install the missing stuff.
+
+---------------------------------------------
+Task					Command
+---------------------------------------------
+Install					dpkg -i file.deb
+Remove					dpkg -r name
+Purge					dpkg -P name
+List all				dpkg -l
+Package info			dpkg -s name
+Files in pkg			dpkg -L name
+Find owner	d			pkg -S /file/path
+--------------------------------------------

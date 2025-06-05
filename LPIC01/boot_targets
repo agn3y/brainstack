@@ -1,0 +1,82 @@
+Systemd vs Telinit
+
+This is an updated method compared to using telinit and init. Instead of using telinit or init to change system runlevels, we use targets in systemd.
+
+Example:
+
+To switch to the reboot target (reboot the system), you would run:
+
+$ sudo systemctl isolate reboot.target
+
+Here, isolating a target means changing the system's current state to the one defined by the target.
+
+What is a Unit File?
+
+A unit file is a configuration file that tells systemd how to manage a service or system component. These files control the state of services, timers, and other system tasks.
+
+Example unit file:
+
+/etc/systemd/system/myapp.service
+
+Listing Unit Files
+
+To list all systemd unit files, you can use:
+
+$ sudo systemctl list-unit-files
+
+This command will display the configuration for all unit files, whether they are active or not.
+
+Types of Unit Files
+Unit files come in different types, each controlling a different part of the system:
+
+Services (.service)
+Controls system services (e.g., nginx.service, ssh.service)
+
+Sockets (.socket)
+Controls socket-based communication
+
+Targets (.target)
+Defines different system states (e.g., reboot.target, multi-user.target)
+
+Timers (.timer)
+Controls time-based actions (similar to cron jobs)
+
+Example Output of list-unit-files:
+
+UNIT FILE            STATE
+ssh.service          enabled
+nginx.service        disabled
+reboot.target        static
+
+enabled: Starts automatically at boot
+
+disabled: Does not start automatically
+
+static: Cannot be started directly but is used by other units
+
+Difference Between list-units and list-unit-files
+systemctl list-units: Shows only currently active or loaded units (running or in use right now).
+
+systemctl list-unit-files: Shows all unit files, including those not currently active, and their startup states (enabled, disabled, static, etc.).
+
+Summary of Commands:
+systemctl list-units: Displays active services and units.
+
+systemctl list-unit-files: Displays all installed unit files and their current configuration (whether enabled, disabled, or static).
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Run-level	Target			Explanation
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0		poweroff.target		This run level/target is used by systemd to power-off or halt the system
+  1		rescue.target		This run level/target is used by systemd to boot the system in rescue or recovery mode. 
+							It is very helpful if some goes wrong you can change the configuration in that mode
+  2		multi-user.target	This run level/target is used by systemd to boot system into multi-user environment so user can work in parallel
+  3		multi-user.target	
+  4		multi-user.target	
+  5		graphical.target	This run level/target is used by systemd to boot system into multi-user graphical environment so user can work in parallel in graphical mode
+  6		reboot.target		This run level/target is used by systemd to reboot the system
+  
+  $ sudo systemctl get-defualt --> to see default target / runlevel
+  
+  $ sudo systemctl set-default rescue.target --> to set default target
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

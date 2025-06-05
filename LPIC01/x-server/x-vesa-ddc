@@ -1,0 +1,59 @@
+VESA - Video Electronics Standard Association
+DDC - Display Data Channel
+
+What is VESA?
+VESA (Video Electronics Standards Association) is a group that makes video/display standards. One of the most important things they created is:
+
+VESA BIOS Extensions (VBE)
+- It’s a standard way for the system to talk to the video card before the operating system starts.
+- Think of it like the basic video mode your computer can fall back on — low resolution, but works everywhere.
+
+✅ Used when:
+
+- You have no graphics driver yet.
+- You need a safe default video mode.
+
+What is DDC?
+
+DDC stands for Display Data Channel.
+
+It lets your computer ask the monitor things like:
+
+- What resolution do you support?
+- What is your name?
+- What refresh rates can you do?
+
+The monitor replies using EDID (Extended Display Identification Data), which is just a small block of monitor info.
+
+How VESA & DDC work with X11:
+
+Let’s combine everything now. Here’s the boot to GUI flow simplified:
+
+Step-by-step:
+
+1. Boot:
+- BIOS/UEFI uses VESA (VBE) to show basic display.
+- Safe graphics, like 640x480 or 800x600.
+
+2. Kernel loads:
+- Linux loads graphics drivers (like i915, nouveau, amdgpu, etc.).
+
+3. DDC talks to Monitor:
+- The driver or X11 uses DDC to read monitor info (EDID).
+- Now the system knows what screen resolutions the monitor supports.
+
+4. X11 starts:
+- X Server configures itself based on what DDC told it.
+- It uses proper screen size, refresh rate, and color depth.
+
+5. Window Manager + GUI loads:
+- Full graphical desktop shows up with correct resolution.
+
+-------------------------------------------------------------------
+Part		Role
+-------------------------------------------------------------------
+VESA		Gives basic video output before OS/driver loads
+DDC		Allows system to ask monitor about its capabilities
+X11		Uses info from DDC to start GUI correctly
+Driver		Talks to video card for high performance graphics
+-------------------------------------------------------------------

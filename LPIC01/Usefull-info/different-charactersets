@@ -1,0 +1,19 @@
+Characterset 
+1 > ASCI
+2 > ISO-8859
+3 > Unicode
+4 > UTF
+5 > UTF-8
+
+- Why this many charcter set ? beacuse we cannot have every language included in one characterset though we can make use of UTF-8 
+
+- Supoese we wrote a string but there was i word which is in polish so we need to copy that word and paste beacuse we might be using ASCII and it does not include polish characters 
+
+- To check this write some common english word and then use 
+$ file demo.txt
+
+- Now add the polish word and do this again
+$ file demo.txt 
+
+- First time you will see that encoding of text is in ACSII
+- In second time you will see that encoding is changed to UTF-8

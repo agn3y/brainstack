@@ -1,0 +1,139 @@
+What is Journaling (systemd-journald)?
+- systemd-journald is the journal service provided by the systemd system and service manager. It is responsible for collecting, storing, and managing log messages from:
+- The kernel
+- Services (via systemd)
+- Standard input/output (stdout/stderr) of services
+- Syslog daemons like rsyslog or syslog-ng
+- Applications using the journal API directly
+
+Key Characteristics of journald:
+
+--------------------------------------------------------------------------------------------------------
+Feature					    Description
+--------------------------------------------------------------------------------------------------------
+Binary log format			Logs are stored in a binary format (not plain text) for fast search/indexing
+Structured logs				Logs include fields like _PID=, _UID=, _SYSTEMD_UNIT=, etc.
+Volatile + persistent		Logs can be in-memory (volatile) or saved to disk (persistent)
+Access tool					You use journalctl to view and filter logs
+--------------------------------------------------------------------------------------------------------
+
+Journal Storage Locations
+
+------------------------------------------------------
+Path					Description
+------------------------------------------------------
+/run/log/journal/		Volatile (RAM-based) logs
+/var/log/journal/		Persistent logs saved on disk
+------------------------------------------------------
+
+- If /var/log/journal/ does not exist, logs will only be stored in memory and will be lost on reboot.
+
+To enable persistent logging:
+
+$ sudo mkdir -p /var/log/journal
+$ sudo systemd-tmpfiles --create --prefix /var/log/journal
+$ sudo systemctl restart systemd-journald
+
+journalctl – The Log Viewer for Journald
+
+journalctl is the command used to view logs collected by journald.
+
+-------------------------------------------------------------------------------
+Command									Description
+-------------------------------------------------------------------------------
+journalctl			                    Show full system logs
+journalctl -b		    				Logs since the last boot
+journalctl -xe		    				Show recent logs with errors and debug
+journalctl -u sshd						Logs for specific service
+journalctl --since "2 hours ago"		Time-based filtering
+journalctl -f	    					Real-time log streaming (like tail -f)
+-------------------------------------------------------------------------------
+
+Permission to View Journal
+Normal users may not have permission to view the full journal. To allow them:
+
+$ sudo usermod -aG systemd-journal yourusername
+$ newgrp systemd-journal
+
+Journald Configuration
+File: /etc/systemd/journald.conf
+
+Key options:
+
+[Journal]
+Storage=persistent         # Options: volatile, persistent, auto
+Compress=yes               # Compress older logs
+SystemMaxUse=500M          # Limit disk usage
+MaxRetentionSec=1month     # Keep logs for this long
+
+Apply changes:
+
+$ sudo systemctl restart systemd-journald
+
+How journald works with rsyslog/syslog-ng
+- journald collects logs at a low level.
+- rsyslog or syslog-ng can pull logs from journald using imjournal module.
+- This allows integration of traditional syslog pipelines with modern journal features.
+
+So, journald is the source, and rsyslog/syslog-ng are processors/routers.
+
+What is dmesg and kmsg (Kernel Message Buffer)?
+
+dmesg – Kernel Ring Buffer Viewer
+dmesg shows messages directly from the kernel ring buffer, which is a memory area used by the Linux kernel to write important system events like:
+
+- Boot logs
+- Device initialization
+- Hardware driver messages
+- Kernel panics or oops errors
+- Filesystem errors (like ext4 corruption)
+- USB plug/unplug events
+- Network interface changes
+
+The kernel writes these logs to /proc/kmsg, and dmesg reads from it.
+
+Command:
+
+$ dmesg | less
+
+# To show real-time:
+
+$ dmesg -w
+
+# To see timestamps:
+
+$ dmesg -T
+
+Root vs. Normal Users
+- From Linux Kernel 5.10 and above, normal users cannot read full dmesg due to security reasons (can leak sensitive info like kernel memory addresses).
+
+# To allow non-root access:
+$ sudo sysctl -w kernel.dmesg_restrict=0
+
+Or make it permanent:
+$ echo "kernel.dmesg_restrict = 0" | sudo tee -a /etc/sysctl.conf
+$ sudo sysctl -p
+
+Location of Kernel Logs
+
+-------------------------------------------------------------------
+Path					Description
+-------------------------------------------------------------------
+/proc/kmsg				Live kernel message stream
+/dev/kmsg				Similar, used by journald
+/var/log/kern.log		Traditional syslog storage (if configured)
+------------------------------------------------------------------
+
+- journald can capture kernel logs from /dev/kmsg using systemd-journald — they are marked with PRIORITY=0 to 3 (emergency to error).
+
+journald vs dmesg
+
+--------------------------------------------------------------------------------------------------------
+Feature				journald								    dmesg
+--------------------------------------------------------------------------------------------------------
+Source				Kernel + user + services logs			    Only kernel
+Storage				Binary logs (/run or /var/log)				In-memory kernel ring buffer
+CLI Tool			journalctl									dmesg
+Can persist logs	Yes (if Storage=persistent)	    		    No – lost after reboot or ring overflow
+Filters/logs		Full logs with metadata, timestamps			Raw kernel messages
+--------------------------------------------------------------------------------------------------------

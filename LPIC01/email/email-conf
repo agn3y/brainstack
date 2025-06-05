@@ -1,0 +1,7 @@
+# To install mailx we need to install
+$ sudo apt install mailutils
+$ sudo apt install sendmail
+$ sudo apt install postfix
+
+# Use this
+$ man mail

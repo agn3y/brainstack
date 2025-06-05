@@ -1,0 +1,29 @@
+We can use find to find file based on name, permission ,size, type or modified by date
+
+By Name
+$ find /path -name "filename"
+$ find experimental/ -name "[fF]ile[1-4].txt" 		#  performed in system
+
+By Permission
+$ find /path -perm mode
+$ find / -perm 0777       #  files with 777 permission 
+
+By Size
+$ find /path -size +1M
+$ find / -size +100M      # files bigger than 100MB
+
+By Type
+
+f = file
+d = directory
+
+$ find /path -type f   # for files
+$ find /path -type d   # for directories
+$ find /etc -type d
+
+By Modified Date
+$ find /path -mtime -n
+# -n means within last n days
+# +n means more than n days ago
+
+$ find /home/shun -mtime -2 	# file modified 2 days ago

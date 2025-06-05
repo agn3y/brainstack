@@ -1,0 +1,54 @@
+Tool for partitioning
+
+[1] partitioning using fdisk tool :
+
+$ fdisk -l			# list partition table for specified device and then exit
+
+ *  -  Means that it is a bootable sector
+ 
+Example of using fdisk:
+
+$ sudo fdisk /dev/sdb
+
+the [ n ] and then [ w ]
+
+Note :
+
+- fdisk is an older tool and it only supports MBR (Master Boot Record) partition tables.
+
+
+[2] mark partition with particular file system :
+
+$ ls -l /sbin | grep "mkfs"			# list all mkfs system
+
+Example :
+
+$ sudo mkfs.ext4 /dev/sdb1
+
+
+[3] deleteing partition created with fdisk
+
+$ fdisk /dev/sdb1		# for example we have used sbd1 
+
+the n press [ d ] it will be deleted and then [ w ] to write
+
+
+[4] modiify already created partition :
+
+$ fdisk /dev/sdc1
+
+first use [ l ] to list partition list and get code for each type
+
+then use [ t ] and number of that partition.
+suppose in my case it is [ 86 ] and the  [ w ].
+
+
+[5] to create a swap partition 
+
+$ fdisk /dev/sbd1		# create a partition then use
+$ sudo mkswap /dev/sdb1		# marks it as a swap partition
+
+then 
+
+$ swapon			# to start using swap
+$ swapon /dev/sdb1	`	# start using this partition as a swap memory

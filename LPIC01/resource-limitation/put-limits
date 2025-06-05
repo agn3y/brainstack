@@ -1,0 +1,12 @@
+We can implement resource usage when there are multiple user's accessing one big system so one particular user dont consume all the resources which system have. we can perform such operation using ulimit command.
+
+We can use commands such as $ man ulimit or ulimit --help to know more about it.
+
+$ ulimit -a  =  show all system resource inshort shows limit how much we can use
+$ ulimit -H and ulimt -S  =  shows limit for both soft-limit and harf-limit
+
+ulimit applies in all non0system users
+
+we can apply soft limits using -c flag however if we want to make it permanent then we will have to update or edit conf file for that.which is located at 
+
+/etc/security/limits.conf  

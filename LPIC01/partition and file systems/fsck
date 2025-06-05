@@ -1,0 +1,21 @@
+[*] fscl - cheks and repaira linux filesystem
+
+fsck auto detects from fsck.ext2. fscl.ext3, fsck.msdos
+
+to list all available commands we can use
+
+$ ls -l /sbin | grep "fsck"
+
+It does not operate on XFS
+It should be used only on unmounted disk and partition
+It is a good practise to use -N while using fsck
+
+$ sudo fsck /dev/sdd1		# file checks with auto ditacting system
+$ sudo fsck -r /dev/sdd1	# give more details
+
+one practical opeartion :
+
+$ mkdir /home/user/dirname					# create dir to mount partition
+$ sudo fdisk -l 						# optional just list block devices and provide info about them
+$ sudo mount -t etx3 /dev/sdd1 /home/username/dirname		# mount the disk in dir
+

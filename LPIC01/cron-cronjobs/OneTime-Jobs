@@ -1,0 +1,17 @@
+we use At command to create a one time job
+
+# To schedule a job we need to know time so we use
+$ date
+$ at HH:MM and <EOT> 				# install at if not installed, <EOT> end of transition , ctrl + d
+$ at MM:DD:YY and then ctrl+D
+
+we can also do
+
+$ at now + 5 minutes  
+
+# List all at jobs
+$ atq		or
+$ at -l
+
+# Cancel all scheduled jobs
+$ atrm 2 3 		# 2 and 3 is job id's

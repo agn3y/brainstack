@@ -1,0 +1,12 @@
+We use xinetd for this types of operation.
+we had something called inetd which was replaced by xinetd.it is a security daemon.
+Which is located at /etc/xinetd.conf   [includedir]
+
+If it is not installed already install it using
+$ sudo apt install xinetd
+
+More services running invites more hackers...!!!
+
+This all has become old now. Nowdays in systemd systems we have something called unit files which we use instead of directly using services.
+This is located at /etc/systemd/system
+

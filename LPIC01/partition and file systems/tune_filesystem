@@ -1,0 +1,14 @@
+We can say it is like a tool which checks wether fs are working well before they are mounted and if any problems occurs it try to warn us by throwing errors
+
+We use tune2fs commmand to tune the file system
+We don't use that often 
+It will only work with ext2, ext3, ext4 type of system
+
+`**tune2fs**` is a command-line tool in Linux used to **view and change settings** of **ext2, ext3, and ext4** file systems. It allows you to "tune" or adjust the behavior of the file system. For example, you can use it to change how often a file system should be checked for errors, how many times it can be mounted before a check, how much space is reserved for the root user, or even change the name (label) of the file system. This is useful for system administrators who want better control overdisk performance, safety, or space usage. 
+
+The word **"tuning"** means adjusting the internal settings of a system to make it work better, just like tuning a car engine
+for better performance. But remember, `tune2fs` only works on **ext**-based file systems—not on xfs, vfat, or LVM. So, if youtry it on other types, it will give an error like "bad magic number".
+
+Let me know if you want an example or a diagram!
+
+$ tune2fs

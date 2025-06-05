@@ -1,0 +1,72 @@
+[*] Goal:
+
+- You have a server with CLI only (no GUI),
+- But from your client machine with GUI, you want to run a GUI app from the server, and see it on your client screen.
+
+[*] Key Concept: X11 is Network Transparent
+
+That means:
+
+1. The X Server runs on your client machine (with display).
+2. The X Client (app) runs on the server machine (no display).
+3. The app sends drawing commands over network to your display.
+
+Step-by-Step (with Explanation)
+
+Step 1: Install X Server on Client Machine (your local computer)
+
+For Windows:
+
+# Install Xming
+
+Xming will act as an X Server and show GUI apps from remote systems.
+
+Step 2: On Client Machine (Windows/Linux GUI)
+
+Allow other computers (like your server) to send GUI apps to you:
+
+$ xhost +               # allow anyone (NOT safe in open networks)
+$ xhost +192.168.9.2    # safer: allow only that server IP
+
+- xhost controls access to your X Server.
+
+Step 3: On Server Machine (CLI only)
+
+Set the DISPLAY variable to point to client’s IP (with display):
+
+$ export DISPLAY=192.168.9.10:0
+
+Here:
+
+192.168.9.10 = IP of your client
+:0 = Display number 0 (default on most machines)
+
+Now, if you run a GUI app on server like:
+
+$ xclock
+
+- It will appear on the client screen (if Xming is running).
+
+
+[*] Optional: Secure Access with xauth
+
+- xhost + is fast but not secure. For better control, use:
+
+$ xauth list                     # show authorized cookies
+$ xauth add <details>           # add a cookie manually
+
+When you use xauth, it creates a special file:
+
+~/.Xauthority
+
+This file holds the authentication cookie used to let only trusted users run apps on your X server.
+
+-----------------------------------------------------
+Part			Purpose
+-----------------------------------------------------
+xming		    Acts as X Server on client (Windows)
+xhost		    Controls who can use your display
+DISPLAY			Tells app where to show GUI (your IP)
+xauth			Safer, user-level access control
+Xauthority		Holds secret cookie for secure access
+-----------------------------------------------------

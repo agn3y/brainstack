@@ -1,0 +1,25 @@
+- What ntp does is that it use udp(PORT 123) protocol to provide accurate time information
+- name of ntp daemon is ntpd	
+
+# to use ntpdate
+$ sudo dnf install ntp
+$ sudo dnf install ntpdate		# sets time and date via NTP
+$ man ntpdate
+
+# ro set manual ntp server
+$ sudo ntpdate server ip
+$ sudo ntpdate 1.pool.ntp.org
+
+# Bydefault ntp server info is located at
+# /etc/ntp.conf
+
+# use ntpstat to see status
+$ npstat
+
+# NTP query programme
+$ ntpq  
+
+# An impotant command
+# ntpq -pn
+#
+#

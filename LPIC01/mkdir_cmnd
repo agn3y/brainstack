@@ -1,0 +1,8 @@
+If you meant to create all subdirectories inside Parentfolder, you'd use this:
+
+$ mkdir -p Parentfolder/childfolder1 Parentfolder/childfolder2/grandchildfolder
+
+This will create:
+
+Parentfolder/childfolder1
+Parentfolder/childfolder2/grandchildfolder

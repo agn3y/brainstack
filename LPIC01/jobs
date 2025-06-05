@@ -1,0 +1,15 @@
+Job is a process which runs in background
+ 
+[*]Manual way :
+
+$ sleep 500  		# command for sleep 500 then ctrl + z which will stop it
+$ jobs    		# to list jobs which are held in background
+$ bg "JOB NUMBER"	# this will start running the process in background which we stopped earlier using ctrl + z
+$ fg "JOB NUMBER"	# to get back the job to foregroound
+
+[*] Automatic way :
+
+$ sleep 400& 		# use & at the ending of command
+$ jobs			# list jobs running in background
+# fg "JOB NUMBER"   	# to get back the process to foreground
+# jobs -l 		# list jobs with their corresponding PID

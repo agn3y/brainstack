@@ -1,0 +1,9 @@
+NTP - Network time protocol
+Allow system clock to syncronize over a network and let a device have accurate time.
+
+# First install ntp, sent very accurate time to all it connections
+$ sudo dnf install ntp -y
+
+# there are total 16 stratom level 0-15 and 0 is where atomic clocks relies
+- at level 1 there are ntp server
+- 0 has the most accurate time and as we go far from 0 accuracy of time will not be much as compared to what we had at level 0

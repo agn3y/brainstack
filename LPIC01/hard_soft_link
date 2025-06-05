@@ -1,0 +1,21 @@
+link means symbolic link / shortcut
+
+two types :
+
+1 ] Hard link
+2 ] Soft link
+
+Hard link is same as file. Its, like creating another file which has same content of the file which we have selected. an exact copy if the file.However, Both shared the same inode.
+
+$ ln originalfile newfilename		# creates new hard link
+$ ls -li				# let us see inode so we can identify that it is hardlink
+
+
+creating soft link
+
+$ ln -s "filename" "nameofsoftlink"	# name of softlink
+
+Note :
+
+we cant change original files name in softlink
+

@@ -1,0 +1,126 @@
+🧠 What is GRUB 2?
+
+GRUB 2 is the second version of the GRUB bootloader.
+
+It’s more powerful and flexible than the old GRUB (also called "GRUB Legacy").
+
+You can think of GRUB 2 like a smarter, automatic TV remote — it finds operating systems, shows a boot menu, lets you edit entries, and even rescue a broken boot system.
+
+🆚 Difference Between GRUB Legacy and GRUB 2
+
+-------------------------------------------------------------------------------------
+Feature						GRUB Legacy						GRUB 2 (Modern)
+-------------------------------------------------------------------------------------
+Config file					/boot/grub/menu.lst				/boot/grub/grub.cfg
+Manual kernel entries		Yes								Mostly automatic
+Script-based system			No								Yes (uses shell scripts)
+Editable at boot			Limited							Yes (e to edit)
+Auto OS detection			No								Yes (update-grub)
+Partition naming			Weird (hd0,0)					Clear (/dev/sda1)
+-------------------------------------------------------------------------------------
+
+🗂️ Important GRUB 2 Files and Folders
+
+----------------------------------------------------------------------
+Path						Purpose
+----------------------------------------------------------------------
+/etc/default/grub			Main config file you edit (like settings)
+/etc/grub.d/				Script files to build the menu
+/boot/grub/grub.cfg			Final boot menu (auto-generated)
+/boot/grub2/				On some distros like RHEL/Fedora
+----------------------------------------------------------------------
+
+📄 Sample /etc/default/grub
+
+This file sets basic GRUB 2 behavior:
+
+---------------------------------------------------------------------------------
+																				|
+GRUB_TIMEOUT=5                     # Wait 5 seconds before boot					|
+GRUB_DEFAULT=0                     # Boot first entry by default				|
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"  # Kernel options (no logs on screen)	|
+GRUB_CMDLINE_LINUX=""             # Extra kernel options if needed				|
+---------------------------------------------------------------------------------
+
+After editing:
+
+$ sudo update-grub      # On Debian/Ubuntu
+$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg  # On RHEL/CentOS
+
+🛠️ How GRUB 2 Works (Behind the Scenes)
+
+You edit /etc/default/grub (or add scripts in /etc/grub.d/)
+You run update-grub
+That creates the real boot file: /boot/grub/grub.cfg
+On boot, BIOS/UEFI loads GRUB from the MBR or EFI partition
+GRUB reads grub.cfg, shows menu, boots the OS
+
+💡 Boot Menu Example (grub.cfg result)
+
+Ubuntu
+Advanced options for Ubuntu
+Windows Boot Manager (on /dev/sda1)
+
+You can press:
+
+↑ / ↓ to pick OS
+e to edit boot entry (temporarily)
+c for GRUB command-line mode
+
+🧪 Real Example (Add Custom Entry)
+
+Add a custom entry by creating a new script:
+
+sudo nano /etc/grub.d/40_custom
+
+Add:
+
+menuentry "My Custom Linux" {
+    set root=(hd0,1)
+    linux /boot/vmlinuz-custom root=/dev/sda1
+    initrd /boot/initrd-custom.img
+}
+
+Then run:
+
+$ sudo update-grub
+
+Now you’ll see "My Custom Linux" in the GRUB menu!
+
+====================
+🆘 GRUB Rescue Mode |
+====================
+
+If GRUB gets corrupted, you might see:
+
+$ grub rescue>
+
+You can fix manually using commands like:
+
+set root=(hd0,1)
+set prefix=(hd0,1)/boot/grub
+insmod normal
+normal
+
+Then reinstall GRUB:
+
+$ sudo grub-install /dev/sda
+
+🔥 Summary :
+
+------------------------------------------------------------
+Feature							GRUB 2 (Modern Bootloader)
+------------------------------------------------------------
+Easy to auto-detect OS			✅ Yes
+Edit boot entry at boot			✅ Yes (press e)
+Works with BIOS + UEFI			✅ Yes
+Easy to manage					✅ Uses update-grub
+Config system					/etc/default/grub + scripts
+------------------------------------------------------------
+
+Let me know if you want:
+
+A step-by-step on dual boot with GRUB 2
+How to customize GRUB themes or colors
+How to recover from GRUB rescue mode
+

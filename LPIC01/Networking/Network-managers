@@ -1,0 +1,26 @@
+network managers 
+
+nmcli 
+
+If not installed already we can use
+$ sudo apt install network-manager -y
+
+To start network manager we can use 
+$ sudo systemctl start network-manager
+$ sudo systemctl status network-manager
+
+To see connections
+$ nmcli dev
+$ nmcli con
+
+To shutdown a particular connection 
+$ nmcli con down "name of connection" | "Galaxy"
+
+To delete connection 
+$ nmcli con delete "Galaxy"
+
+To add connection manually
+$ nmcli con add con-name "Wired Connection 1" type ethernet ip4 192.168.32.55/24 gw4 192.168.32.1 ifname ens01 autoconnect yes
+
+To use interactive mode
+$ nmcli con edit 

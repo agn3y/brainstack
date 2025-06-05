@@ -1,0 +1,14 @@
+Main file
+
+xorg.conf
+
+Additional files
+
+xorg.conf.d/
+
+this all files are located in 
+
+/etc/x11/xorg.conf/ and
+/usr/share/X11/xorg.conf.d
+
+

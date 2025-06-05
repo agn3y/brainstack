@@ -1,0 +1,115 @@
+What is GRUB?
+
+GRUB stands for GRand Unified Bootloader.
+
+It’s the program that starts first when your PC turns on and decides which OS or kernel to boot.
+
+🤖 What GRUB Does
+
+When your computer starts:
+
+BIOS/UEFI runs.
+GRUB loads from MBR or EFI partition.
+GRUB shows you a boot menu (if more than 1 OS or kernel).
+You choose (or it auto-boots the default).
+GRUB loads the Linux kernel → Linux starts!
+
+🧱 GRUB Boot Flow (Simple Diagram)
+
+=============================================
+											|
+BIOS/UEFI									|
+   ↓										|
+GRUB (boot menu)							|
+   ↓										|
+Linux kernel								|
+   ↓										|
+Root filesystem mounted						|
+   ↓										|
+Login screen or terminal					|
+											|
+=============================================
+
+
+✨ Real-Life Example (Like a TV Remote)
+
+Imagine GRUB as a TV remote:
+
+You press power → GRUB turns on.
+You see options: "Linux", "Advanced Linux", "Windows"
+You press button 1 → Linux starts
+You press button 2 → Windows starts
+
+You don’t need to unplug and switch cables — GRUB gives you the menu! ✅
+
+🗂️ GRUB Configuration File
+
+For GRUB2, config file is:
+
+/etc/default/grub
+
+To apply config, you don’t edit GRUB menu directly, instead:
+
+$ sudo update-grub     # On Debian/Ubuntu
+$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg   # On RHEL/CentOS
+
+📄 Example /etc/default/grub
+
+=================================================================
+																|
+GRUB_DEFAULT=0           # First entry is default				|
+GRUB_TIMEOUT=5           # Wait 5 seconds before boot			|
+GRUB_DISTRIBUTOR=`lsb_release -i -s`							|
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"  # Kernel options		|
+GRUB_CMDLINE_LINUX=""											|
+																|
+=================================================================
+
+After editing:
+
+$ sudo update-grub
+
+📁 Where GRUB Files Are Stored
+
+File/Folder				Purpose
+/etc/default/grub		Main config file
+/boot/grub/grub.cfg		Actual boot menu (auto-generated)
+/boot/grub2/			Location on RedHat-based systems
+/etc/grub.d/			Scripts to create grub.cfg
+
+🧪 Add Another OS to GRUB
+
+If you have Windows and Linux:
+
+Install Linux second (it will detect Windows).
+
+Then run:
+
+$ sudo update-grub
+
+You will now see both Linux and Windows on boot menu.
+
+* GRUB Commands You Should Know
+	
+$ update-grub				//  Regenerates grub.cfg menu
+$ grub-install 				//  /dev/sda	Installs GRUB to MBR
+$ grub-reboot 'entry'	    //  Set a one-time boot to an OS
+$ grub-set-default 'entry'	//  Change the default boot OS
+
+🔥 GRUB vs LILO (Quick Comparison)
+
+-------------------------------------------------------------------------------
+Feature					GRUB	    		    	LILO
+-------------------------------------------------------------------------------
+Auto-detect OS			✅ Yes						❌ No
+Supports UEFI			✅ Yes				 		❌ No
+Edit menu at boot		✅ Yes (press e)				❌ No
+Update kernel			✅ Easy with update-grub		❌ Must run lilo manually
+Use today				✅ Very common	    	 	❌ Outdated
+-------------------------------------------------------------------------------
+
+💬 Extra Tips
+
+To see GRUB menu, press Shift (BIOS) or Esc (UEFI) during boot.
+You can edit a boot entry temporarily by pressing e in the GRUB menu.
+You can boot into recovery mode from GRUB → "Advanced options for Linux".

@@ -1,0 +1,45 @@
+[*] streams :
+
+#  0  -  stdin   →  Takes input (usually from keyboard)
+#  1  -  stdout  →  Shows normal output (like command results)
+#  2  -  stderr  →  Shows error messages (like "file not found")
+
+Using this streams
+
+$ ls -l 1> filename      		# using standard output  this will work as it is valid , ls -l will list long format and redirect it using 
+$ cat pancackes 2> filename      	# since the file does not actually exist it will redirect the output to the file , beacuse file not found an output will be created that's why 
+$ cat < filename  			# takes input from file instead of keyboard
+$ cat 0< filename
+
+Example :
+
+$ wc -l << EOF
+> this is agney 
+> how may i help you ?
+> please make it quick
+> we are running out of time
+> ronaldo is the goat
+> messi is also goat
+> neymar is also a magician
+> EOF
+
+Output :
+
+[10:55] agn3y@localhost [~/experimental]  $ wc -l << EOL
+> this is agney
+> how may i help you
+> please make it quick
+> we are running out of time
+> ronaldo is goat
+> messi is also goat
+> neymar is also a magician 
+> EOL
+7
+
+
+Another Example :
+
+$ ls -l > filename.txt 2> error.txt  OR
+$ ls -l 1> filename.txt 2> error.txt 
+# It works like an if else statement if the first condition which is ls -l would not work it will use {2 stderr} and populate error.txt
+# However, in our case it will work beacuse our working eviorment is set in such way first condition will not fail 

@@ -1,0 +1,17 @@
+
+It can be called Window Manager also
+
+The dm i currently using is lightdm
+there is also kdm
+
+conf files are located at
+
+/etc/lightdm
+
+In some systems the lightdm.conf file is located at 
+
+/etc/lightdm
+
+in some systems we can find it in
+
+/etc/init/lightdm.conf

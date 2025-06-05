@@ -1,0 +1,61 @@
+The uname command in Linux is used to display system information. It's a simple yet very useful command, particularly for troubleshooting or gathering details about the machine you're working on. It stands for "Unix Name," and it shows different details about the system, such as its kernel name, version, machine type, and architecture.
+
+Practical Use of uname:
+
+This will give you the kernel name (e.g., Linux).
+$ uname
+
+Kernel Name:
+
+Displays the kernel name (e.g., Linux, Darwin for macOS).
+$ uname -s
+
+Node Name (Hostname):
+Shows the hostname of the machine. This is the name assigned to your system in the network.
+$ uname -n
+
+Kernel Version:
+Displays the kernel version, which tells you the version number of the Linux kernel running on the system.
+$ uname -v
+
+Machine Type (Hardware Platform):
+Shows the architecture of the machine (e.g., x86_64 for 64-bit systems, i686 for 32-bit systems).
+$ uname -m
+
+Processor Type:
+Displays the processor type. For most modern systems, it might show something like x86_64.
+$ uname -p
+
+Operating System:
+Displays the operating system name. On most systems, this will show "Linux" but could show other values on different OSes like macOS or AIX.
+$ uname -o
+
+All Information:
+This is a very commonly used option because it shows all available system information, including:
+$ uname -a
+
+Kernel name
+Hostname
+Kernel version
+Architecture
+Processor type
+Operating system
+
+Example of uname -a output:
+
+Linux myserver 5.4.0-77-generic #86-Ubuntu SMP Wed Jun 16 14:15:36 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+This means:
+
+The system is running Linux.
+The hostname is myserver.
+The kernel version is 5.4.0-77-generic.
+The architecture is x86_64 (64-bit).
+The operating system is GNU/Linux.
+
+Why Use uname?
+
+System Diagnostics: Quickly determine the kernel version or architecture of the system, which is useful when troubleshooting issues.
+Scripting: You can use uname in scripts to check the system details before performing certain tasks or configurations.
+Compatibility: Ensure your scripts or programs are running on the correct architecture or operating system.
+In short, uname helps you gather key system information quickly and is helpful for system administrators and users who need to know the system's configuration.

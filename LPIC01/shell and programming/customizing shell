@@ -1,0 +1,40 @@
+We can define var in many ways to customize our shell however the focus is on to customize our shell
+
+we can type
+
+MYVARNAME = "agn3y"		# this way we can create a var which will be only available to that particular terminal
+export MYVARNAME = "agn3y"	# this way it will be available to all the child shell of the main shell here shell means prompt in some way
+
+we can use unset command to unset the var
+
+$ unset MYVARNAME		# and it will be gone
+
+we can also make use of alias
+
+$  alias text = "ls -la | grep *.tx"			# this will list all the text file
+
+we can also use function in terminal
+
+$ function myfunc(){
+> ls -l
+> echo "This is one of the biggest function that was ever built"
+> uname -a
+> } 
+
+All this way we can define var and function in shell but once we  reboot our pc it all will be gone.
+
+To make things permanent we need to modify .bashrc file
+
+and then we can use alias as we have dine before but in bashrc which will make this var able to survive reboots and also work in different terminals
+
+and then update bashrc you may use
+
+$ source .bashrc
+$ . .bashrc
+
+or close terminal and reopen
+
+To modify or add custom script as command we can also update $PATH
+
+$ export PATH=$PATH:/home/agn3y/myscript		
+# this will add myscript folder to PATH var so every time we use our custome command system will look in the defined directory just like it does for all the other defined directories in the PATH variables

@@ -1,0 +1,28 @@
+od = Octal Dump
+It shows raw data from a file — like the binary, hexadecimal, octal, or ASCII values.
+
+$ od file.txt
+
+--------------------------------------------
+Option		What it does
+--------------------------------------------
+-c		Show characters (ASCII)
+-x		Show hexadecimal output
+-d		Show decimal output
+-b		Show binary (octal) output
+-A x		Address base (e.g. x = hex)
+--------------------------------------------
+
+Why Use od?
+
+Debugging binary files
+Seeing hidden characters
+Understanding file encoding
+
+wc - word count
+
+$ man wc
+
+nl - number lines of file
+
+$ nl file

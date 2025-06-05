@@ -1,0 +1,29 @@
+To modify group definition 
+$ groupmod 
+
+# To create group and check also 
+$ sudo groupadd -g 1122 developers
+$ cat /etc/group 		# To check wether group is created or not
+
+# To update or modify group id
+$ sudo groupmod -d 4455 developers		# modifying group id of developers group
+
+# To change name of group 
+$ sudo groupmod -n newname developers		# changing developers groups name to newname
+
+# To modify user account
+$ sudo usermod 
+
+# Change shell for user acoount
+$ sudo usermod -s /bin/bash nameofuser
+
+# Add user to particular group
+$ sudo usermod -G nameofgroup nameofuser
+$ sudo usermod -G wheel agn3y
+# One thing to remember when we use -G only it will remove user from preveous group and then add to another defined group 
+# It is like removing from one and then adding add to other or can be said inverted
+ 
+# To avoid above described issue
+$ sudo usermod -aG groupname username
+# This -a means append which will eventually append user to multiple group
+# This way we can add or remove one user to multiple groups

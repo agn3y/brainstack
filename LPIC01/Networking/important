@@ -1,0 +1,5 @@
+To make changes persistent edit this file which is located at
+
+$ sudo /etc/network/interfaces
+
+

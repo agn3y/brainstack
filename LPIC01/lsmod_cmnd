@@ -1,0 +1,28 @@
+* What is lsmod?
+
+lsmod means "list modules" — it's a command that shows which kernel modules are currently loaded into the Linux kernel.
+
+When to Use lsmod?
+
+To check if a device driver module is loaded
+To debug hardware issues
+To see what kernel features are active
+
+Example Output:
+
+$ lsmod
+Module                  Size  Used by
+i915                  123456  3
+snd_hda_intel          40960  2
+usbcore               200704  5 usbhid, xhci_hcd
+
+-------------------------------------------------------------
+Column		What it Means
+-------------------------------------------------------------
+Module		Name of the loaded kernel module
+Size		Size of the module in memory (in bytes)
+Used by		How many things (other modules) are using it
+-------------------------------------------------------------
+
+If Used by is 0, it means the module is not currently being used by another module (but may still be active).
+

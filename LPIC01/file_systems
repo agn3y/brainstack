@@ -1,0 +1,53 @@
+[*] Linux based file systems :
+
+Ext - extended file system
+
+Ext2
+- Max limit 32 TB
+- no journaling / no loging
+- USB
+
+Ext3
+- faster start up 
+- faster recovery 
+- added journaling
+
+Ext4
+- Max limit 1EB exa byte
+- journaling
+- speed enhancement
+- extension of ext3
+
+btrfs 
+- RAID backups
+- LVM
+- snapshots
+- compression
+- auto defragment
+
+Reiserfs
+- efficient for space
+- support dropped for linux
+
+Ecryptfs
+- enterprise cryptographic file system
+- while using this only the os which created files using this will be able to decrypt files as it is the one which encrypted all the file
+- more security focused
+
+XFS
+- x file system
+- best for large file systems
+ 
+
+[*] non-linux based file systems :
+
+NTFS
+- new technology file system
+- windows
+
+FAT32
+- File allocation table 32
+
+swap
+- not fs but used for virtual memory
+

@@ -1,0 +1,66 @@
+What is a Kernel?
+
+The Kernel is the brain of the operating system.
+
+It connects hardware (like CPU, RAM, USB) to software (apps, CLI, etc).
+
+It handles:
+
+Process management
+Memory management
+Device drivers
+System calls
+
+Types of Kernel Designs
+
+Monolithic     -->  Everything is built into one big kernel file
+Modular	Kernel -->  can load and unload modules (small pieces) while running
+Microkernel    -->  Very small kernel + many parts in user-space (not used in Linux)
+
+What is a Loadable Kernel Module (LKM)?
+
+LKM = a piece of code that can be added or removed while the system is running
+
+LKMs are used for:
+
+Device drivers (USB, GPU, etc)
+File systems
+Network protocols
+Security features
+
+Older Kernels vs Modern Kernels
+
+Older Linux Kernels (before ~2.0):
+
+Were mostly monolithic
+Needed full recompile to add/remove drivers
+Very hard to update or extend
+
+Modern Kernels (2.6+ and now 6.x):
+
+Use a modular kernel
+Can load/unload modules anytime
+No need to reboot to add new drivers
+
+How LKMs Work with Modular Kernels
+
+Modular Kernel = supports LKMs
+You can:
+
+modprobe <module_name>   # Load a module
+rmmod <module_name>      # Remove a module
+lsmod                    # List loaded modules
+
+Example: You plug in a USB Wi-Fi dongle → Kernel loads the Wi-Fi driver module dynamically.
+
+If not, you can load it manually:
+
+sudo modprobe rtl8192cu
+
+Where Modules Are Stored?
+
+In Linux:
+
+/lib/modules/$(uname -r)/
+
+Each folder has compiled .ko files = kernel modules

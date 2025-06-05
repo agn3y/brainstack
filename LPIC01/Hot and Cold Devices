@@ -1,0 +1,15 @@
+* Hot Plug
+
+You can plug in or remove the device while the system is running.
+
+The system detects it without rebooting.
+
+Example: USB drive, mouse, keyboard, HDMI cable.
+
+* Cold Plug
+
+The device must be plugged in before the system starts.
+
+You usually need to reboot the computer to use the device.
+
+Example: Older PCI cards, some internal components like RAM or hard drives (without hot-swap support).

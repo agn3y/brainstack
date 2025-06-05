@@ -1,0 +1,43 @@
+[#] locate :
+
+- To install locate command we can use 
+$ sudo dnf install epel-release -y
+$ sudo dnf install mlocate -y
+
+- Locate command works on database one of the reason which makes it quick.
+- It is located at /var/lib/mlocate/mlocate.db
+
+- To update this database, we can use
+$ sudo updatedb
+
+$ locate 		# to locate file or directory
+$ time locate *.py	# locate py files and also tell how much time does it took
+
+- Directories where lot of data read and write happens will not counted in bydefault such as tmp and var 
+- If we want to remove above given restriction we need to perform certain step:
+- Go to /etc and look for [" updatedb.conf" ]. In this file there are two things: 
+[1] PRUNEPATHS			# directories which are listed in this path will be ignored while updating the database
+[2] PRUNEFS				# directories will be updated when we update the database
+	
+
+[#] find :
+
+$ find / -name *.py	# does look forpy in root directory
+
+
+[#] whereis :
+- locates the binary, source, and manual pages for a command
+
+$ whereis tree
+
+
+[#] which :
+- locates the command itself
+
+$ which tree
+
+
+[#] type :
+- it displays information about type of command
+
+$ type tree

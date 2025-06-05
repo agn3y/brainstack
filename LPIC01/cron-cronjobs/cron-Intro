@@ -1,0 +1,31 @@
+- Cron is a commandline utility which schedules job/ automating tasks
+- It is a daemon with help of we can schedule tasks
+
+# Important files realted to cron is located in /etc
+
+- etc/crontab
+- etc/cron.d
+
+# To edit it with the file or edit cronjobs
+$ crontab -e
+
+# To remove crontab file
+$ crontab -r 		# we dont have to specify user 
+
+# To remove crontab file for a specific user
+$ crontab -r -u username
+
+# To list crontab for user
+$ crontan -l
+$ crontab -l -U username			# to list for a particular user
+
+
+### There are two special files which can allow or deny users from creating cronjobs ###
+1. cron.allow
+2. cron.deny
+
+- Here this file must be created by super user in etc directory
+- When we create this two files
+- To allow or deny user from accessing it we just have to edit and type username in it
+- Suppose if we have common user mentioned in both file it would get allowed to create cronjob
+- If we create allow or deny file it will overwrite current default setting so we should always create pair of this files. else, it will overwite the default settings.

@@ -1,0 +1,12 @@
+## /proc/cpuinfo – CPU Info
+
+This file contains **details about your processor**.
+
+View it with:
+
+$ cat /proc/cpuinfo
+
+Example (part of the output):  
+
+model name : Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz cpu 
+cores : 4 cpu MHz : 1800.000 

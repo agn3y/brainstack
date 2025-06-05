@@ -1,0 +1,12 @@
+## /proc/meminfo – Memory Info
+
+This file shows detailed information about RAM  
+
+$ cat /proc/meminfo
+
+Example (part of the output):
+
+MemTotal:       16329664 kB
+MemFree:         6254380 kB
+Buffers:          402632 kB
+Cached:          3759396 kB

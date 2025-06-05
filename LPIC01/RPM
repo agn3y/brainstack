@@ -1,0 +1,86 @@
+RPM - rpm packet manager
+
+now packages comes in two types :
+
+[1] Binary file
+[2] Source file
+
+[*] What is RPM?
+
+RPM is a package manager used by Red Hat and related Linux systems like CentOS, Fedora, etc.
+
+It helps install, update, remove, and manage .rpm software packages.
+
+[*] Think of it like this:
+A .rpm file is like a zip file that contains an app (like "tree", "vim", or "nginx") and some info about how it should be installed.
+
+RPM itself is like a "software installer" that reads this file and installs it.
+
+[*] What can RPM do?
+Here are the most common RPM commands:
+
+[*] Install a package
+$ sudo rpm -ivh package.rpm
+
+-i = install
+-v = verbose (show progress)
+-h = hash (progress bar)
+
+[*] Example:
+$ sudo rpm -ivh tree-1.7.0-1.el8.x86_64.rpm
+
+2. Upgrade a package
+[*] sudo rpm -Uvh package.rpm
+
+-U = upgrade (or install if not already there)
+
+3. Remove (uninstall) a package
+$ sudo rpm -e package-name
+
+[*] Not the .rpm file name — just the package name like tree.
+
+4. Check if a package is installed
+$ rpm -q package-name
+
+[*] Example:
+$ rpm -q tree
+
+5. List all installed packages
+$ rpm -qa
+
+6. Get info about a package
+$ rpm -qi package-name
+
+7. List files inside a package
+$ rpm -ql package-name
+
+[*] RPM has one big problem
+
+RPM does not install dependencies by itself.
+
+So if tree.rpm needs another package (like libfoo.rpm), RPM will just say:
+
+"Missing dependency: libfoo"
+
+That’s why we use tools like dnf or yum — they are smart and handle dependencies.
+
+[*] How it works with .rpm file
+
+You download a .rpm file from internet
+$ sudo rpm -ivh tree.rpm					//	It tries to install it directly
+
+If anything is missing (like dependencies), it shows an error.
+
+[*] When should I use RPM directly?
+
+If you're installing a simple package with no dependencies
+
+If you're in a restricted system (like air-gapped or no internet)
+
+For scripting or special automation
+
+[*] Quick Tip:
+
+Use this to test the .rpm without installing:
+$ rpm -qp --requires package.rpm		//	Shows what dependencies it needs.
+

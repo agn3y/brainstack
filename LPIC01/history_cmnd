@@ -1,0 +1,14 @@
+To list commands history
+$ history
+
+To run any command from the history via number we just have to use 
+$ !'number of command from history'
+$ !44
+
+We can also locate history file which stores history of commands (locate file first default location is ~/ )
+$ cat -n .history
+
+To clear history 
+$ history -c 
+
+and delete file seprately cause the above given command won't 

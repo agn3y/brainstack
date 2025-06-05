@@ -1,0 +1,66 @@
+modprobe is a command to:
+
+Load a driver (module) into the Linux kernel
+Remove a driver (module) from the Linux kernel
+
+Think of modules like plugins for your system. If you need support for USB or Wi-Fi, Linux uses a module (driver). modprobe turns that support on or off.
+
+To Load a Module (plug it in):
+
+$ sudo modprobe usb_storage
+
+* This tells the system : "Hey, I want USB storage support!"
+
+* To Remove a Module (unplug it):
+
+$ sudo modprobe -r usb_storage
+
+* This tells the system : "Okay, I don’t need that USB driver anymore."
+
+* How to Know if It's Loaded?
+
+$ lsmod | grep usb_storage
+
+If it shows up = it's loaded.
+
+If not = it’s not loaded.
+
+* Real-World Example
+
+You plug in a USB drive → Linux tries to auto-load usb_storage.
+
+But if it doesn't work, you can do:
+
+$ sudo modprobe usb_storage
+
+Boom — now your USB should work. To Load a Module (plug it in):
+
+$ sudo modprobe usb_storage
+
+* This tells the system:
+
+"Hey, I want USB storage support!"
+
+* To Remove a Module (unplug it):
+
+$ sudo modprobe -r usb_storage
+
+* This tells the system:
+
+"Okay, I don’t need that USB driver anymore."
+
+* How to Know if It's Loaded?
+
+$ lsmod | grep usb_storage
+
+If it shows up = it's loaded.
+
+If not = it’s not loaded.
+
+* Real-World Example
+
+You plug in a USB drive → Linux tries to auto-load usb_storage.
+
+But if it doesn't work, you can do:
+
+$ sudo modprobe usb_storage

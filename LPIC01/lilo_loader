@@ -1,0 +1,86 @@
+Bootloader is a program that helps system to load operating system
+
+LILO only works with MBR and it cannot handle UEFI
+
+What is LILO?
+
+LILO stands for Linux Loader.
+It is a boot loader used to load Linux (or other OSes) into memory when the computer starts.
+It was used before GRUB became popular.
+
+⚙️ How LILO Works (Simple Idea)
+
+When your PC powers on, BIOS/UEFI looks for a bootloader.
+LILO is installed in the MBR (Master Boot Record) or boot sector.
+LILO loads the Linux kernel from a configured partition.
+The kernel then starts the Linux OS.
+
+🗂️ LILO Configuration File
+
+The main configuration file for LILO is:
+
+/etc/lilo.conf
+
+You edit this file to tell LILO:
+
+Where your kernel is
+What partitions exist
+What OSes you want to boot
+Timeouts, labels, etc.
+
+📄 Sample /etc/lilo.conf file:
+
+=================================================================
+boot=/dev/sda          # Where LILO installs (MBR of /dev/sda)  |
+prompt                 # Show boot prompt                       |
+timeout=100            # Wait 10 seconds (100 = 10s)            |
+default=linux          # Boot this label by default             |
+                                                                |
+image=/boot/vmlinuz    # Path to Linux kernel                   |
+  label=linux          # Name shown in boot menu                |
+  root=/dev/sda1       # Root partition                         |
+  read-only            # Kernel loads root as read-only         |
+                                                                |
+other=/dev/sda2        # Boot another OS (e.g., Windows)        |
+  label=windows                                                 |
+=================================================================
+  
+🛠️ How to Configure and Use LILO
+
+Step 1: Install LILO (if not already)
+
+$ sudo apt install lilo        # Debian/Ubuntu
+$ sudo yum install lilo        # RHEL/CentOS (if available)
+
+Step 2: Edit the Config File
+
+$ sudo nano /etc/lilo.conf
+
+Make sure your config points to the correct kernel and root partition.
+
+Step 3: Apply Configuration (IMPORTANT)
+
+$ sudo lilo
+
+⚠This writes LILO to the MBR, so always check your config before running it.
+
+📌 LILO Key Info
+
+------------------------------------------------------------
+Feature				    	Info
+------------------------------------------------------------
+Config file					/etc/lilo.conf
+Must run after change		sudo lilo
+Installed to				MBR (/dev/sda) or boot sector
+OS support					Can boot Linux, Windows, etc.
+Limitation					No auto kernel detection
+Status today	    		Replaced mostly by GRUB
+------------------------------------------------------------
+
+
+📌 LILO Limitations
+
+No auto-update for new kernels.
+Must run sudo lilo every time you change /etc/lilo.conf or install a new kernel.
+Limited support for large disks and new filesystems.
+

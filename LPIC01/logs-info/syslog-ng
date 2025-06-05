@@ -1,0 +1,114 @@
+What is syslog-ng?
+
+- Syslog-ng (System Logging Next Generation) is an advanced implementation of the syslog protocol, just like rsyslog, but with a focus on flexibility, reliability, and structured logging. It is developed by a company called One Identity (previously BalaBit).
+
+- It is a syslog daemon, meaning it receives, processes, and forwards log messages from various sources on the system. It can be used instead of rsyslog — they do not usually run together.
+
+What syslog-ng Does
+- Like all syslog daemons, syslog-ng collects log messages and can:
+- Receive logs from local sources (system, apps, kernel)
+- Filter or parse the log messages
+- Store logs to local files or directories
+- Send logs to remote servers or cloud platforms
+- Forward logs to databases (MySQL, PostgreSQL, etc.)
+- Support TLS encryption for secure logging
+
+File Locations and Daemon
+
+----------------------------------------------------------------------------
+Element									Description
+----------------------------------------------------------------------------
+syslog-ng								The main daemon binary
+/etc/syslog-ng/syslog-ng.conf	    	Main configuration file
+/var/log/								Default log storage
+/dev/log								UNIX socket for app logs
+/etc/syslog-ng/conf.d/	    			Optional directory for extra configs
+----------------------------------------------------------------------------
+
+Key Concepts in syslog-ng
+- syslog-ng has a clean and block-based configuration structure using 4 parts:
+
+1. Source – where logs come from
+Example:
+
+source s_local {
+    system();
+    internal();
+};
+
+2. Filter – define what kind of messages to match
+Example:
+
+filter f_auth { facility(auth); };
+
+3. Destination – where logs are stored/sent
+Example:
+destination d_auth { file("/var/log/auth.log"); };
+
+4. Log – tie source, filter, and destination together
+Example:
+
+log {
+    source(s_local);
+    filter(f_auth);
+    destination(d_auth);
+};
+
+- This format is modular, easy to read, and helps in setting up complex logging pipelines.
+
+Advanced Features of syslog-ng
+
+---------------------------------------------------------------------------------------
+Feature						Description
+---------------------------------------------------------------------------------------
+Structured Logging			Can handle JSON, CSV, and other formats
+Reliable Delivery	    	Uses disk-based buffering for reliable log forwarding
+Secure Transport	    	TLS encryption for remote logging
+Real-Time Log Processing	Supports filtering, rewriting, and parsing during logging
+Cloud / SIEM Integration	Can send logs to Elasticsearch, Kafka, Hadoop, Splunk, etc.
+Log Enrichment	    		Adds metadata (e.g. hostname, time zone) to logs
+PatternDB					Special plugin for classifying log messages using rules
+----------------------------------------------------------------------------------------
+
+syslog-ng vs rsyslog
+
+----------------------------------------------------------------------------------------------
+Feature	    		rsyslog									syslog-ng
+----------------------------------------------------------------------------------------------
+Configuration		Rule-based								Block-based
+Performance			Very fast								Slightly slower than rsyslog
+Structured logs		Good									Excellent
+Modules/plugins		Many (including RELP, MongoDB)			Also many (PatternDB, Kafka, etc)
+TLS support	    	Yes										Yes
+Reliability			High (supports queues)					High (disk-based buffering)
+Popularity			Default on most Linux distros			Often used in SIEM setups
+-----------------------------------------------------------------------------------------------
+
+Example: Logging to a File
+
+source s_sys { system(); };
+destination d_mesg { file("/var/log/custom.log"); };
+log { source(s_sys); destination(d_mesg); };
+
+This simple setup:
+- Takes logs from system (like /dev/log)
+- Sends them to /var/log/custom.log
+
+----------------------------------------------------------------------
+Command								Purpose
+----------------------------------------------------------------------
+systemctl status syslog-ng			Check service status
+syslog-ng -s	    				Check config syntax
+syslog-ng-ctl stats					Show runtime stats
+journalctl -u syslog-ng				See logs for the syslog-ng daemon
+----------------------------------------------------------------------
+
+Summary :
+
+- syslog-ng is a feature-rich, secure, and structured syslog system, well-suited for environments that need:
+- JSON log handling
+- Reliable and guaranteed delivery
+- Flexible filtering and routing
+- Forwarding logs to modern platforms (Kafka, SIEMs, etc.)
+- It is not necessarily better than rsyslog, but it is more suitable for certain complex or enterprise use cases, especially where log enrichment and custom routing are needed.
+

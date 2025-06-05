@@ -1,0 +1,13 @@
+# seq command prints sequence
+
+$ seq -10 10
+
+# test command  check file types and compare values
+
+$ test -d /home/agn3y/Downloads/; echo $?			# test for directory
+$ test -e /home/agn3y/Downloads/; echo $?			# test for file
+
+0  =  it does exist
+1  =  it does not exist
+
+# In  linux everything is a file, even directories. But , not all files are not directories.

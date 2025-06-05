@@ -1,0 +1,23 @@
+xarg - extended arguments
+
+xargs takes output from one command and uses it as input for another command.
+
+$ touch aniridh agney ayush
+$ echo "is angry" | xargs -n1 ls
+
+Example :
+
+$ ls | xargs -n1 -I {} echo "{} is angry" 
+
+Explanation:
+
+xargs -n1 → handle one name at a time
+$ -I {} → placeholder where the name goes
+echo "{} is angry" → puts name in {}
+
+use -t flag to see what is the actual command
+
+$ ls | grep -tn1 echo "my name is"
+$ ls | xargs -I {} echo "when {} is Angry, don't go near to him"
+$ seq 10 | xargs -I {} sh -c 'echo "This is file Number {}" > file{}.txt'
+

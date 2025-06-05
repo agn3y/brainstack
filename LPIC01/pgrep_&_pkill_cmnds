@@ -1,0 +1,10 @@
+[*] pgrep :
+
+$ pgrep processname			# process name and returns PID
+$ pgrep lsmd 				# returns PID of lsmd process
+
+[*] pkill :
+
+$ pkill process_name		# to kill process by name
+$ pkill -x process_name		# confirm which process needs to be eliminated
+$ pkill -x ngi				# displays termination console for y and n ans also displays full name for process name

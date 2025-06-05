@@ -1,0 +1,29 @@
+To see data of compress data without decompressing it 
+
+What does zcat do?
+
+zcat reads and displays the content of compressed .gz files without uncompressing them on disk.
+It works just like cat, but for .gz files.
+
+You can use zcat on any .gz file:
+
+$ zcat file.txt.gz      # works (text file)
+$ zcat script.sh.gz     # works (shell script)
+$ zcat data.csv.gz      # works (CSV file)
+$ zcat file.gz 
+
+there are compression method which is called bzip2
+
+$ bzip2 "file"
+
+and to view it we can use 
+
+$ bzcat "filename.bz2"
+
+There is a newer format xzip
+
+$ xz filename
+
+and to see it
+
+$ xzcat filename 
