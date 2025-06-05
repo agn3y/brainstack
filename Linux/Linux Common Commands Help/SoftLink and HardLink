@@ -1,0 +1,34 @@
+crete a softlink using
+
+ln = Hard Link
+
+Creates a direct reference to the data on disk.
+
+Hard link:
+
+Works only within the same partition
+
+Shares the same inode
+
+If you delete the original file, the hard link still works
+
+You just lose one name, but the file data stays
+
+ln -s = Soft (Symbolic) Link
+
+Creates a shortcut or reference to the path.
+
+Soft link:
+
+Can link across partitions or drives
+
+Has a different inode
+
+If you delete the original file, the soft link breaks (shows as “broken link”)
+
+
+Note : 
+
+Hard Links works within same partitions
+
+WHen we remove source file soft link will also be gone however for hardlink it will not be gone and will have the same content what we used to had in deleted file

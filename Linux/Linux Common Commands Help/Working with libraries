@@ -1,0 +1,37 @@
+[*] Check Installed Libraries in MX Linux
+
+To list all installed libraries (shared object files - .so), run:
+
+$ dpkg --get-selections | grep -E 'lib.*'
+
+Or, if you want a more detailed list with versions:
+
+$ dpkg -l | grep -E '^ii' | grep -i lib
+
+[*] Find Unused (Not Needed) Libraries
+
+To check for unused libraries that are no longer needed, run:
+
+$ sudo apt autoremove --dry-run
+
+[*] Uninstall Unused Libraries
+
+If the previous command lists unused libraries, remove them by running:
+
+sudo apt autoremove -y
+
+[*] Manually Remove Specific Libraries
+
+If you want to remove a specific library, first check its package name:
+
+$ dpkg -l | grep libssl
+
+Then, remove it using:
+
+$ sudo apt remove --purge libssl3{#package name} -y
+
+[*] Clean Up System (Optional)
+
+After uninstalling libraries, free up space by running:
+
+$ sudo apt clean

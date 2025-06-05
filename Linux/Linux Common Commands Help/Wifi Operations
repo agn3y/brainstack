@@ -1,0 +1,51 @@
+---------------------------------------------
+NETWORKMANAGER COMMAND LINE INTERFACE (nmcli)
+---------------------------------------------
+
+* Turn on wifi
+
+nmcli radio wifi on
+
+
+* Turn off wifi
+
+nmcli radio wifi off
+
+
+* Check wifi Status
+
+nmcli radio wifi
+ 
+
+* list all available wifi
+
+nmcli dev wifi list
+
+
+* to connect one of that wifi
+
+nmcli dev wifi connect "SSID_NAME" password "YOUR_PASSWORD"
+
+
+* to check status of connected wifi
+
+nmcli connection show --active
+
+
+* Set-up auto connect
+
+nmcli connection modify "SSID_NAME" connection.autoconnect yes
+
+
+* List All Saved Wi-Fi Networks
+
+nmcli connection show
+
+
+* Show the Password for a Specific Wi-Fi Network
+
+/etc/NetworkManager/system-connections/
+
+remember to use sudo to open file whichever you pick
+
+

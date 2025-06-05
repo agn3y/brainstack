@@ -1,0 +1,9 @@
+using 
+
+1 > vim
+2 > Redirect command > and >>
+3 > echo > or >>
+
+> will overwrite everything in existing file
+
+>> will add new written thing to file

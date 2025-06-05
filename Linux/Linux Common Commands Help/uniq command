@@ -1,0 +1,54 @@
+What does uniq do?
+
+it is best practise to use uniq with sort
+
+$ sort filename | uniq 
+$ sort filename | uniq -c
+
+uniq removes duplicate lines from a file — but only if the duplicates are next to each other (very important!).
+
+Example:
+
+Suppose names.txt has:
+
+shun
+shun
+agney
+agney
+zara
+shun
+If you run:
+
+uniq names.txt
+
+Output:
+
+shun
+agney
+zara
+shun
+
+Wait… why didn’t it remove the last shun?
+
+Because uniq only removes repeated lines that are side-by-side.
+
+How to fix this?
+
+Sort first, then uniq:
+
+sort names.txt | uniq
+
+Now output:
+
+agney
+shun
+zara
+Perfect! ✔️
+
+Common uniq Options:
+
+Option		What it does								 Example
+
+-c			Counts how many times each line appears		`sort file.txt
+-d			Show only duplicate lines					`sort file.txt
+-u			Show only unique (non-repeated)				`sort file.txt

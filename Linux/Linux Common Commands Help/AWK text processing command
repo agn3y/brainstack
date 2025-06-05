@@ -1,0 +1,185 @@
+1. What is awk?
+
+awk is a command-line tool to:
+
+Read a file line by line
+
+Break each line into columns (fields) by default using space or tabs
+
+Do actions based on conditions or print the fields you want
+
+2. Basic Usage
+
+Syntax:
+
+$ awk '{ action }' filename
+
+Example:
+
+File: people.txt
+
+Shun DevOps India
+Alice Frontend USA
+Bob Backend Canada
+
+$ awk '{print $1}' people.txt
+
+Output:
+
+Alice
+Bob
+$1 = first column
+
+$2 = second column
+
+$3 = third column
+
+$0 = full line
+
+3. Print Multiple Columns
+
+$ awk '{print $1, $3}' people.txt
+
+Output:
+
+Shun India
+Alice USA
+Bob Canada
+
+4. Change Field Separator (FS)
+
+If your data uses comma (,) or colon (:) instead of space:
+
+File: data.csv
+
+Shun,DevOps,India
+Alice,Frontend,USA
+Bob,Backend,Canada
+
+$ awk -F "," '{print $2}' data.csv
+
+Output:
+
+DevOps
+Frontend
+Backend
+-F "," tells awk to split using a comma
+
+5. Conditions (if/else like logic)
+
+$ awk '$3 == "USA" {print $1}' people.txt
+
+Output:
+
+Alice
+
+Explanation:
+
+$ 3 == "USA" → check if 3rd word is USA
+
+then print $1 → print first name
+
+6. Pattern Matching (like grep inside awk)
+
+$ awk '/Backend/ {print $1}' people.txt
+
+Output:
+
+Bob
+
+It finds lines with the word "Backend" and prints the first word.
+
+7. BEGIN and END Blocks
+
+These are special blocks that run before or after processing the file.
+
+$ awk 'BEGIN { print "Names:" } { print $1 } END { print "Done!" }' people.txt
+
+Output:
+
+Names:
+Shun
+Alice
+Bob
+Done!
+
+8. Count Lines
+
+$ awk 'END { print NR }' people.txt
+
+NR = Number of Rows (lines) 🟰 Output:
+
+3
+
+9. Sum Column Values
+
+File: marks.txt
+
+Copy
+Edit
+80
+70
+90
+60
+
+$ awk '{ sum += $1 } END { print "Total:", sum }' marks.txt
+
+Output:
+
+Total: 300
+
+10. Real Advanced: Format Output
+
+$ wk '{ printf "Name: %-10s | Dept: %-10s | Country: %-10s\n", $1, $2, $3 }' people.txt
+
+Output (well-formatted table):
+
+Name: Shun       | Dept: DevOps     | Country: India     
+Name: Alice      | Dept: Frontend   | Country: USA       
+Name: Bob        | Dept: Backend    | Country: Canada   
+
+11. One-liner Replace (like sed)
+
+Replace “DevOps” with “Cloud”:
+
+$ awk '{gsub("DevOps", "Cloud"); print}' people.txt
+
+12. Save to File
+
+$ awk '{print $1}' people.txt > names.txt
+
+Summary Table:
+
+awk concept	Example	Use case
+
+Print 1st column	awk '{print $1}' file	Simple column printing
+
+Use comma as FS	awk -F "," '{print $2}' file	CSV file
+
+With condition	$3=="India" {print $1}	Filtering rows
+
+BEGIN/END blocks	BEGIN {print "Start"}	Headers/footers
+
+Count lines	END {print NR}	Number of lines
+
+Sum values	{sum+=$1} END {print sum}	Add numbers
+
+Format output	printf with %s, %d	Make output readable
+
+Pattern match	/Frontend/ {print $1}	Like grep
+
+Replace word	gsub("old","new")	Replace in file
+
+user: 
+
+to list only last column 
+
+$ ls -l | awk '{print $NF}'
+
+print only line which contain the name
+
+$ awk '/word/ {print}' filename
+
+If you meant to print the first column
+ 
+$ awk -F: '{print| $1}' filename

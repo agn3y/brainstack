@@ -1,0 +1,40 @@
+To list or see all users 
+
+$ cat /etc/passwd
+
+For bash users
+
+$ compgen -u
+
+For detailed view
+
+$ grep "username" /etc/bash
+
+To add new user in system
+
+$ sudo adduser "userS"
+
+Set password for new user
+
+$ sudo passwd "user"
+
+To confirm the user was added successfully
+
+$ id "user"
+
+To create user with Home Directory
+
+$ usermod -m "user"
+
+Remove a user (keep files):
+
+$ sudo userdel username
+
+Remove a user and their files:
+
+$ sudo userdel -r username
+
+Verify the Deletion
+
+$ id username
+

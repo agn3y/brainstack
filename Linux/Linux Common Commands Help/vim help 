@@ -1,0 +1,29 @@
+How to Edit a File Using vi
+
+Step 1: Open the File
+
+vi filename
+
+Step 2: Start Writing
+
+Press i to enter Insert Mode
+
+Now you can type like a normal editor
+
+Step 3: Save and Exit
+
+Press Esc to return to Normal Mode
+
+Then type:
+
+:wq
+
+(This means write and quit)
+
+Exit Without Saving
+
+Press Esc
+
+Then type:
+
+:q!

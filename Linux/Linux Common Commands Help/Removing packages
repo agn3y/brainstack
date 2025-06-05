@@ -1,0 +1,31 @@
+------------------------
+* UNINSTALL THE PACKAGE
+------------------------
+
+ Remove but keep configuration files:
+ 
+ $ sudo apt remove <package-name> -y
+ 
+ Completely remove including config files:
+ 
+ $ sudo apt purge <package-name> -y
+
+
+-------------------------------
+* REMOVE ORPHANED DEPENDENCIES
+-------------------------------
+
+ $ sudo apt autoremove --purge -y
+
+
+----------------------
+* CLEAR PACKAGE CACHE
+----------------------
+
+ Remove downloaded package files
+ 
+ $ sudo apt clean
+
+ Remove outdated package files
+ 
+ $ sudo apt autoclean

@@ -1,0 +1,8 @@
+Copmaring two files
+
+diff	(line by line)
+cmp 	(byte by byte)
+
+
+diff filename 
+cmp filename

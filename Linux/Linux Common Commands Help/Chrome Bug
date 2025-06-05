@@ -1,0 +1,9 @@
+CHROME-BUG
+
+Error :
+
+ERROR:process_singleton_posix.cc(358)] The profile appears to be in use by another Google Chrome process (3990) on another computer (dell-vostro-3578).  Chrome has locked the profile so that it doesn't get corrupted.  If you are sure no other processes are using this profile, you can unlock the profile and relaunch Chrome.[4357:4357:0312/113543.046155:ERROR:message_box_dialog.cc(191)] Unable to show message box: Google Chrome - The profile appears to be in use by another Google Chrome process (3990) on another computer (dell-vostro-3578).  Chrome has locked the profile so that it doesn't get corrupted.  If you are sure no other processes are using this profile, you can unlock the profile and relaunch Chrome.
+
+SOLUTION :
+
+rm -rf ~/.config/google-chrome/Singleton*

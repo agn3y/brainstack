@@ -1,0 +1,56 @@
+grep
+
+Used to search for text in files or command output.
+
+Example:
+
+grep "hello" file.txt
+
+- Finds lines that contain "hello".
+
+egrep
+
+Same as grep -E — allows advanced patterns (regex).
+
+- use you want to search two keywords
+
+$ egrep -i "keyword1|keyword2" filename (yep no space)
+
+Example:
+
+$ egrep "cat|dog" file.txt
+
+Finds lines with either "cat" or "dog".
+
+
+👉 Basic grep Options
+
+Option	Description	Example
+
+-i			Ignore case (a = A)								$ grep -i "hello" file.txt
+-v			Invert match (show lines not matching)			$ grep -v "error" log.txt
+-r or -R	Search recursively in directories				$ grep -r "main" ./code/
+-n			Show line numbers								$ grep -n "word" file.txt
+-c			Count matches per file							$ grep -c "user" file.txt
+-l			Show only file names with matches				$ grep -l "error" *.log
+-L			Show file names without the match				$ grep -L "success" *.log
+-w			Match whole word only							$ grep -w "cat" file.txt
+-x			Match whole line only							$ grep -x "hello" file.txt
+-o			Print only matched parts (not full line)		$ grep -o "abc" file.txt
+-E			Use extended regex (same as egrep)	`			$ grep -E "cat
+--color		Highlight matched text							$ grep --color "text" file.txt
+
+
+Some example of commands
+
+$ grep --version					// Prints version
+$ grep "keyword" file				// Finds the full line which is containing keyword
+$ grep -c "keyword" file			// Show number how many times searched keyword is used in there
+$ grep -i "keyword" file			// To nuetralize k sensitivity
+$ grep -n "keyword" file			// show number of line the searched keyword is in
+$ grep -v "keyword" file			// show output without including the line which has the keyword
+
+an advanced command combined with other command
+
+$ grep "agn3y" /etc/passwd | awk -F: '{print $1}'
+

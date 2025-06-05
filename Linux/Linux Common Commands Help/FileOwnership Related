@@ -1,0 +1,9 @@
+Do { ls -l } and in third colum you will see owner info
+
+To change owner of file
+
+$ sudo chown "user which is going to be the owner" filename  
+
+To change group of while
+
+$ sudo chgrp "user which is going to be the owner" filename

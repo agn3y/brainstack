@@ -1,0 +1,7 @@
+1. Try Repairing the ZIP File
+
+zip -FF OneDrive_4_2-21-2025.zip --out fixed.zip
+
+2.Then, try extracting:
+
+unzip fixed.zip

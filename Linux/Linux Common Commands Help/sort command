@@ -1,0 +1,46 @@
+What is sort?
+
+The sort command in Linux is used to arrange lines of text files in a specific order.
+
+By default, it sorts alphabetically (A to Z).
+
+Basic Example
+
+Suppose names.txt contains:
+
+shun
+agney
+zara
+rahul
+
+Now run:
+
+sort names.txt
+
+Output:
+
+agney
+rahul
+shun
+zara
+
+Sorted A → Z
+
+Common Options (with Examples)
+
+Option	Meaning	Example
+
+sort	Sort alphabetically A-Z	sort file.txt
+
+-r	Sort reverse (Z to A)					sort -r file.txt
+
+-n	Sort numbers (1, 2, 10...)				sort -n numbers.txt
+
+-k	Sort by column number					sort -k 2 file.txt
+
+-t	Use custom separator (like :)			sort -t ":" -k 2 passwd.txt
+
+-u	Remove duplicates after sorting			sort -u file.txt
+
+-f	Ignore uppercase/lowercase				sort -f file.txt
+	

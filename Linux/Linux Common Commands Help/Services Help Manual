@@ -1,0 +1,49 @@
+-------------------------------------
+[*] SYSVINIT SYSTEM LIST ALL SERVICES
+-------------------------------------
+
+$ sudo service --status-all
+
+[ + ] = Running
+[ - ] = Stopped
+[ ? ] = Unknown
+
+* List Available Services (For SysVinit)
+
+$ ls /etc/init.d/
+
+* How to Start/Stop a Service in MX Linux
+
+* Start a service
+
+$ sudo service <service-name> start
+
+* Stop a service
+
+sudo service <service-name> stop
+
+* Restart a service
+
+$ sudo service <service-name> restart
+
+* Check service status
+
+$ sudo service <service-name> status
+
+
+
+-------------------------------------
+[*] SYSTEMD SYSTEMS LIST ALL SERVICES
+-------------------------------------
+
+* Using systemctl (Recommended)
+
+$ systemctl list-units --type=service --all
+
+* To see only active services:
+
+$ systemctl list-units --type=service --state=running
+
+* To list disabled services:
+
+$ systemctl list-units --type=service --state=inactive

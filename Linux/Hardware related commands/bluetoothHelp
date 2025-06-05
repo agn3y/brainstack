@@ -1,0 +1,148 @@
+1. General Bluetooth Management
+
+Start Bluetooth service:
+$ sudo systemctl start bluetooth
+
+Enable Bluetooth to start on boot:
+$ sudo systemctl enable bluetooth
+
+Check Bluetooth status
+$ systemctl status bluetooth
+
+2. Using bluetoothctl (Interactive Command-Line Tool)
+bluetoothctl is the primary command-line tool for managing Bluetooth devices. Below are the main commands used within bluetoothctl.
+
+Start bluetoothctl:
+$ bluetoothctl
+This opens the Bluetooth control interface.
+
+Turn Bluetooth on:
+$ power on
+
+Turn Bluetooth off:
+$ power off
+
+Start scanning for devices:
+$ scan on
+
+Stop scanning for devices:
+$ scan off
+
+List devices found during scanning:
+$ devices
+
+Pairing and Connecting:
+$ pair <MAC_address>
+
+Trust a device (allow automatic connection in the future):
+$ trust <MAC_address>
+
+Connect to a device:
+$ connect <MAC_address>
+
+Disconnect from a device:
+$ disconnect <MAC_address>
+
+Remove a paired device:
+$ remove <MAC_address>
+
+Show current Bluetooth information:
+$info <MAC_address>
+
+Exit bluetoothctl:
+$ exit
+
+3. Control Audio Devices with PulseAudio
+If you're using PulseAudio, you can control Bluetooth audio devices like headphones or speakers. Below are commands for PulseAudio.
+
+List all audio output devices:
+$ pactl list sinks
+This lists all audio output devices, including Bluetooth audio sinks (speakers, headphones).
+
+Set default audio output (sink):
+
+$ pactl set-default-sink <sink_name>
+Replace <sink_name> with the name of your Bluetooth audio device from pactl list sinks.
+
+Adjust volume for Bluetooth audio sink:
+$ pactl set-sink-volume <sink_name> 50%
+Replace <sink_name> with the name of your Bluetooth device and 50% with the desired volume level.
+
+Mute/unmute Bluetooth device:
+
+$ pactl set-sink-mute <sink_name> 1   # Mute
+$ pactl set-sink-mute <sink_name> 0   # Unmute
+
+4. Using rfkill (Toggle Bluetooth Radio)
+rfkill is used to block or unblock wireless devices like Bluetooth and Wi-Fi.
+
+Check Bluetooth status:
+$ rfkill list bluetooth
+
+Block Bluetooth (turn off):
+$ sudo rfkill block bluetooth
+
+Unblock Bluetooth (turn on):
+$ sudo rfkill unblock bluetooth
+
+5. Using hcitool (Bluetooth Device Interaction)
+hcitool is an older tool, but still useful for some Bluetooth tasks like scanning and interacting with Bluetooth devices.
+
+$ sudo hcitool scan
+This command will list devices nearby and their MAC addresses.
+
+Check Bluetooth device information
+$ sudo hcitool info <MAC_address>
+
+Turn Bluetooth on 
+$ sudo hciconfig hci0 up
+
+Turn Bluetooth off:
+$ sudo hciconfig hci0 down
+
+Show Bluetooth device status:
+$ sudo hciconfig
+
+6. Using bluetoothd (Bluetooth Daemon)
+bluetoothd is the daemon responsible for Bluetooth support. You can control it through the following commands.
+
+Start Bluetooth daemon:
+$ sudo bluetoothd
+
+Restart the Bluetooth daemon (useful when there are connection issues):
+$ sudo systemctl restart bluetooth
+
+7. Check Bluetooth Logs
+Bluetooth logs can be useful for troubleshooting.
+Check dmesg logs for Bluetooth-related entries:
+$ dmesg | grep -i bluetooth
+
+Check system journal for Bluetooth logs:
+$ journalctl -u bluetooth
+
+8. Using bluez Tools
+BlueZ is the official Linux Bluetooth protocol stack. It provides additional tools for Bluetooth management.
+List Bluetooth devices using BlueZ:
+$ bluetoothctl devices
+
+Get detailed information about a Bluetooth device:
+$ bluetoothctl show
+
+9. Advanced Commands for Bluetooth Profiles (A2DP, HSP, etc.)
+If you're using Bluetooth audio devices (like headphones or speakers), you might need to switch profiles.
+
+Switch to A2DP (high-quality audio):
+$ pactl set-card-profile <card_name> a2dp_sink
+
+Switch to HSP (headset profile):
+$ pactl set-card-profile <card_name> headset_head_unit
+
+
+Summary of Commands
+
+bluetoothctl: Pair, connect, and manage Bluetooth devices.
+pactl list sinks: List audio devices, including Bluetooth speakers/headphones.
+rfkill: Block/unblock Bluetooth radio.
+hcitool: Scan, check status, and interact with Bluetooth devices.
+hciconfig: Turn Bluetooth on/off and check device status.
+dmesg: Check Bluetooth-related logs.

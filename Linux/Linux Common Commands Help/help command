@@ -1,0 +1,4 @@
+help command gives description about the command
+
+$ ls --help
+$ pwd --help

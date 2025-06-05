@@ -1,0 +1,43 @@
+Permission Table: 
+
+--------------------------------------------------------
+  Number  |   	    Permission Type			|  Symbol  |
+--------------------------------------------------------
+    0     |	    No Permission           	|    —     |
+    1     |	    Execute                 	|    –x    |
+    2     |	    Write                   	|    -w-   |
+    3     |	    Execute + Write         	|    -wx   |
+    4     |	    Read                   	    |    r–    |
+    5     |	    Read + Execute         	    |    r-x   |
+    6     |	    Read + Write             	|    rw-   |
+    7     |	    Read + Write + Execute   	|    rwx   |
+--------------------------------------------------------
+
+Expressing Context (For better understanding) :
+
+dr-xr-xr-- => d | r-x | r-x | r--
+
+to add/remove any permission from group 
+
+$sudo chmod g(+w/-w) "file/directory name"
+
+to apply process on everyone we can use
+
+$sudo chmod a(+w/-w) "file/directory name"
+
+Example:
+
+$chmod ugo+e "file name"
+
+
+Note: 
+
+Beacuse we can do operation on or in directory such as navigating thats why there is execute permission there
+
+=========================
+Permission using Numerics
+=========================
+
+we can do same this which we used in example using numerics
+
+$chmod 444 filename

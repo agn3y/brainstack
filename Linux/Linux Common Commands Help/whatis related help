@@ -1,0 +1,3 @@
+The whatis command in Linux is used to display a short description of a command, function, or file.
+
+$ whatis cd

@@ -1,0 +1,5 @@
+man - manual command
+
+gives detailed information about command
+
+$ man ls

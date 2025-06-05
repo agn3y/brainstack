@@ -1,0 +1,64 @@
+Common Audio-Related Commands Available by Default:
+
+1. aplay
+Purpose: Used for playing .wav files and testing playback devices.
+
+$ aplay /path/to/soundfile.wav
+
+This command is part of the ALSA (Advanced Linux Sound Architecture) package and allows you to play sound files.
+
+2. alsamixer
+Purpose: A command-line tool for adjusting volume levels and managing audio channels.
+
+$ alsamixer
+Once open, use the arrow keys to adjust the volume, and M to mute or unmute channels.
+
+3. amixer
+Purpose: Command-line interface for controlling audio settings directly (ALSA).
+
+$ amixer set Master 50%
+This sets the master volume to 50%. You can also mute and unmute audio channels using:
+
+$ amixer set Master mute
+$ amixer set Master unmute
+
+4. speaker-test
+Purpose: Test sound output on your system by generating noise through the audio channels.
+
+$ speaker-test -t wav
+This command generates a test sound, helping you verify if the audio output works.
+
+5. pactl
+Purpose: Control PulseAudio sound system directly (if using PulseAudio).
+
+$ sudo dnf install pulseaudio-utils
+$ pactl list sinks
+
+This will list all the available audio output devices (sinks). You can also set volumes, mute, and unmute sinks.
+
+$ pactl set-sink-volume <sink_name> 50%
+
+6. lsmod
+Purpose: List loaded kernel modules, useful to see if audio-related modules (like snd_hda_intel) are loaded.
+
+$ lsmod | grep snd
+This will list sound-related modules, such as the snd_hda_intel driver.
+
+7. dmesg
+Purpose: Show kernel and system logs, which can help troubleshoot issues related to audio hardware.
+
+$ dmesg | grep -i audio
+This shows the kernel logs related to audio devices and drivers, helping identify hardware or driver issues.
+
+8. lspci
+Purpose: List all PCI devices, useful for identifying your audio hardware.
+
+
+4 lspci | grep -i audio
+This command will show detailed information about your audio hardware, such as the sound card or integrated audio chipset.
+
+9. pacmd
+Purpose: PulseAudio command-line interface for managing sound.
+
+$ pacmd list-sinks
+This lists all the audio output devices that PulseAudio can use.

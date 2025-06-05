@@ -1,0 +1,96 @@
+What is cut?
+
+The cut command is used to cut (select) parts of text from each line of a file or output.
+
+You can use it to:
+
+Get specific columns (fields)
+
+Get specific characters
+
+✂️ Basic Syntax
+
+cut OPTION... [FILE]
+
+You can use:
+
+-c → to cut by character
+
+-f → to cut by field (column)
+
+-d → to set the delimiter (default is TAB)
+
+Example 1: Cut by character (-c)
+
+Let's say you have this file names.txt:
+
+css
+Copy
+Edit
+john
+jake
+mark
+
+Now run:
+
+$ cut -c 1 names.txt
+
+It will show:
+
+j
+j
+m
+
+It prints only the 1st character of each line.
+
+📊 Example 2: Cut by field (-f) with delimiter (-d)
+
+Let’s say you have a file people.txt:
+
+Copy
+Edit
+john,25,male
+jake,30,male
+sara,28,female
+Now run:
+
+$ cut -d ',' -f 1 people.txt
+
+It will show:
+
+nginx
+Copy
+Edit
+john
+jake
+sara
+
+It prints 1st field (name), split by , (comma).
+
+If you want name and age, use:
+
+cut -d ',' -f 1,2 people.txt
+
+Output:
+
+john,25
+jake,30
+sara,28
+
+Common Options
+
+Option	Use
+
+-c	Cut by character position
+-d	Set field delimiter (like ,)
+-f	Choose which field to show
+
+Simple Tip:
+
+Use -c when working with fixed width (same number of characters).
+
+Use -d and -f when working with CSV or column data.
+
+list particular column of file
+
+$ cut -d: -f 4 /etc/passwd

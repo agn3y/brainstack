@@ -1,0 +1,22 @@
+cat, head, tail, more and less
+
+cat - easy
+
+$ cat file.txt
+
+head - easy
+
+$ head file.txt /// $ head -2 filename (only displays first two lines)
+
+tail 
+
+$ tail file.txt /// $ tail -2 filename (only displays last two lines)
+
+we can also make use of more and less
+
+more displays info in size of one page
+
+  
+
+
+

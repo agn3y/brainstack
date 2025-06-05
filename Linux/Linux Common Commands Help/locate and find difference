@@ -1,0 +1,13 @@
+how to use find
+
+$ find / -name Hulk.txt
+
+how to use locate 
+
+$ locate Hulk.txt
+
+Data reported by Locate as not as fresh as find beacuse linux system creates snapshot of system and locate use that to quickly report back. if there are any changes done it will be reported after the next snapshot is created, thats why. Inshort, Find is more reliable
+
+to update the database of snapshot we use
+
+$updatedb

@@ -1,0 +1,7 @@
+* use this command to open pdf
+
+  xdg-open "name.pdf"
+
+or may be this for (xfce)
+
+  exo-open "name-open"

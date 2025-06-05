@@ -1,0 +1,38 @@
+What is tee command?
+
+tee is a Linux command used to:
+
+read from standard input (keyboard or output of a command) and write the input to both:
+
+terminal (screen)
+
+a file 
+
+Basic Syntax:
+
+command | tee filename
+
+Example 1 – Save output to file and see it on screen:
+
+echo "Hello Shun" | tee output.txt
+
+Show Hello Shun on the screen
+
+Save Hello Shun inside a file called output.txt
+
+Example 2 – Use with a real command:
+
+ls -l | tee list.txt
+
+Show the list of files (ls -l) on screen
+
+Save the same list into list.txt
+
+Append instead of overwrite:
+
+echo "Another line" | tee -a output.txt
+
+-a means append (add to the file)
+
+Without -a, it will overwrite the file
+

@@ -1,0 +1,43 @@
+In Linux, file permissions (read, write, execute) are typically managed using user, group, and others permissions (rwx). However, these standard permissions are not flexible enough when you need to give specific users or groups custom access rights.
+
+ACL (Access Control List) solves this limitation by allowing more granular permissions.
+
+setfcal and getfacl
+
+* To add permission for a user
+
+-m for modify
+
+$ setfcal -m u:user:rwx /path/to/file
+
+example : 
+
+sudo setfacl -m u:user:rwx testfolder
+
+* To add permission to group
+
+$ setfacl -m g:group:rwx /path/to/file
+
+* To allow recursively (to all files which are in the folder)
+
+$ setfacl -Rm "entry" /path/to/file
+
+* To remove a specific user 
+
+$ setfacl -x u:user /path/to/file
+
+* To remove all entries
+
+$ setfacl -b /path/to/file
+
+
+* To Displays the Access Control List (ACL) of a file or directory.
+
+$ getfcal file/folder
+
+
+
+Note : 
+
+- As you assign the ACL permission to a file/directory it adds {+} sign at the end of the permission 
+- setting w permission with ACL does not allow you to remove a file

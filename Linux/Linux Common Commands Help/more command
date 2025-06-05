@@ -1,0 +1,11 @@
+we can use this command with | (pipe)
+
+$ ls -ltr | more
+
+more will display one page result
+
+Tails command
+
+$ ls -ltr | tail -1
+
+it will only list last line

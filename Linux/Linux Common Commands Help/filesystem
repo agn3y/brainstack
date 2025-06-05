@@ -1,0 +1,227 @@
+Linux File Hierarchy (Filesystem Structure)
+The Linux filesystem is organized as a single tree with the root directory / at the top. Everything — files, directories, devices, processes — exists under this root.
+
+🔰 1. / — Root Directory
+Top-most directory of the Linux system.
+
+Every single file and directory starts from here.
+
+You can think of it as the "main hard disk folder".
+
+📁 2. /bin — Essential User Binaries
+Stores basic commands needed for system operation.
+
+Available to all users, even in single-user mode.
+
+Examples:
+
+ls – list files
+
+cp – copy files
+
+mv – move/rename files
+
+rm – delete files
+
+cat, echo, grep
+
+✅ If /bin is missing, the system won’t even boot properly.
+
+📁 3. /boot — Boot Loader Files
+Contains boot-related files:
+
+Linux kernel (vmlinuz)
+
+Initial RAM disk (initrd)
+
+GRUB bootloader files
+
+Without this, the system can’t start.
+
+🧠 Think of it like the BIOS helper folder for Linux.
+
+📁 4. /dev — Device Files
+Contains special files for all hardware devices.
+
+Devices are treated as files in Linux.
+
+Example: /dev/sda – first hard disk
+
+/dev/tty – terminal
+
+/dev/null – data sink
+
+⛓️ Linux uses the concept of "everything is a file" here.
+
+📁 5. /etc — Configuration Files
+Stores all system-wide config files.
+
+Example:
+
+/etc/passwd – user accounts
+
+/etc/fstab – disk mount settings
+
+/etc/hostname – system name
+
+/etc/network/ – network settings
+
+⚠️ Do not delete anything here — very important for system working.
+
+📁 6. /home — User Home Directories
+Stores personal files for each user.
+
+Like C:\Users\ in Windows.
+
+/home/shun → your personal folder
+
+Each user has:
+
+Desktop, Downloads, Documents, etc.
+
+📁 7. /lib and /lib64 — Libraries
+Contains shared libraries needed by /bin and /sbin programs.
+
+Like .dll files in Windows.
+
+/lib64 is for 64-bit systems.
+
+Example:
+
+/lib/libc.so.6 – C standard library.
+
+📁 8. /media — Removable Media
+Temporary mount point for external devices:
+
+USB drives
+
+DVDs
+
+Memory cards
+
+When you plug in a USB, it may appear as:
+
+/media/shun/USB_DRIVE_NAME
+
+📁 9. /mnt — Temporary Mount Directory
+Used by sysadmins to manually mount filesystems.
+
+Example:
+
+bash
+Copy
+Edit
+mount /dev/sdb1 /mnt
+Use it when you want to access extra drives manually.
+
+📁 10. /opt — Optional Software Packages
+Stores optional or third-party apps.
+
+Example: commercial software or games you install manually.
+
+Each package often gets its own directory:
+
+/opt/google/ or /opt/skype/
+
+📁 11. /proc — Process Info (Virtual Filesystem)
+Special directory — contains info about running processes.
+
+Example:
+
+/proc/1 – info about process ID 1 (usually systemd)
+
+/proc/cpuinfo – info about your CPU
+
+/proc/meminfo – memory usage
+
+🚫 Not a real directory — it’s created in memory by the kernel.
+
+📁 12. /root — Root User’s Home
+Home directory for the root user (admin).
+
+Not to be confused with /.
+
+Example: root's personal files → /root/.bashrc
+
+📁 13. /run — Runtime Information
+Stores data about system since last boot.
+
+Used by programs and system services to keep state info.
+
+Example: network status, process IDs.
+
+🧠 It replaces older folders like /var/run.
+
+📁 14. /sbin — System Binaries
+Like /bin, but for admin-level (root-only) commands.
+
+Examples:
+
+fsck – check filesystems
+
+reboot, shutdown
+
+ifconfig, iptables
+
+🛠️ Usually used during system maintenance.
+
+📁 15. /srv — Service Data
+"srv" = service
+
+Used by server programs like:
+
+Web server (e.g., /srv/www)
+
+FTP server
+
+Stores the data that services serve.
+
+📁 16. /sys — Kernel and Device Info (Virtual)
+Like /proc, this is a virtual filesystem.
+
+Contains data about hardware and kernel settings.
+
+Example:
+
+/sys/class/net/ – info about network interfaces
+
+Mostly used by the system and hardware tools.
+
+📁 17. /tmp — Temporary Files
+For temporary files created by programs.
+
+Auto-deleted after reboot or time period.
+
+Examples:
+
+Temporary download files
+
+App installation temps
+
+🚫 Don’t store important data here!
+
+📁 18. /usr — User Programs and Data
+Largest folder usually.
+
+Contains programs, docs, and data for users (not admin).
+
+Subdirectories:
+
+/usr/bin – most user commands
+
+/usr/lib – app libraries
+
+/usr/share – icons, help files, man pages
+
+🧠 Think of it like a read-only "Program Files" in Windows.
+
+📁 19. /var — Variable Files
+Contains files that change often:
+
+Logs → /var/log/
+
+Print jobs → /var/spool/
+
+Mail → /var/mail/
+
+Caches → /var/cache
