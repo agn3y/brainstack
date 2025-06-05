@@ -1,0 +1,37 @@
+----------------------------------
+* AWS Identity & Access Management
+----------------------------------
+
+* Service that helps you securely control access to the AWS resources
+* Allow you to manager users,roles and permission to define who can access what within AWS Enviorment
+* Main user is root user / default user
+* It does not charge you anything
+
+
+* Ways to access AWS 
+
+* Through console
+* Through AWS Terminal ( cloudshell ) 
+* AWS CLI ( using .pem )
+* AWS SDKs and API
+
+
+* AWS CLI ( In my MXLinux )
+
+$ sudo apt install awscli
+$ aws --version
+
+
+* AWS CLI configuration
+
+
+------------------------
+* AWS IAM Best Practices
+------------------------
+
+* Avoid using root account except of account setups
+* Add user to a group and assign permission to group
+* Use password policy or MFA
+* Use Access key for CLI/SDK
+* Never share Access keys or password
+* Audit the permission using IAM credential report

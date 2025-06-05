@@ -1,0 +1,245 @@
+--------------
+* Hypervisors
+--------------
+
+A hypervisor is a software or firmware that creates and manages virtual machines (VMs) on a physical computer (host machine). It allows multiple operating systems (OS) to run on the same hardware by abstracting and distributing resources (CPU, memory, storage, and network) among VMs.
+
+
+---------------------------------
+1. Type 1 Hypervisor (Bare Metal)
+---------------------------------
+
+* Runs directly on the host hardware, without requiring an operating system.
+* Provides better performance and security because there is no middle OS layer.
+* Used in data centers, enterprise environments, and cloud computing.
+
+Examples of Type 1 Hypervisors:
+
+* VMware ESXi
+* Microsoft Hyper-V
+* Xen
+* KVM (Kernel-based Virtual Machine)
+
+
+-----------------------------
+2. Type 2 Hypervisor (Hosted)
+-----------------------------
+
+* Virtual CPU (vCPU): A software-based CPU assigned to each VM.
+* Virtual Memory: RAM allocated to a VM, managed by the hypervisor.
+* Virtual Disk: A virtualized hard disk for each VM.
+* Virtual Network Interface (vNIC): Network adapter for VM connectivity.
+* Guest OS: The OS installed inside a VM.
+
+
+---------------------------
+Hypervisor-Related Concepts
+---------------------------
+
+1. Full Virtualization vs. Paravirtualization
+
+Full Virtualization: Guest OS runs unmodified. The hypervisor fully emulates hardware. (Example: VMware ESXi, VirtualBox)
+
+Paravirtualization: Guest OS is modified to work efficiently with the hypervisor. (Example: Xen, KVM)
+
+2. Hardware-Assisted Virtualization
+
+Uses CPU extensions like Intel VT-x and AMD-V to improve VM performance.
+
+3. Nested Virtualization
+
+Running a hypervisor inside another hypervisor (VM inside VM). Useful for testing.
+
+
+-----------------
+* Cloud Computing
+-----------------
+
+* Cloud computing is the delivery of computing services over the internet. Instead of owning and maintaining physical servers, storage, and software, you can rent these resources from cloud providers on a pay-as-you-go basis.
+
+
+--------------------------
+* Types of cloud computing
+--------------------------
+
+* IAAS
+
+* Infrastructure as a service
+* Provides virtual servers, storage, networking.
+* Users manage OS and applications.
+* Best for scalable infrastructure.
+* its like getting an empty computer or to make it more easier it's like getting an empty room to start your ice cream shop
+
+
+* PAAS
+
+* Platform as a Service
+* Provides runtime environment, databases, and tools.
+* Developers focus on coding, not infrastructure.
+* Best for application development.
+* to relate it with previous example of room it is like getting a room equipped with fridge and coolers now all you have to is to store your ice cream in fridge and sell it whatever you want.
+
+
+* SAAS
+
+* Software as a Service
+* Ready-to-use software accessible via a web browser.
+* No need to install or maintain software.
+* Best for end-users.
+* To relate with preveous example think of a wending machine. Insert your coin in machine get you coca-cola and fuck off.
+
+
+--------------------------------------
+* Different Types of Cloud Deployments
+--------------------------------------
+
+1. Public Cloud
+
+* Owned and operated by third-party providers like AWS, Azure, and Google Cloud.
+* Resources (servers, storage, networking) are shared among multiple customers.
+* Accessible over the internet with a pay-as-you-go model.
+* Think it like a public transport such as a train
+
+✅ Pros:
+
+* Cost-effective (no hardware to buy).
+* High scalability and flexibility.
+* Managed security and maintenance.
+
+❌ Cons:
+
+* Less control over infrastructure.
+* Security concerns due to shared resources.
+
+Example:
+
+* Amazon Web Services (AWS) offers cloud computing power, databases, and storage to businesses worldwide.
+
+2. Private Cloud
+
+* Dedicated infrastructure for a single organization.
+* Hosted on-premises or in a private data center.
+* More control, security, and customization.
+* Think it like renting a car you can have it but it's not yours
+
+✅ Pros:
+
+* High security (not shared with others).
+* Customizable hardware and software.
+* Better compliance for industries like banking & healthcare.
+
+❌ Cons:
+
+* Expensive (requires infrastructure setup).
+* Requires in-house IT team for maintenance.
+
+Example:
+
+* Banks & Government Agencies use private clouds for data security and compliance.
+
+3. Hybrid Cloud
+
+* A mix of public and private clouds for flexibility.
+* Critical data stays in a private cloud, while scalable workloads run in a public cloud.
+* Commonly used for backup, disaster recovery, and burst computing.
+* Think like when you go home you use public transport ( Surat ->  Bharuch ) and from there you take private vehicle ( Jhagadia Depot -> Limodara )
+
+✅ Pros:
+
+* Balance of security (private) and scalability (public).
+* Cost-efficient for variable workloads.
+* Supports data residency compliance.
+
+❌ Cons:
+
+* Complex management (requires cloud integration tools).
+* Higher network latency due to hybrid connectivity.
+
+Example:
+
+* A hospital stores patient records in a private cloud but runs its appointment scheduling system on AWS.
+
+4. Multi-Cloud
+
+* Uses multiple cloud providers (AWS + Azure + Google Cloud).
+* Avoids vendor lock-in and improves reliability.
+
+✅ Pros:
+
+* No dependency on one cloud provider.
+* Improved uptime & reliability.
+* Best for global scalability.
+
+❌ Cons:
+
+* Difficult to manage multiple cloud environments.
+* Higher costs for cross-cloud data transfers.
+
+Example:
+
+* A company uses AWS for AI workloads, Azure for enterprise applications, and Google Cloud for data analytics.
+
+5. Community Cloud
+
+*A shared private cloud for a specific group (industry, organization, or government).
+* Controlled by multiple organizations with similar security & compliance needs.
+
+✅ Pros:
+
+* Shared infrastructure cost among organizations.
+* Meets industry-specific regulations.
+* More control & security than a public cloud.
+
+❌ Cons:
+
+* Limited scalability compared to public clouds.
+* Shared responsibility can cause governance issues.
+
+Example:
+
+* Universities & research institutions using a community cloud to share computing resources for scientific studies.
+
+
+-------------------------------------
+* Features offered by cloud providers
+-------------------------------------
+
+01. Compute Services
+02. Storage Services
+03. Networking Services 
+04. Database Services
+05. Security & Identity Services 
+06. AI & Machine Learning Services
+07. DevOps & CI/CD Services
+08. Internet of Things (IoT) Services
+09. Big Data & Analytics Services
+10. Hybrid & Multi-Cloud Services
+
+
+---------------------
+* Amazon Web Services
+---------------------
+
+* A company providing cloud services 
+* First cloud platform
+* ec2 and s3 bucket they were providing in the begining now there are over 200 services they are providing
+
+
+--------------------
+Question : Why AWS ?
+--------------------
+
+* Scalability
+* Global Reach
+* Reliability
+* Security
+
+
+------------------
+* Popular services
+------------------
+
+* EC2 for compute capacity
+* S3 for Highly reliable storage
+* RDS for managed Database
+* Cloudfront for content delivery

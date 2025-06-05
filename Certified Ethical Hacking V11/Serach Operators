@@ -1,0 +1,59 @@
+1. site:
+Limits results to a specific website
+Example:
+site:bbc.com climate change
+
+2. filetype: or ext:
+Search for a specific file type
+Example:
+python tutorial filetype:pdf
+(or ext:pdf)
+
+3. intitle:
+Find pages with a specific word in the title
+Example:
+intitle:"linux basics"
+
+4. inurl:
+Find pages with a specific word in the URL
+Example:
+inurl:login
+
+5. intext:
+Find pages with certain words in the content/text
+Example:
+intext:"docker installation"
+
+6. cache:
+View the cached version of a webpage
+Example:
+cache:cnn.com
+
+7. - (Minus sign)
+Exclude specific words
+Example:
+apple -fruit
+(Searches for Apple but not the fruit)
+
+8. OR (Must be in CAPS)
+Search for either one term or another
+Example:
+java OR python
+
+9. "" (Quotes)
+Search for exact phrases
+Example:
+"best linux command cheat sheet"
+
+10. * (Wildcard)
+Placeholder for any word
+Example:
+"best * for web development"
+
+Extra Tips:
+
+Operator			Use Case							Example
+related:			Find sites similar to another		related:youtube.com
+define:				Dictionary definition				define:API
+before: / after:	Time-based search					ai research after:2023
+

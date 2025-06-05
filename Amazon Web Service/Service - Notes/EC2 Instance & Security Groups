@@ -1,0 +1,46 @@
+-----------------------------
+* Elastic cloud compute (EC2)
+-----------------------------
+
+ Basically you get a machine and you get to choose what you want like os, ram, cpu , space etc.
+ we call it instance.
+ we can enable ssh and http / https traffic on it.
+ also, we can define multiple layer of rules to make it behave certain way or to make it more secure.
+ 
+
+-----------------
+* Security Groups
+-----------------
+
+ Network firewall rules that control inbound and outbound traffic for instances
+
+
+--------------
+* Common Ports
+--------------
+
+------------------------------------------------------------------
+ Http        |  80     |  Unencrypted web traffic
+------------------------------------------------------------------
+ Https       |  443    |  Encrypted web traffic ( SSL/TSL )
+ -----------------------------------------------------------------
+ SSH         |  22     |  Secure remote access to servers
+ -----------------------------------------------------------------
+ FTP         |  21     |  File Transfer Protocol (unsecured)
+ -----------------------------------------------------------------
+ SFTP        |  22     |  Secure File transfer protocol
+ -----------------------------------------------------------------
+ SMTP        |  25     |  Simple Mail Transfer Protocol ( email )
+ -----------------------------------------------------------------
+ RDP         |  3389   |  Remote desktop control
+ -----------------------------------------------------------------
+ MYsQL       |  3306   |  MYSQL Database connection
+ -----------------------------------------------------------------
+ PostGreSQL  |  5432   |  PostGRESQL Database connection
+ -----------------------------------------------------------------
+ DNS		 |  53     |  Domain Name System
+ -----------------------------------------------------------------
+ 
+ 
+ 
+ 

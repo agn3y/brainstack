@@ -1,0 +1,30 @@
+# Install Required Packages
+$ sudo dnf install -y libappindicator-gtk3 cups curl
+
+# Download Discord .tar.gz File
+$ curl -o discord.tar.gz -L "https://discord.com/api/download?platform=linux&format=tar.gz"
+
+# Extract the File
+$ tar -xvzf discord.tar.gz
+
+# Move to /opt Directory
+$ sudo mv Discord /opt/discord
+ 
+# Create a Shortcut/SymLink
+$ sudo ln -sf /opt/discord/Discord /usr/bin/discord
+ 
+# Add Discord to Application Menu
+$ sudo nano /usr/share/applications/discord.desktop
+
+# Paste this inside:
+
+[Desktop Entry]
+Name=Discord
+Comment=Chat for Communities and Friends
+Exec=/opt/discord/Discord
+Icon=/opt/discord/discord.png
+Type=Application
+Categories=Network;InstantMessaging;
+
+# Run Discord
+$ discord

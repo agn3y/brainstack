@@ -1,0 +1,118 @@
+### **AWS Learning Plan (1.5 Months)**
+This plan will cover **AWS basics and intermediate concepts** in **6 weeks** with a structured approach.
+
+## **🗓 Week 1: AWS Fundamentals**
+✅ **Day 1-2:** Introduction to AWS  
+- What is AWS?  
+- AWS Global Infrastructure (Regions, Availability Zones, Edge Locations)  
+- AWS Management Console & CLI  
+- Free Tier Setup  
+
+✅ **Day 3-4:** IAM (Identity & Access Management)  
+- Users, Groups, Roles, Policies  
+- AWS Security Best Practices  
+
+✅ **Day 5-6:** Compute Services  
+- **EC2 (Elastic Compute Cloud)**: Instances, AMIs, Security Groups  
+- **Auto Scaling & Load Balancing**  
+
+✅ **Day 7:** Hands-on Labs  
+- Launch EC2 instances, set up SSH, and create IAM roles  
+
+---
+
+## **🗓 Week 2: Storage & Databases**
+✅ **Day 8-9:** S3 (Simple Storage Service)  
+- S3 Buckets, Storage Classes, Lifecycle Policies  
+- Security & Access Control (Bucket Policies, ACLs)  
+
+✅ **Day 10-11:** Databases  
+- **RDS (Relational Database Service)**: MySQL, PostgreSQL, Aurora  
+- **DynamoDB**: NoSQL Database  
+
+✅ **Day 12-13:** Backup & Disaster Recovery  
+- AWS Backup, Snapshots, Cross-Region Replication  
+
+✅ **Day 14:** Hands-on Labs  
+- Store & retrieve data in S3  
+- Launch RDS & DynamoDB instances  
+
+---
+
+## **🗓 Week 3: Networking & Security**
+✅ **Day 15-16:** VPC (Virtual Private Cloud)  
+- Subnets, Route Tables, Internet Gateway, NAT, VPN  
+
+✅ **Day 17-18:** AWS Networking Services  
+- CloudFront, Elastic Load Balancer (ELB), Route 53 (DNS)  
+
+✅ **Day 19-20:** Security Best Practices  
+- AWS WAF (Firewall), Shield, Inspector, Security Hub  
+
+✅ **Day 21:** Hands-on Labs  
+- Set up a VPC with subnets and internet access  
+- Configure an Application Load Balancer (ALB)  
+
+---
+
+## **🗓 Week 4: Serverless & Containers**
+✅ **Day 22-23:** AWS Lambda (Serverless)  
+- Deploying serverless functions  
+- API Gateway Integration  
+
+✅ **Day 24-25:** Containers & Orchestration  
+- **ECS (Elastic Container Service)**  
+- **EKS (Elastic Kubernetes Service)**  
+
+✅ **Day 26-27:** Messaging & Event-Driven Architecture  
+- **SNS (Simple Notification Service)**  
+- **SQS (Simple Queue Service)**  
+
+✅ **Day 28:** Hands-on Labs  
+- Deploy a serverless function with API Gateway  
+- Run a containerized app in ECS  
+
+---
+
+## **🗓 Week 5: Monitoring & Automation**
+✅ **Day 29-30:** Cloud Monitoring & Logging  
+- **CloudWatch** (Metrics, Logs, Alarms)  
+- **AWS X-Ray** (Tracing)  
+
+✅ **Day 31-32:** Infrastructure as Code (IaC)  
+- **AWS CloudFormation**  
+- **Terraform Basics** (Optional)  
+
+✅ **Day 33-34:** AWS Cost Optimization  
+- AWS Budgets & Cost Explorer  
+
+✅ **Day 35:** Hands-on Labs  
+- Set up CloudWatch alarms and logging  
+- Deploy infrastructure using CloudFormation  
+
+---
+
+## **🗓 Week 6: DevOps on AWS & Final Revision**
+✅ **Day 36-37:** CI/CD in AWS  
+- **AWS CodePipeline, CodeBuild, CodeDeploy**  
+
+✅ **Day 38-39:** Advanced Security & Compliance  
+- IAM Best Practices  
+- AWS Audit & Compliance Tools  
+
+✅ **Day 40-41:** Final Hands-on Labs  
+- Build a complete **AWS project** using multiple services  
+
+✅ **Day 42:** Final Review & Mock Tests  
+- Take AWS Certification practice tests  
+- Review weak areas  
+
+---
+
+## **⚡ What You Need**
+- AWS Free Tier Account  
+- Hands-on practice every day  
+- AWS Documentation & Tutorials  
+
+Would you like **extra resources or certification suggestions**? 🚀
+
