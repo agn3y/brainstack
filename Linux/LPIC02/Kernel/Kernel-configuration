@@ -1,0 +1,18 @@
+/proc/sys/kernel this location has live setting stored.
+
+/etc/sysctl.conf - how the Linux kernel behaves, such as how it manages memory, networking, or security.
+
+between sysctl.conf and sysctl.d the conf file has precedence.
+
+THERE IS COMMAND WHICH IS ALSO VERY USEFULL AND ONLY BE USED AS ROOT.
+Use $ man sysctl to get more information
+
+IN MODERN LINUX SYSTEM COMMAND WE WILL HAVE TO [ udevd DAEMON ] command.
+udev handles of loading and unloading module.
+
+we can use [ lsusb ] and [ lspci ] also [ lsdev ]
+lsdev - display information about installed hardware
+
+To administer we have two commands
+[1] udevmonitor - old depricated command
+[2] udevadm monitor - yes the way it is written is the correct way.

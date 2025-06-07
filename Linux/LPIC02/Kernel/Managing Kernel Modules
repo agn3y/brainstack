@@ -1,0 +1,17 @@
+Use [ $ depmod ] command to find information about current kernel
+We can also use [ $ uname -r ]
+We can also see loaded modules using [ $ lsmod ]
+We can target module to remove [ $ rmmod ]
+We can use command to insert modules using [ $ insmod ]. To use this command we have to locate kernerl module and then we can use it correctly.
+$ insmod /lib/modules/kerner-version-file/kernel-file.ko # file with ko extension
+
+Now there is a modern approach to do this operation
+which is [ $ modprobe ]
+
+to remove module we can use
+$ modprobe-r data_acpi
+
+to install it again
+$ modprobe data_acpi
+# Advantage that we dont have to specify absolute path of kernel module itself
+# How it works, when we use depmod command it creates a depmod.deb. which will be used by modprobe then.
