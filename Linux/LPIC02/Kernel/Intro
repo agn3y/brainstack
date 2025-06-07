@@ -6,3 +6,6 @@ and even number in major revesion would approve version being stable-release.
 version 2.6 was used for so much longer it became milestone.
 beacuse of this after 2.6 every version from 2.6.1 - 2.6.39 was counted as stable version.
 now we have reached to version 3.0.1. remember that all version after 2.6 are stable.
+
+See $ ls -l /boot/ - see  init.rd with that kernel version will be readable
+or $ ls -l /lib/modules - list folders which contain all the kernel modules
