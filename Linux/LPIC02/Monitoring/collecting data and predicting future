@@ -1,0 +1,28 @@
+* We use collectd daemon to collect systemwide data.
+
+-->install it 
+$ sudo apt install collectd -y
+
+-->its conf file located at 
+/etc/collectd/collect.conf
+
+--> after updating conf file restart the service using
+$ sudo systemctl restart collectd.service
+
+--> be familiar with use of nagios which is family of projects 
+- nagios log server
+- nagios network analyzer
+- nagios incident manager
+
+We can use nagios with collectd so all the data which we collected with collectd will go through nagios network analyzer.
+
+ANOTHER SOLUTION FOR NETWORK MANAGER IS [ MRTG ] -Multi router traffic grapher.
+ONE MORE TOOL IS [ CACTI ] - it is front-end tool for RRD (round robin database).
+
+
+- all this network monitoring is done for security purposes to set maybe some systemwide policy that might save the organization from unidentified future threat or it might let the management know wether they might have to increase the bandwith of their network.
+
+- HELPS INTO
+- RESOURCE EXHAUSTION
+- PREDICT GROWTH
+- DIAGNOSE PARTICULAR PROBLEMS

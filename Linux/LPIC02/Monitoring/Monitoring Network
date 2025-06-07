@@ -1,0 +1,8 @@
+Tools :
+
+- netstat
+- if not installed use $ sudo apt install net-tools
+ $ netstat -s
+
+- Use netstat -c to monitor realtime network connection 
+- to see routing table use nestat -r

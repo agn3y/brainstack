@@ -1,0 +1,35 @@
+--> When port scanning with Nmap, there are three basic scan types. These are:
+
+TCP Connect Scans (-sT)
+SYN "Half-open" Scans (-sS)
+UDP Scans (-sU)
+
+--> Additionally there are several less common port scan types, some of which we will also cover (albeit in less detail). These are:
+
+TCP Null Scans (-sN)
+TCP FIN Scans (-sF)
+TCP Xmas Scans (-sX)
+
+--> If sym packets are dropped it means there is a firewall.
+
+--> Nmap stores its scripts on Linux at /usr/share/nmap/scripts.
+
+--> There are two ways to search for installed scripts. 
+
+[1] One is by using the /usr/share/nmap/scripts/script.db file.Nmap uses this file to keep track of (and utilise) scripts for the scripting engine.
+[2] The second way to search for scripts is quite simply to use the ls command. For example, we could get the same results as in the previous screenshot by using ls -l /usr/share/nmap/scripts/*ftp*:
+
+--> Installing New Scripts
+
+We mentioned previously that the Nmap website contains a list of scripts, so, what happens if one of these is missing in the scripts directory locally? A standard sudo apt update && sudo apt install nmap should fix this; however, it's also possible to install the scripts manually by downloading the script from Nmap (sudo wget -O /usr/share/nmap/scripts/<script-name>.nse https://svn.nmap.org/nmap/scripts/<script-name>.nse). This must then be followed up with nmap --script-updatedb, which updates the script.db file to contain the newly downloaded script.
+
+--> use updatedb command aswell.
+
+-- >The following switches are of particular note:
+
+* -f:- Used to fragment the packets (i.e. split them into smaller pieces) making it less likely that the packets will be detected by a firewall or IDS.
+An alternative to -f, but providing more control over the size of the packets: --mtu <number>, accepts a maximum transmission unit size to use for the packets sent. This must be a multiple of 8.
+
+* --scan-delay <time>ms:- used to add a delay between packets sent. This is very useful if the network is unstable, but also for evading any time-based firewall/IDS triggers which may be in place.
+
+* --badsum:- this is used to generate in invalid checksum for packets. Any real TCP/IP stack would drop this packet, however, firewalls may potentially respond automatically, without bothering to check the checksum of the packet. As such, this switch can be used to determine the presence of a firewall/IDS.

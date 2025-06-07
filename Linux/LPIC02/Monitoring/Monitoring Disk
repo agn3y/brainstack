@@ -1,0 +1,19 @@
+Tools: 
+
+- [ uptime ]			# shows for how much time system is/was up
+- Again we can use stress here.
+
+For to monitor disk I/O we can use a tool which is [ iotop ]
+
+- we can put some stress on disk using
+$ sudo stress --hhd 1 
+
+- we will install one more pkg [ sysstat ]
+$ sudo apt-get install sysstat
+$ man iostat
+
+- There is one more tool name sar 
+$ sar 1 5 
+
+- we can also make use lsof command
+$ lsof | grep "stress"

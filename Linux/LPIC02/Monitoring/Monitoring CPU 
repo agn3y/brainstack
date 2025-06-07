@@ -1,0 +1,7 @@
+Tool : 
+
+- VMstat   # use this first to enqire info about memory
+- free     # to enqire free memory
+- top      # more precised information and more clear
+
++ stress is package and tool which we can use to apply compute stress to computer hardware

@@ -1,0 +1,8 @@
+Kernel is modular. / Latest kernel version - 6.11.0-17-generic
+
+old version description of kernels - 1.4.2.1.
+in here odd number such as 5 or 3 or 7 are developemt and unstable-release.
+and even number in major revesion would approve version being stable-release.
+version 2.6 was used for so much longer it became milestone.
+beacuse of this after 2.6 every version from 2.6.1 - 2.6.39 was counted as stable version.
+now we have reached to version 3.0.1. remember that all version after 2.6 are stable.

@@ -1,0 +1,6 @@
+Enumeration 
+
+- Collect as much data as possible about your target 
+- for computer start looking for SMB and start Port scanning
+- [ Enum4linux ] for enumerate SMB #https://github.com/CiscoCXSecurity/enum4linux
+
