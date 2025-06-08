@@ -1,0 +1,6 @@
+Inproper shutdowns call currption of systems.
+In such situation we use 
+$ fsck patition
+$ fsck /dev/sda1
+don't use it on partition on which we are running our system
+use umount to unmount that partition

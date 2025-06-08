@@ -1,0 +1,12 @@
+LILO - Linux Loader
+config file located at /etc/lilo.conf
+
+SYSLINUX - MS-DOS SYSTMS / FAT PARTITION
+config file located at /boot/syslinux/syslinux.cfg
+
+EXTLINUX - ext, fat, ntfs, xfs
+config file located at extlinux.conf
+
+ISOLINUX - config file isoLinux.conf
+
+Pxelinux - config file pxelinux.conf
