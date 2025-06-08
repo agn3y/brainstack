@@ -1,0 +1,3 @@
+Its replaced lilo
+
+config file for grub is located at /boot/grub/grub.conf

@@ -1,0 +1,16 @@
+grub configuration can be found in
+ 
+[1] /etc/grub.d/ or 
+[2] /etc/default/grub
+
+amd grub.conf file
+
+[*] /boot/grub/grub.cfg
+
+to generate this file we have commands which are 
+
+If we make any change in grub file we will have to make it in either of two above given location.
+And then use [$ sudo grub-mkconfig or grub2-mkconfig ] -o filename.cfg
+And then this config file to /boot/grub/
+create a backup of original file then use grub-install 
+and then we have to something in grub menu

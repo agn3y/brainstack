@@ -1,0 +1,10 @@
+Two commands for this insted of renaming files from S to K.
+
+In redhat systems $ chkconfig
+In debian systems $ update-rc.d
+
+check man update-rc.d
+
+check this command
+
+$ update-rc.d apache2 start 10 2 3 4 5 . stop 0 1 6 .  # 10 is number in process tree and 2 3 4 5 are runlevels apache name of service
