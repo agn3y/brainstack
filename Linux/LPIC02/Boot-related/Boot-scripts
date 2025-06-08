@@ -1,0 +1,18 @@
+- Efficient with sysvinit systems
+- init systems operate in linear fashion
+- if linear which process should start first
+- in 
+[1] redhat - /etc/rc.d/ 
+--> {1} rc.sysinit (a kind of bash script which loads system...)
+- do mount systems
+- RAID devices
+- LVM
+- start system services
+--> {2} rc 
+- we can say it somehow use inittab file to load system in default runlevel
+- there are dir which are located in rc.d where there are more dir according to run level which contains file for os to be loaded in runlevel, kinda symlink
+- if sylink start with {s-start and k-kill} process [ exp k9enginx - k for kill , 9 is number os process to be started in linear process ]
+
+[2] debian - /etc/init.d/
+
+- DO NOT RENAME OR MESS AROUND WITH THIS SYMLINK THAT WILL CAUSE ISSUE HARD TO CORRECT.

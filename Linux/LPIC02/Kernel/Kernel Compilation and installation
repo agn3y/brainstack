@@ -1,3 +1,22 @@
 To compile kernel we will first need source code of kernel.
 
-which we can download from kernel.org
+Which we can download from kernel.org
+
+- Download kernel file and extract at /usr/src/
+- Create a symlink to extract folder
+- go to symlink then Documentation 
+- then run $ apt install make gcc libncurses-dev 
+- $ man make
+- now go to /usr/src/symlink and then $ make clean
+- then install fkex and bison using apt
+- and then make menuconfig
+- and save and we will get a .config file
+- then do $ make bzimage 
+- then $ make modules
+- now to install modules using $ make modules_install
+- copy the bzimage to /boot and create { initramfs } file to do this we have command name [ $ mkinitramfs ] for ubuntu And for red hat based systems we can use [ $ mkinitrd ] which calls dracut which creates initial image used by kernel for preloading block devices.
+- to run this compiled kernel we have to modify grub configuration
+
+SOMETHING WE SHOULD KNOW ABOUT KERNEL THAT IT COMES IN 2 TYPES:
+[1] zimage - older systems, size upto only 512kb
+[2] bzimage - bigzimage - handles kernel which are bigger than 512kb

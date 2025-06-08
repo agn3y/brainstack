@@ -1,0 +1,34 @@
+Located at /etc/inittab
+
+All inittab Actions Explained (Complete List)
+
+Action			Meaning
+initdefault		Sets the default runlevel for the system. Only one entry allowed.
+sysinit			Runs once during system boot, before anything else. Used for system initialization (e.g., /etc/rc.d/rc.sysinit).
+wait			Runs once when entering the specified runlevel and waits until command finishes. Good for startup scripts.
+once			Runs once when entering the runlevel but does not wait.
+respawn			Runs again and again. If the process dies, it starts again automatically. Often used for login terminals (e.g., getty).
+ctrlaltdel		Defines what to do when Ctrl+Alt+Del is pressed (usually triggers a reboot).
+powerfail		Runs command when UPS/power fails (used with powerd).
+powerwait		Runs on power fail, but waits until command is finished.
+powerokwait		Runs command when power comes back, and waits for it to finish.
+ondemand		Similar to runlevel, but only when you type init <runlevel> manually (for quick test runlevels like init a).
+off				Does nothing in that runlevel.
+boot			Runs once during boot, regardless of runlevel. Does not wait.
+bootwait	    Runs once during boot and waits until the process ends.
+sysinit	    	First thing that runs — system setup (mount filesystems, etc).
+wait			Run once, wait till done
+once			Run once, no wait
+respawn			Keep restarting if it dies
+initdefault		Set default runlevel
+sysinit			First thing at boot
+bootwait		Run once during boot, wait
+boot			Run once during boot, don’t wait
+ctrlaltdel		Ctrl+Alt+Del handling
+powerfail		Run when power goes off
+powerwait		Power fail, but wait till done
+powerokwait		When power comes back, wait
+off				Do nothing
+ondemand		Manual runlevel like init a
+
+
