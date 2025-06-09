@@ -1,0 +1,25 @@
+* ISO9660 and Removable Media
+- When we talk about removable media (like CD/DVD), we usually refer to the ISO9660 file system.
+- Originally, it was known as High Sierra Format (HSF) → later standardized as ISO9660.
+- ISO9660 is read-only and used for writing data to optical discs like CD-ROMs.
+
+* ISO9660 Extensions (to improve flexibility)
+1. Joliet – adds support for Unicode and longer file names (used by Windows)
+2. Rock Ridge – adds UNIX file permissions, symbolic links, and long file names
+3. El Torito – allows the CD to be used as a bootable device
+
+* Commands Related to ISO9660
+
+[*] mkisofs
+- Used to create an ISO9660 file system from a directory
+- Supports extensions like Joliet, Rock Ridge, and El Torito
+$ mkisofs -o myiso.iso /path/to/data
+
+For Joliet:
+$ mkisofs -J -o joliet.iso Documents/
+
+For Rock Ridge:
+$ mkisofs -R -o rockridge.iso Documents/
+
+For El Torito (bootable ISO):
+$ mkisofs -o bootable.iso -b boot.img Documents/

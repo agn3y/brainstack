@@ -1,0 +1,16 @@
+XFS Tools (Focus on RHEL/CentOS)
+
+[*] xfsdump
+- Used to take backup of XFS file systems
+- $ xfsdump -f /tmp/backuppath /boot/important-files
+
+[*] xfsrestore
+- Used to restore backup created by xfsdump
+- $ xfsrestore -f /tmp/backuppath /restore/location
+
+[*] xfs_info
+- Shows info about mounted XFS file system
+- $ xfs_info /dev/sda1
+
+[*] xfs_repair
+- $ xfs_repair /dev/sda1

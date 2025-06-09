@@ -1,0 +1,32 @@
+[*] SMART – Self-Monitoring, Analysis, and Reporting Technology
+- Used to monitor disk health (especially HDDs and SSDs)
+- $ sudo apt install smartmontools -y
+- Enable and use smartctl with the smartd daemon
+
+To check health status of a drive:
+$ sudo smartctl -H /dev/sda
+
+Note: 
+- SMART works on the whole disk, not partition.
+
+[*] autofs
+
+- When a system boots, some partitions are auto-mounted — these are defined in /etc/fstab
+- But autofs is a different system used to automount on-demand
+- Unlike fstab (which mounts at boot), autofs mounts when a directory is accessed and unmounts it after inactivity
+- its like mounted when needed and then unmounted when not
+- installing use
+- sudo apt install autofs which creates files which are
+- autofs.conf, auto.master, auto.misc, auto.net, auto.smb
+- auto.master is the first file we should take a look at
+- edit masterf file like [ nfs  /home/user/nfs ]
+- and then in etc create auto.nfs edit it and write
+- videos 192.168.23.12:/monekyoussy/videos
+- now whenever we open videos this all data from server will be loaded over a network
+- inshort edit master file and write something like [ /nameoffolder /path/auto.nameoffolder ] then go back in etc then touch and create auto.nameoffolder and then in created file do something like[ foldername 192.168.2.33:/foldername/video ] 
+
+Used for things like:
+
+- On-demand USB or NFS mounts
+- Reducing boot time
+

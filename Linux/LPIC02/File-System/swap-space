@@ -1,0 +1,14 @@
+* We can create a swap partition or a swap file.
+
+* To create a swap file 
+- $ sudo fallocate -l 1G /swapfile      # make 1GB file
+- $ sudo chmod 600 /swapfile           # set correct permission
+- $ sudo mkswap /swapfile              # format as swap
+- $ sudo swapon /swapfile              # turn it on
+
+* To activate a swap partition we can use
+- $ swapon /dev/sda1
+
+* To deactivate the swap partition we can use
+- $ swapoff /dev/sda1
+

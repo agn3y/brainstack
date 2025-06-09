@@ -1,0 +1,21 @@
+[1] dumpe2fs
+- $ sudo dumpe2fs -h /dev/sda1   # shows info (same as tune2fs)
+- Without -h flag, it shows too much info — more than we usually need
+- Be aware of Filesystem features section in the output
+- Also check Inode count
+- Learn about backup superblocks
+
+[2] debugfs
+- You must unmount the filesystem to use this tool
+- To use it, run:
+$ sudo debugfs /dev/sda1
+Inside debugfs, you can use stats to see statistics
+Mainly useful when you accidentally delete a file
+
+Steps:
+
+- Unmount the partition
+- Run debugfs
+- Use lsdel to see deleted inodes
+- Use undel <inode> to recover
+

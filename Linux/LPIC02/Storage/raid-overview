@@ -1,0 +1,43 @@
+# RAID – What is it?
+- Imagine you have many boxes (disks) to store your stuff (data).
+- RAID mixes these boxes to keep your stuff safe and/or faster to use.
+
+RAID Levels (Like real life examples)
+
+RAID 0 – Striping (Speed but no backup)
+- Like cutting your file into pieces and putting each piece in a different box.
+- You find parts faster, but if one box is lost, whole file is lost.
+- Good if you want speed only.
+
+RAID 1 – Mirroring (Exact copy)
+- Like having two identical boxes with the same stuff inside.
+- If one box is lost, the other still has everything.
+- Very safe but needs double space.
+
+RAID 5 – Striping + Parity (Backup with speed)
+- Imagine you cut file into parts and also write a special note (parity) to help rebuild if one box is lost.
+- Can lose 1 box without losing data.
+- Good balance of safety and speed.
+
+RAID 6 – Like RAID 5 but safer
+- Same as RAID 5, but can lose 2 boxes at the same time without losing data.
+
+RAID 10 – Mirroring + Striping (Best of both)
+-Combine two RAID 1 boxes (mirrors), then split data between these pairs.
+
+Fast and safe but needs many boxes.
+
+[*] How to create RAID on computer (software RAID)
+- Use tool called mdadm to manage RAID on Linux.
+
+Example: Make two boxes mirror (RAID 1)
+$ sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+
+Remember:
+
+- RAID protects from broken boxes (disks), not from losing stuff by mistake or theft. Always keep backups somewhere else!
+- RAID 0 = speed, no safety
+- RAID 1 = safety, no speed
+- RAID 5 & 6 = mix of both
+- RAID 10 = fast + safe but needs many disks
+

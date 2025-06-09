@@ -1,0 +1,35 @@
+[*] SMART – Self-Monitoring, Analysis, and Reporting Technology
+- Used to check disk health (HDD/SSD)
+- Works on entire disk, not partitions
+- Tool: smartctl (from smartmontools)
+
+[*] Commands:
+$ sudo apt install smartmontools -y         # Install tool
+$ sudo smartctl -H /dev/sda                 # Check health status
+
+[*] autofs – Automount on Demand
+- fstab mounts at boot, even if not needed
+- autofs mounts only when folder is accessed
+- Good for: NFS, USB, reducing boot time
+
+[*] Setup autofs (NFS Example):
+- Install autofs:
+$ sudo apt install autofs -y
+
+[*] Edit master config:
+$ sudo nano /etc/auto.master
+
+-Add this line:
+/media/nfs  /etc/auto.nfs
+
+[*]Create and edit map file:
+$ sudo nano /etc/auto.nfs
+
+- Add this:
+movies 192.168.1.100:/shared/movies		# yes. it ain't no command
+
+Now /media/nfs/movies will auto-mount when you open it.
+
+Make It Work After Reboot:
+$ sudo systemctl enable autofs   # Start on boot
+$ sudo systemctl start autofs    # Start now

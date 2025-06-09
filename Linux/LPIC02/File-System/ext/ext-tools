@@ -1,0 +1,14 @@
+In ext systems we can repair systems with the command
+
+$ fsck
+
+- When we use the command it check type of file system and invokes related command
+- We can also do it manually which is usually not needed.
+- To invoke fisccheck on mounted system ew will have to edit the fstab file
+- In fstab under <pass> there are digits which represent when the check will happen.
+- But the time period is still unknown. to have more info about that we will have to use one more command [ tune2fs ] ( only works with ext systems )
+- Use [ $ tune2fs -l /dev/sda1 ]  # gives more info
+- We can change interval of check using [ $ sudo tune2fs -i 7 /dev/sda1 ] # value in days 
+- Use [ $ mount -a ] at last to check changes are okay.
+- There is something named maximum mount count we can change it aswell but it is unnecessary ( $ sudo using tune2fs -c 5 /dev/sda1 )
+- After the period time fsck the maximum mount count will reset
