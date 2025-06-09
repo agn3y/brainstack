@@ -1,0 +1,12 @@
+* To make auto mounting work which would not loose its effect even after a reboot we will have to make some certain changes in this file 
+
+- Cat /etc/fstab ( shows information about mounted partition ) edit this file.
+- We will have to use [ mount -a ] to do this.
+- we can also reboot system if we want.
+
+- we can also use sytemctl to check mounting 
+- $ sudo systemctl status /home/agn3y/mountingpoint ( path may differ )
+- if we stop it will be unmounted
+- now again if we mount it it will be mounted again.
+- wanna know the reason ? beacuse in /run/systemd/generator there files which holds configuation files like 
+- for an example it could be named like {**home-agn3y-Backups.mount**}
