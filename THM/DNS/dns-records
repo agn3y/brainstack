@@ -1,0 +1,5 @@
+* A - contain ip IPv4
+* AAAA - contain IPv6
+* CNAME - points one domain to another domain
+* MX - mail exchange kind of a post office
+* TXT - text record , used to store text data such as verification and email security

@@ -1,0 +1,45 @@
+FHS - File Hierarchy System
+
+/ - root dir
+
+/bin - contain command binary (commands such as ls, cat, lsblk)
+
+/boot - contain bootloader files and kernel files (like vmlinuz, initrd, grub config files)
+
+/dev - contains device files (like /dev/sda, /dev/null, etc.)
+
+/etc - contains all configuration files (system-wide config like fstab, hostname, ssh/)
+
+/home - contains home directory for users on system (like /home/user1, /home/shun)
+
+/lib - contains libraries that are useful to run binary files located into /bin
+
+/lib32 and /lib64 - contains libraries for both type of system 32 and 64 (used by applications and binaries)
+
+/lost+found - special directory that contains outdated data or recovered files after improper shutdown (used by fsck)
+
+/media - works as mount points to connect external devices (like USBs and CDs)
+
+/mnt - works same as media directory and there is no functional difference (but used for temporary manual mounts)
+
+/opt - reserved for add-on application packages, packages which are not part of system itself (like Chrome or VMware)
+
+/proc - does not actually exist on hardware itself but gets created when system boots up, it contains all the running processes and system info (like /proc/cpuinfo, /proc/meminfo)
+
+/root - much more like home directory for the root user (not to be confused with /)
+
+/run - simply supplies runtime variable data, things such as apache2, udev, systemd related data can be found in this directory (cleared on reboot)
+
+/sbin - binary shells for only super user (commands like reboot, fsck, fdisk, etc.)
+
+/snap - snapd package manager (used to store snap apps and versions)
+
+/srv - data brought via FTP server or webserver will be stored here (example: /srv/www, /srv/ftp)
+
+/sys - contains information about device, kernel and file systems etc (virtual filesystem created by kernel)
+
+/tmp - contains temporary data (deleted on reboot, used by apps for temp storage)
+
+/usr - contains user data like applications, libraries, documentation (includes /usr/bin, /usr/lib, /usr/local)
+
+/var - this is where we keep our variable files (like logs in /var/log, mails, caches, spool)
