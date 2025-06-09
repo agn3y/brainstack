@@ -1,0 +1,27 @@
+
+To create a partition and install a file system on newwly storage device we will use this command
+
+***** CRATE PARTITION *****
+
+* first check 
+$ fdisk -l
+
+* Select partition ( for example )
+$ sudo fdisk /dev/sdb
+
+then m for help
+
+use l for list of partition and choose desired option for instance i will choose
+
+n - new partition
+then use p
+choose number of partition 
+leave sector default
+again leave default
+and use w at last 
+
+***** INSTALLING FS *****
+
+we can do 
+
+$ sudo mkfs.ext4  /dev/sdb1

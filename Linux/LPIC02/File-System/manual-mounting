@@ -1,0 +1,30 @@
+* The file named install-fs was about creating paertition and installing file system on it, And this file is how we can mount/unmount those partition in system.
+
+* Two main commands
+[1] mount
+[2] umount
+
+* we can use lsblk to find list of block devices
+
+- lsblk -f
+
+* mount
+
+- $ mount | grep sda
+- Its pulling all the information about mounted devices from /etc/mtab 
+- And we can also pull this information from /proc/mounts
+- We can use -n flag which will mount device without updating this file
+- mount using $ sudo mount -t ext4 /dev/sdb1 /media/agn3y/
+- above gicen step [ use lsblk and find out fs installed on it and mount it using as above command to desired location ]
+
+*umount
+
+- $ umount /dev/sdb1 (describe the path where device is mounted)
+-  or we can also use the uuid to unmount 
+- $ umount -u "uuid"
+- we can also specify the path where partition is mounted but lets stick to above given methods
+
+
+Note :
+
+- this changes are not permanent if we reboot the machine all changes we made will be lost
