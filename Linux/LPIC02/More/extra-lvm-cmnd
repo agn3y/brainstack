@@ -1,0 +1,27 @@
+### Physical Volume (PV) Operations
+- `pvchange` - Modify attributes of a physical volume
+- `pvmove` - Move data from one physical volume to another
+- `pvremove` - Remove a physical volume from LVM
+
+### Logical Volume (LV) Operations
+- `lvchange` - Change attributes of a logical volume
+- `lvextend` - Extend a logical volume's size  
+  Example:  
+  `sudo lvextend -L 600M /dev/targetvg/lvname`  
+  `sudo lvextend -L 700M /dev/mapper/vgname-lvname`
+- `lvreduce` - Reduce a logical volume's size
+- `lvcreate -s` - Create a snapshot  
+  Example:  
+  `sudo lvcreate -L 52M -s -n snapname /dev/vgname/lvname`
+
+### Volume Group (VG) Operations
+- `vgchange` - Modify volume group attributes
+- `vgextend` - Add physical volumes to a volume group (Note: Correct command is `vgextend`, not `vdextend`)
+
+### Help
+- `lvm --help` - Show detailed LVM command information
+
+Key Notes:
+- When extending LVs, specify the total new size (not the size to add)
+- Both traditional (/dev/vg/lv) and mapper (/dev/mapper/vg-lv) naming formats work
+- Snapshots require space allocation (-L) and a name (-n)

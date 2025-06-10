@@ -1,0 +1,46 @@
+# STEP-BY-STEP: LVM Setup on Linux
+Step 1: Install LVM Tools
+$ sudo apt install lvm2
+
+Step 2: Prepare Partitions
+# Use fdisk to mark each partition as LVM type (8e):
+$ sudo fdisk /dev/sda
+# Press 't' → select partition → type '8e' for Linux LVM
+# Press 'w' to write changes
+# Repeat for /dev/sdb, /dev/sdc, etc.
+
+Step 3: Create Physical Volumes (PVs)
+$ sudo pvcreate /dev/sda1 /dev/sdb1 /dev/sdc1
+
+# View Physical Volumes:
+$ sudo pvdisplay
+
+Step 4: Create Volume Group (VG)
+$ sudo vgcreate my_vg /dev/sda1 /dev/sdb1 /dev/sdc1
+
+#View Volume Group
+$ sudo vgdisplay
+
+Step 5: Create Logical Volumes (LVs)
+
+# Option 1: Fixed Size
+$ sudo lvcreate -n filechunk -L 50M my_vg
+
+#Option 2: Use Percentage of Free Space
+$ sudo lvcreate -n anotherchunk -l 40%FREE my_vg
+
+# View Logical Volumes:
+$ sudo lvdisplay
+
+Step 6: Create File System on LV
+$ sudo mkfs.ext3 /dev/my_vg/filechunk
+
+# You can use ext4, xfs, etc. if needed:
+$ sudo mkfs.ext4 /dev/my_vg/anotherchunk
+
+Step 7: Mount the Logical Volume
+$ sudo mkdir /mnt/mydata
+$ sudo mount /dev/my_vg/filechunk /mnt/mydata
+
+#Done! Now the LV acts like a normal mounted partition.
+
