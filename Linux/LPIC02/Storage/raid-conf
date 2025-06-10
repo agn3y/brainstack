@@ -1,0 +1,41 @@
+RAID-1 Setup (Mirroring) in Linux
+
+* We are creating a RAID-1 array (mirror) using mdadm tool. This will keep 2 disks with same data, so if one fails, your data is safe.
+
+[1] Check RAID Status
+$ cat /proc/mdstat
+- This shows current RAID arrays (if any).
+
+[2] Prepare Disks (Make them RAID type)
+Example: using /dev/sdb, /dev/sdc, /dev/sdd
+$ sudo fdisk /dev/sdc
+
+Press l → shows all partition types
+Type fd → selects Linux RAID
+Press w → write and save changes
+
+Repeat for /dev/sdd
+
+[3] Install mdadm tool
+$ sudo apt update
+$ sudo apt install mdadm
+
+[4] Create RAID-1 Array
+$ sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdc1 /dev/sdd1
+/dev/md0: name of new RAID device
+
+--level=1: means RAID-1 (mirror)
+--raid-devices=2: using 2 devices
+
+[5] Format the RAID device
+$ sudo mkfs.ext4 /dev/md0
+
+[6] Check RAID Status Again
+$ cat /proc/mdstat
+
+❗ Problem: RAID breaks after reboot
+By default, system forgets RAID after reboot.
+To fix this, we need to save RAID configuration.
+
+[7] Save RAID Config
+$ sudo mdadm --detail --scan | sudo tee /etc/mdadm.conf

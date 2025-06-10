@@ -1,0 +1,94 @@
+--------
+[*] hdd
+--------
+
+[*] DMA – Direct Memory Access
+- What: 	Allows devices (like HDD) to directly access RAM without CPU.
+- Why: 		Speeds up data transfer and reduces CPU load.
+- Control:  Enabled/disabled by the kernel.
+
+[*] IDE, PATA, SATA – Storage Technologies
+- IDE	 Integrated Drive Electronics	Uses ATA (Advanced Tech Attachment)
+- PATA	 Parallel ATA (older IDE drives)	Uses ribbon cables, slower
+- SATA	 Serial ATA (modern drives)	Faster, now common in most systems
+
+- If device is /dev/hda1 → h = IDE/PATA device
+- If device is /dev/sda1 → s = SATA or SCSI-based device
+
+[*] Useful Tools
+
+[*] hdparm
+- Works for IDE/SATA drives.
+$ sudo hdparm -d 0 /dev/sda    # Turn OFF DMA  
+$ sudo hdparm -d 1 /dev/sda    # Turn ON DMA
+
+[*] sdparm
+- Works for SCSI/SATA drives.
+
+[*] Kernel and Drive Control Paths
+- /dev					All device files (e.g. drives)
+- /proc/sys/kernel/		Kernel behavior config
+
+[*] You can view or change kernel settings using:
+$ cat /proc/sys/kernel/...
+
+[*] SCSI – Small Computer System Interface
+- What: An older standard to connect storage devices (like hard drives, USBs) to a computer.
+- Type: Mostly physical connection.
+- Each SCSI device has a LUN (Logical Unit Number) – like a unique ID.
+
+--------------------------
+[*] iSCSI – Internet SCSI
+--------------------------
+- What: A modern version of SCSI that works over a network (TCP/IP).
+- Use: Connects remote storage like it’s a local hard disk.
+- How: Sends SCSI commands over the internet/local network.
+
+-------------------------
+[*] iSCSI Setup in Linux
+-------------------------
+
+1. Install the Client
+$ sudo apt install open-iscsi
+
+2. Discover iSCSI Target (Server)
+$ iscsiadm -m discovery -t st -p 192.168.0.99
+
+-m discovery: mode
+-t st: type = send targets
+-p: IP address of iSCSI target (example: 192.168.0.99)
+
+3. Config File
+$ /etc/iscsi/iscsid.conf
+
+--------------------------------
+[*] LVM – Logical Volume Manager
+--------------------------------
+- LVM lets you manage storage more flexibly than traditional partitions.
+
+Main Parts of LVM
+
+PV		Physical Volume		Real storage device (like a 3 GB hard drive)		/dev/sdb1, /dev/sdc1
+VG		Volume Group		Combines multiple PVs into one big storage pool		3×3 GB = 9 GB VG
+LV		Logical Volume		Virtual partitions made from VG	You can create 		2×4.5 GB LVs
+
+Think of it like:
+
+PVs = Bricks
+VG = Wall built using bricks
+LVs = Windows cut out of the wall
+
+[*] Basic LVM Commands
+
+# Make a physical volume
+$ sudo pvcreate /dev/sdb1 /dev/sdc1
+
+# Create a volume group from PVs
+$ sudo vgcreate my_vg /dev/sdb1 /dev/sdc1
+
+# Create logical volume (e.g., 7.5 GB)
+$ sudo lvcreate -L 7.5G -n my_lv my_vg
+
+# Format and mount the LV
+$ sudo mkfs.ext4 /dev/my_vg/my_lv
+$ sudo mount /dev/my_vg/my_lv /mnt
