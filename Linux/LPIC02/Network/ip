@@ -1,0 +1,37 @@
+- Understanding ip Command: Modern Replacement for ifconfig, arp, and route
+- The ip command is a powerful Linux networking tool that replaces older utilities like:
+- ifconfig (interface configuration)
+- arp (ARP cache management)
+- route (routing table management)
+
+* It provides a unified way to manage network settings with more features and better control.
+
+1. Managing IP Addresses (Replaces ifconfig)
+# Unlike ifconfig, this adds a secondary IP instead of replacing the existing one.
+# Add an IP Address (Without Removing Existing Ones)
+$ sudo ip addr add 192.168.0.50/24 dev enp0s3
+
+To remove an IP, use:
+$ sudo ip addr del 192.168.0.50/24 dev enp0s3
+
+Enable/Disable Promiscuous Mode
+# Used for network monitoring (e.g., packet sniffing).
+$ sudo ip link set enp0s3 promisc on   # Enable
+$ sudo ip link set enp0s3 promisc off  # Disable
+
+2. Managing ARP Cache (Replaces arp)
+# Useful if a device’s MAC changes but the cache is outdated.
+
+- View ARP Cache (MAC ↔ IP Mappings)
+$ ip neigh show
+
+- Delete an ARP Entry
+$ ip neigh del 192.168.0.51 dev enp0s3
+
+3. Managing Routing Table (Replaces route)
+
+- View Routing Table
+$ ip route show
+
+- Add a New Route
+$ sudo ip route add 192.168.0.51/24 via 192.168.0.1
