@@ -1,0 +1,64 @@
+# Topic: `netstat` Command in Linux
+
+## 1. What is `netstat`?
+
+`netstat` stands for "network statistics".
+It is a command-line tool used to monitor network connections, ports, and interface statistics.
+
+## 2. Why is `netstat` used?
+
+* To see all active network connections.
+* To check which ports are open and listening.
+* To identify which programs (by PID) are using which ports.
+* To view routing tables.
+* To check network interface statistics.
+
+## 3. Basic Syntax
+
+netstat [options]
+
+## 4. Commonly Used Options
+
+| Option | Meaning                                         |
+| ------ | ----------------------------------------------- |
+| `-t`   | Show TCP connections only                       |
+| `-u`   | Show UDP connections only                       |
+| `-l`   | Show only listening sockets                     |
+| `-n`   | Show addresses and ports in numeric format      |
+| `-p`   | Show PID and name of the program using the port |
+| `-i`   | Show network interface statistics               |
+| `-r`   | Show routing table                              |
+| `-a`   | Show all connections and listening ports        |
+
+## 5. Most Common Command
+
+netstat -tulnp
+
+This shows:
+
+* All **listening** TCP/UDP ports
+* In **numeric** format (no DNS lookups)
+* With **PID and program name**
+
+## 6. Output Fields (for `-tulnp`)
+
+* **Proto**: Protocol (TCP/UDP)
+* **Recv-Q / Send-Q**: Data queue sizes
+* **Local Address**: IP and port on the system
+* **Foreign Address**: Connected peer (if any)
+* **State**: Connection state (LISTEN, ESTABLISHED, etc.)
+* **PID/Program name**: Which process is using the socket
+
+## 7. Replacement (Modern Alternative)
+
+'netstat` is now considered outdated. Use `ss` instead:
+
+$ ss -tulnp
+
+Faster and more detailed.
+
+## 8. Summary
+
+* `netstat` helps you monitor and troubleshoot network activity.
+* Most useful for checking open ports and identifying which programs are using them.
+* Still useful, but replaced by `ss` in newer systems.

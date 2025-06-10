@@ -1,0 +1,66 @@
+# Topic: `lsof` Command in Linux
+
+## 1. What is `lsof`?
+
+- `lsof` stands for **List Open Files**.
+- It is a command-line tool used to **show all files opened by processes**.
+- In Linux, **everything is a file** — regular files, directories, sockets, pipes, devices, etc.
+- So `lsof` helps to **inspect what files or ports are being used by which processes**.
+
+## 2. Why is `lsof` used?
+
+* To see **which process is using a file or port**
+* To **find open network connections**
+* To **troubleshoot "file in use" errors**
+* To **check open ports and the owning process**
+* To **identify processes using a directory or device**
+
+## 3. Basic Syntax
+$ lsof [options] [target]
+
+## 4. Common Use Cases
+
+### 4.1 Show All Open Files
+$ lsof		# Shows a very long list of all open files on the system.
+
+### 4.2 Show Open Files by a Specific User
+$ lsof -u username
+
+### 4.3 Find Which Process is Using a Specific File
+$ lsof /path/to/file
+
+### 4.4 Show Who is Using a Specific Port
+$ lsof -i :80		# Shows which process is using TCP/UDP port 80.
+
+### 4.5 Show All Network Connections
+$ lsof -i		# Shows all open internet connections (TCP/UDP).
+
+### 4.6 Show All TCP Connections
+$ lsof -i tcp
+
+### 4.7 Show All UDP Connections
+$ lsof -i udp
+
+### 4.8 Kill the Process Holding a File
+$ kill -9 $(lsof -t /path/to/file)
+
+* `-t`: Only show PIDs (no extra info)
+* This command kills the process using the file
+
+## 5. Common Options
+
+| Option    | Description                                      |
+| --------- | ------------------------------------------------ |
+| `-i`      | Show network files (IP/ports)                    |
+| `-u user` | Show files opened by a specific user             |
+| `-p PID`  | Show files opened by a specific process          |
+| `-t`      | Show only process IDs (used for scripting)       |
+| `+D /dir` | Show all files opened in a directory recursively |
+| `-nP`     | Disable DNS and port name resolution (faster)    |
+
+## 6. Summary
+
+* `lsof` lists all open files (including network sockets, pipes, devices, etc.)
+* Very useful for debugging file locks and open ports
+* Can help identify which process is using a port or file
+* Often used together with `netstat` or `ss` for network debugging

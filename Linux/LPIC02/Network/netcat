@@ -1,0 +1,86 @@
+# Topic: `netcat` (`nc`) Command in Linux
+
+## 1. What is `netcat`?
+
+`netcat` (also called `nc`) is a command-line tool used for reading and writing data over network connections using TCP or UDP.
+
+It is often called the **"Swiss Army knife"** of networking because it can:
+
+* Create connections
+* Listen for connections
+* Transfer files
+* Test ports
+
+## 2. Why is `netcat` used?
+
+* To **test network connectivity**
+* To **open TCP/UDP connections**
+* To **listen** on a port
+* To **send/receive files**
+* To **debug** servers and services
+* To **scan open ports**
+
+## 3. Basic Syntax
+$ nc [options] [hostname/IP] [port]
+
+## 4. Common Use Cases
+
+### 4.1 Test if a Port is Open on Remote Machine
+$ nc -zv 192.168.1.1 22
+
+* `-z`: Zero-I/O mode (just check if port is open)
+* `-v`: Verbose output
+
+### 4.2 Start a Listener on a Port
+$ nc -l -p 4444
+
+* `-l`: Listen mode
+* `-p`: Port to listen on
+
+### 4.3 Connect to a Listener
+$ nc 192.168.1.10 4444			#This connects to the machine listening on port 4444.
+
+### 4.4 Send a File
+
+On receiver (listening machine):
+$ nc -l -p 1234 > received.txt
+
+On sender:
+$ nc 192.168.1.10 1234 < file.txt
+
+### 4.5 Simple Chat Between Two Machines
+
+On machine A:
+$ nc -l -p 5000
+
+On machine B:
+$ nc [A's IP] 5000
+# Now you can type and chat via terminal.
+
+### 4.6 Port Scanning
+$ nc -zv 192.168.1.1 20-80		# Scans ports 20 to 80.
+
+## 5. Modes
+
+| Mode          | Use                              |
+| ------------- | -------------------------------- |
+| Client        | Connect to another host          |
+| Server        | Listen and wait for a connection |
+| File transfer | Send or receive files            |
+
+## 6. Common Options
+
+| Option | Description                       |
+| ------ | --------------------------------- |
+| `-l`   | Listen mode                       |
+| `-p`   | Local port number to use          |
+| `-v`   | Verbose                           |
+| `-z`   | Zero-I/O mode (used for scanning) |
+| `-n`   | Do not resolve DNS                |
+| `-u`   | Use UDP instead of TCP            |
+
+## 7. Summary
+
+* `netcat` is used for creating or listening to network connections.
+* Can be used to test ports, chat, transfer files, and debug services.
+* Very flexible, useful for sysadmins, developers, and network engineers.
