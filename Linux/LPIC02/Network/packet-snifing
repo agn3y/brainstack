@@ -1,0 +1,36 @@
+# Topic: **Packet Sniffing Using `tcpdump`**
+
+## What is `tcpdump`?
+
+* `tcpdump` is a command-line tool used to **capture and analyze network packets**.
+* It helps you **see what's happening on the network** in real-time.
+* Useful for **network debugging**, **monitoring**, and **security testing**.
+
+## Basic Usage of `tcpdump`
+
+### 1. **Capture a specific number of packets**
+$ sudo tcpdump -c 10
+
+* Captures **10 packets** from the default network interface.
+
+### 2. **Capture packets on a specific network interface**
+$ sudo tcpdump -i wlp3s0
+
+* Captures traffic only on the **`wlp3s0` interface** (replace with your interface name).
+* Use `ip a` or `ifconfig` to find your active interface.
+
+### 3. **Capture packets from a specific source IP**
+$ sudo tcpdump src 192.168.23.65 -c 20
+
+* Captures **20 packets** where the **source IP is `192.168.23.65`**.
+
+### 4. **Capture packets going to a specific destination IP**
+$ sudo tcpdump dst 192.168.23.65 -c 20
+
+* Captures **20 packets** where the **destination IP is `192.168.23.65`**.
+
+### 5. **Capture packets going to a specific destination port**
+$ sudo tcpdump dst port 23 -c 15
+
+* Captures **15 packets** where the **destination port is `23`** (Telnet traffic).
+        

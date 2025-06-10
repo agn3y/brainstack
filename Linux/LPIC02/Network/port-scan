@@ -1,0 +1,81 @@
+# Topic: Port Scanning in Linux
+
+## 1. What is Port Scanning?
+
+- Port scanning is the process of **checking which ports are open** on a machine (local or remote).
+- It helps you identify which services are running and which ports are accessible from the network.
+
+## 2. Why is Port Scanning used?
+
+* To **check if a service is running** (like SSH, HTTP)
+* To **troubleshoot network/firewall issues**
+* To **test network security** and find open/unsafe ports
+* To **map network services** before penetration testing
+
+## 3. Port Types
+
+| Port Range  | Description                 |
+| ----------- | --------------------------- |
+| 0–1023      | Well-known ports (reserved) |
+| 1024–49151  | Registered ports            |
+| 49152–65535 | Dynamic/private ports       |
+
+## 4. Common Port Scanning Tools
+
+### 4.1 Using `nc` (netcat)
+$ nc -zv <target-ip> <start-port>-<end-port>
+
+Example:
+
+$ nc -zv 192.168.1.10 20-80
+
+* `-z`: Zero-I/O mode (just check if ports are open)
+* `-v`: Verbose (shows which ports are open/closed)
+
+---
+
+### 4.2 Using `nmap` (most powerful tool)
+
+Install it first:
+
+$ sudo apt install nmap   # Debian/Ubuntu
+$ sudo yum install nmap   # CentOS/RHEL
+
+#### Scan top 1000 ports (default):
+$ nmap 192.168.1.10
+
+#### Scan all 65535 ports:
+$ nmap -p- 192.168.1.10
+
+
+#### Scan specific ports:
+$ nmap -p 22,80,443 192.168.1.10
+
+#### Detect service and version:
+$ nmap -sV 192.168.1.10
+
+#### OS detection (if permitted by firewall):
+$ nmap -O 192.168.1.10
+
+### 4.3 Using `lsof` (for local port check)
+- To see all listening ports on your own machine:
+$ lsof -i -P -n | grep LISTEN
+
+### 4.4 Using `ss` or `netstat` (for local system)
+- Show listening ports on your machine:
+$ ss -tulnp
+
+Or:
+
+$ netstat -tulnp
+
+## 5. Summary
+
+* Port scanning helps you find which services are open and reachable on a machine.
+* Use `nc` for quick checks.
+* Use `nmap` for detailed and large-scale scans.
+* Use `ss` or `lsof` for local system port checks.
+
+---
+
+Let me know if you want a comparison chart of these tools or a real scan demo setup.
