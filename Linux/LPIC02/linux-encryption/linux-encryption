@@ -1,0 +1,56 @@
+# Linux Disk Encryption with LUKS (Linux Unified Key Setup)
+
+## What is LUKS?
+LUKS is the standard for disk encryption in Linux, providing:
+- A standardized format for encrypted partitions
+- Multiple encryption keys/passphrases
+- Strong cryptographic protection for your data
+
+## Why Use LUKS Encryption?
+- Protects sensitive data if device is lost/stolen
+- Meets compliance requirements
+- Works with most Linux distributions
+- Supports hardware encryption acceleration
+
+## Key Tools
+1. **DMCrypt** - The kernel-level encryption subsystem that LUKS uses
+2. **cryptsetup** - The main command-line tool for managing LUKS encryption
+
+## Basic Encryption Process
+
+### 1. Prepare the Disk
+$ sudo fdisk /dev/sdX  # Create partitions as needed
+
+### 2. Encrypt a Partition
+$ sudo cryptsetup luksFormat /dev/sdX1
+- You'll be prompted to create a strong passphrase
+
+### 3. Open the Encrypted Device
+$ sudo cryptsetup open /dev/sdX1 encrypted_volume
+- Creates a mapped device at `/dev/mapper/encrypted_volume`
+
+### 4. Create a Filesystem
+$ sudo mkfs.ext4 /dev/mapper/encrypted_volume
+
+### 5. Mount and Use
+$ sudo mount /dev/mapper/encrypted_volume /mnt/data
+
+## Managing LUKS Volumes
+
+### Add a Keyfile
+$ sudo dd if=/dev/urandom of=/root/keyfile bs=1024 count=4
+$ sudo cryptsetup luksAddKey /dev/sdX1 /root/keyfile
+
+### Backup LUKS Header
+$ sudo cryptsetup luksHeaderBackup /dev/sdX1 --header-backup-file /backup/luks-header.bak
+
+### Check Encryption Status
+$ sudo cryptsetup status encrypted_volume
+
+## Full Disk Encryption (FDE) Tips
+- Encrypt during OS installation (most Linux installers support this)
+- Use a strong passphrase (consider a keyfile for servers)
+- Store header backups securely
+- For SSDs: enable TRIM support with `--allow-discards`
+
+LUKS provides robust protection while remaining relatively easy to implement for most Linux systems.

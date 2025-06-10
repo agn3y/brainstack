@@ -1,0 +1,33 @@
+# Understanding the `route` Command and Routing Table
+
+## What is the `route` command?
+- The `route` command is a tool to view and modify your system's IP routing table. The routing table determines how network traffic is directed between your computer and other networks.
+
+## Basic Usage
+
+### Viewing the routing table
+$ route -n
+- This shows all current routes with IP addresses (no name resolution).
+
+
+### Adding a route
+$ sudo route add -net NETWORK_ADDRESS netmask SUBNET_MASK gw GATEWAY_IP
+
+Example:
+$ sudo route add -net 192.168.50.0 netmask 255.255.255.0 gw 192.168.0.1
+- This means: "Send all traffic for 192.168.50.0-192.168.50.255 via the gateway at 192.168.0.1"
+
+### Removing a route
+$ sudo route del -net NETWORK_ADDRESS netmask SUBNET_MASK gw GATEWAY_IP
+
+Example:
+$ sudo route del -net 192.168.50.0 netmask 255.255.255.0 gw 192.168.0.1
+- This removes the specific route from the routing table.
+
+## Key Points to Remember
+- You need `sudo` because modifying routes requires administrator privileges
+- The `-net` option specifies a network route (not a single host)
+- `netmask` defines which IP addresses the route applies to
+- `gw` specifies the gateway (router) that should handle this traffic
+
+Note: On modern Linux systems, the `ip route` command is often preferred over `route`.

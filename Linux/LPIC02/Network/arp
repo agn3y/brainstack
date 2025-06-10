@@ -1,0 +1,4 @@
+# command to manipulate arp records of system
+$ arp
+
+# we can also create arp record manually using this command
