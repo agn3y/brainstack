@@ -1,0 +1,78 @@
+# **Installing Programs from Source (Packaging Basics Continued)**
+
+## **1. Steps to Install Software from Source**
+
+* **Step 1: Download the source code**
+→ Usually comes as a `.tar.gz`, `.tar.bz2`, or `.tar.xz` file.
+
+* **Step 2: Extract the archive**
+→ For `.tar.gz`: `tar -xvzf filename.tar.gz`
+→ For `.tar.bz2`: `tar -xvjf filename.tar.bz2`
+→ For `.tar.xz`: `tar -xvJf filename.tar.xz`
+
+* **Step 3: Enter the extracted folder**
+→ Use `cd foldername`
+
+* **Step 4: Run the configuration script**
+→ `./configure`
+→ This checks your system and prepares the build files.
+→ You can add options like:
+`./configure --prefix=/usr/local` (sets install location)
+
+* **Step 5: Compile the source code**
+→ `make`
+→ This compiles the source into binary (executable) files.
+
+* **Step 6: Install the program**
+→ `sudo make install`
+→ This copies files to appropriate system directories.
+
+## **2. Optional Commands**
+
+* **Clean up build files after install:**
+→ `make clean`
+→ Deletes temporary files created during compilation.
+
+* **Uninstall (if supported):**
+→ `sudo make uninstall`
+→ Only works if the Makefile has uninstall instructions.
+  
+## **3. Summary**
+
+* Installing from source gives you full control, but you must compile it manually.
+* You must have tools like `gcc`, `make`, and `build-essential` installed.
+* Common install path: `/usr/local`
+* Use `./configure`, `make`, and `make install` in order.
+
+
+## **What happens when you run `sudo make uninstall`?**
+
+* `make uninstall` only removes the **installed files** (binaries, config files, etc.) that were copied to your system during `make install`.
+* It **does NOT delete**:
+* The **source code**
+* The **compiled files** (like `.o` object files or compiled binaries) inside the source folder
+* The **build directory** or any **temporary files**
+
+## **So to clean up everything you built:**
+
+After running `sudo make uninstall`, you should also run:
+
+* `make clean`
+→ This removes all compiled object files and binaries from the source folder.
+
+* `make distclean` *(if available)*
+→ This removes everything `make clean` does plus the `Makefile` and configuration files created by `./configure`.
+
+## **If you want to remove everything including the source:**
+
+* After running:
+
+1. `sudo make uninstall`
+2. `make clean` or `make distclean`
+
+* Then delete the source directory manually:
+
+$ cd ..
+$ rm -rf angband-source-folder
+
+*(Replace `angband-source-folder` with the actual folder name you extracted.)*

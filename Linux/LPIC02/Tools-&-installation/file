@@ -1,0 +1,34 @@
+Packaging Basics – Software Installation and File Locations
+
+This note explains how we can install software and where we should place source code and applications in a Linux system. It also covers basic decompression tools.
+
+1. Software and Source Code Locations
+/usr/src
+→ Used to store system-wide source code (like Linux kernel source).
+
+/usr/local
+→ Used to install programs manually (locally).
+→ Commonly used by system administrators for custom software not managed by the package manager.
+
+/usr/local/src
+→ Another place to store local source code (especially when compiling software manually).
+
+/opt
+→ Used for third-party or add-on software (like Chrome, Skype, or other external apps).
+→ Good location for self-contained applications.
+
+2. Decompression Commands
+To decompress .gz files:
+→ Use gunzip filename.gz
+
+To decompress .bz2 or .bz files:
+→ Use bunzip2 filename.bz2
+
+To decompress .xz files:
+→ Use unxz filename.xz
+→ Or use xz -d filename.xz
+
+3. Summary
+Use specific directories like /usr/local and /opt for installing and managing software manually.
+Source code is usually stored in /usr/src or /usr/local/src.
+Always match the decompression tool with the file extension (.gz, .bz2, .xz).
