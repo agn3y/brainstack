@@ -1,0 +1,35 @@
+Backing Up Block Devices Using `dd` Command
+
+What is `dd' ?
+
+* `dd` is a powerful Linux command-line tool.
+* It is used to **copy** and **backup** entire **block devices**, **partitions**, or even full **disks**.
+* Works at a **low level**, meaning it copies **bit-by-bit** (good for making exact clones or backups).
+
+Basic Syntax
+
+$ sudo dd if=<input_file/device> of=<output_file> bs=<block_size> conv=<options>
+
+* `if=` → **Input file or device** (what you want to copy from)
+* `of=` → **Output file or device** (where you want to copy to)
+* `bs=` → **Block size** (how much data to read/write at a time, e.g. 8M for 8 MB)
+* `conv=` → **Conversion options**
+* `noerror` → Skip errors and continue
+* `sync` → Pad blocks with zeros if there's an error
+
+Example: Backup a Partition
+$ sudo dd if=/dev/sdb1 of=/home/agn3y/sdb_backup.img bs=8M conv=noerror,sync
+
+This command does the following:
+
+* Copies the **entire `/dev/sdb1` partition**
+* Saves the copy as a file: `/home/agn3y/sdb_backup.img`
+* Uses 8 MB block size for faster copy
+* If any error happens while reading, it will:
+
+* **Ignore the error**
+* **Fill the missing data with zeros** (so file size stays correct)#### 🧠 **Use Case:**
+
+* Making a **full backup** of a disk or USB drive
+* Creating a **disk image** to restore later
+* Moving data from one device to another **bit-by-bit**
