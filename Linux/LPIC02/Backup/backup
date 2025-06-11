@@ -1,0 +1,11 @@
+which directory should be backed up
+
+/home
+/usr - actually here we store what we download using packet managers so sometime people don't back it up.
+/etc
+/boot
+/bin
+/sbin
+/opt
+/var
+/lib
