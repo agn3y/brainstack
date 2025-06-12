@@ -1,0 +1,35 @@
+NETWORK TROUBLESHOOT AND DIAGNOSTICS
+
+TOOLS
+
+[1] traceroute
+- TRACE PATH OF PACKET
+- $ sudo apt install traceroute google.com
+- IF WE ARE PART OF LARGE INTERNAL NETWORK WE CAN DO THIS
+- *** ARE SERVER THAT ARE CONFIGURED TO NOT RESPOND TO ICMP PACKETS
+
+[2] PING
+
+[3] mtr
+- NETWORK DIAGNOSTIC TOOLS
+- COMBINED FUNCTIONALITY OF ping AND traceroute
+- $ mtr google.com
+
+[4] dmesg
+- LOCATED AT /bin/dmesg
+- PRINT AND CONTROL KERNEL RING BUFFER
+
+
+-------------------------
+[*** IMPORTANT FILES ***]
+-------------------------
+
+[1] syslog FILE
+- LOCATED AT /var/log/syslog		# IN DEBIAN SYSTEMS
+- MAIN LOG FILE
+- CONTAIN VERY IMPORTANT NETWORK INFORMATION
+
+[2] messages
+- LOCATED AT /var/log/messages		# REDHAT BASED SYSTEMS
+- MAIN LOG FILE
+ 
