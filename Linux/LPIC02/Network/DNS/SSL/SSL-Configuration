@@ -1,0 +1,40 @@
+SSL Configuration for Apache
+
+Purpose:
+- To configure Apache with a self-signed SSL certificate for secure HTTPS connections.  
+
+Step 1: Navigate to Apache Config  
+$ cd /etc/apache2/sites-available  
+$ sudo nano default-ssl.conf  
+
+Step 2: Generate SSL Certificate & Key  
+$ sudo openssl req -x509 -nodes -days 100 -newkey rsa:2048 -keyout /etc/apache2/myprivatekey.key -out /etc/apache2/mycert.crt  
+
+Flags Explained: 
+- `-x509`: Creates a self-signed certificate.  
+- `-nodes`: No passphrase (for simplicity).  
+- `-days 100`: Certificate expires in 100 days.  
+- `-newkey rsa:2048`: Generates a 2048-bit RSA key.  
+
+- When prompted:  
+- Common Name (CN): Enter your server’s IP or domain (e.g., `lawdalehsun.com`).  
+
+Step 3: Configure Apache to Use the Certificate
+- In `default-ssl.conf`, add/modify these lines :  
+
+ServerName ip-of-webserver  # Replace with your server's IP/domain  
+
+SSLCertificateFile    /etc/apache2/mycert.crt  
+SSLCertificateKeyFile /etc/apache2/myprivatekey.key  
+
+- Place these **before** `SSLEngine on`.  
+
+Step 4: Enable Modules & Restart Apache**  
+
+$ sudo a2enmod ssl          # Enable SSL module  
+$ sudo a2enmod headers      # Enable headers (for security)  
+$ sudo a2enmod default-ssl  # Enable default SSL site  
+$ sudo systemctl restart apache2  
+
+Step 5: Test in Browser
+Visit:  https://lawdalehsun.com  
