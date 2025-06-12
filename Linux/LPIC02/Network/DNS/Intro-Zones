@@ -1,0 +1,49 @@
+DNS Zones – Introduction
+
+What is a DNS Zone?
+- A **DNS Zone** is a part of the DNS system that contains a portion of the domain name space and is managed by a specific DNS server.
+- It's like a **container** that holds DNS records (A, MX, NS, etc.) for a domain or subdomain.
+
+Why Create Zones?
+
+We use zones to:
+* Store and manage **DNS records** (locally)
+* **Cache** information from other DNS servers
+* **Respond faster** to repeated queries
+* Reduce external DNS traffic
+* When we cache DNS data from another server — that's called **creating a zone**.
+
+Types of DNS Zones
+
+| Zone Type             | Purpose                                                |
+| --------------------- | ------------------------------------------------------ |
+| **Primary (Master)**  | Stores original DNS records (read/write)               |
+| **Secondary (Slave)** | Gets a copy of records from primary (read-only)        |
+| **Caching-Only**      | Doesn’t hold original records, only caches from others |
+| **Forward Zone**      | Used to resolve domain names → IP                      |
+| **Reverse Zone**      | Used to resolve IP → domain names                      |
+
+Files Related to Zones in BIND
+
+| File                         | Purpose                                  |
+| ---------------------------- | ---------------------------------------- |
+| `/etc/bind/named.conf`       | Main BIND config file                    |
+| `/etc/bind/named.conf.local` | Add zone definitions (primary/secondary) |
+| `/etc/bind/db.domain.com`    | Zone data file (holds records)           |
+| `/etc/bind/db.192`           | Reverse zone data file                   |
+
+Example Zone Entry in `named.conf.local`
+
+zone "example.com" {
+    type master;
+    file "/etc/bind/db.example.com";
+};
+
+Summary
+
+* DNS Zones help organize and store DNS data
+* Zones can cache data for **faster performance**
+* Primary = holds original records
+* Secondary = copy of primary
+* Caching-only = stores only what it queries
+* Configured in BIND using zone blocks
