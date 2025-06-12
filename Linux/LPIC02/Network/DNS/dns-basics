@@ -1,0 +1,76 @@
+DNS - DOMAIN NAME SYSTEM
+FQDNS - FULLY QUALIFIED DNS
+
+DNS (Domain Name System) - Levels & Request Journey
+
+DNS converts a domain name like `www.google.com` to an IP address like `142.250.195.68`.
+
+DNS Levels (Hierarchy)
+
+
+                          [ . ]  <== Root DNS Server
+                          / \
+                         /   \
+                    [com]   [org]  <== TLD Servers
+                       |
+                 [google.com]  <== Authoritative DNS Server
+
+
+1. **Root DNS Server** (`.`)
+
+* Top-level of DNS.
+* Knows where `.com`, `.org`, `.net` servers are.
+* Doesn’t know website IP, only tells which TLD to go to.
+
+2. **TLD DNS Server** (Top Level Domain)
+
+* `.com`, `.org`, `.in`, etc.
+* Knows where the **authoritative DNS** is for that domain.
+
+3. **Authoritative DNS Server**
+
+* This server **has the real IP address** of the domain.
+* Example: Knows IP of `google.com`.
+
+How DNS Request Travels
+
+Suppose you type `www.google.com` in browser.
+
+Step-by-step flow:
+
+[1] Browser → Local DNS Cache
+   🔹 If found, return IP. If not, ask OS resolver.
+
+[2] Resolver → Root DNS Server (.)
+   🔹 Asks: "Where is .com DNS?"
+
+[3] Root → TLD Server (.com)
+   🔹 Says: "Go to .com DNS"
+
+[4] TLD → Authoritative DNS for google.com
+   🔹 Says: "Ask google.com DNS"
+
+[5] Authoritative DNS → Resolver
+   🔹 Says: "IP is 142.250.195.68"
+
+[6] Resolver → Browser
+   🔹 Gives back IP to browser
+
+[7] Browser → Sends request to 142.250.195.68 (Google)
+
+Extra Notes
+
+* **Local DNS Cache**: Speeds up repeat visits.
+* **Recursive Resolver**: Does the full lookup for you.
+* **TTL (Time to Live)**: How long to keep DNS info in cache.
+* **CDN and Load Balancers**: Sometimes give different IPs based on location.
+
+Real World Example:
+
+You enter `www.youtube.com` in browser:
+
+1. Check cache – not found
+2. Ask root server – go to `.com`
+3. Ask `.com` TLD – go to `youtube.com` DNS
+4. Get real IP – e.g., `142.250.80.78`
+5. Load website using that IP

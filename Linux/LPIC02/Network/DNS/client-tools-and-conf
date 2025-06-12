@@ -1,0 +1,11 @@
+CLIENT TOOLS AND DNS CONFIGURATIONS
+
+DNS LOOKUP TOOLS
+
+[1] nslookup
+- $ nslookup youtube.com 
+
+[2] host
+- $ host youtube.com
+
+[3] dig
