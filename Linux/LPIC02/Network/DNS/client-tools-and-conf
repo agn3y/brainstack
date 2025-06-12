@@ -1,11 +1,62 @@
-CLIENT TOOLS AND DNS CONFIGURATIONS
+CLIENT TOOLS AND DNS CONFIGURATIONS (LINUX)
 
-DNS LOOKUP TOOLS
+DNS (Domain Name System) converts human-readable names like `youtube.com` into IP addresses like `142.250.196.110`.
 
-[1] nslookup
-- $ nslookup youtube.com 
+DNS LOOKUP TOOLS (Used on Client Side)
 
-[2] host
-- $ host youtube.com
+|--------------|-------------|-----------------------------------------------------------------------------------------------------------------------|
+| **nslookup** 						| Query DNS records 					| `nslookup youtube.com` 												 |
+| **host** 	   						| Simple DNS lookups 					| `host youtube.com` → forward lookup<br>`host 8.8.8.8` → reverse lookup |
+| **dig**      						| Detailed DNS query info 				| `dig youtube.com`    													 |
+| **ping**                          | Check connectivity and get IP     	| `ping youtube.com` 													 |
+| **systemd-resolve / resolvectl**  | Used in modern distros with `systemd` | `resolvectl query youtube.com` 										 |
 
-[3] dig
+DNS CONFIGURATION FILES
+
+| File | Use | Example |
+|------|-----|---------|
+| **/etc/resolv.conf** | Main file to set DNS servers | `nameserver 8.8.8.8` |
+| **/etc/hosts** | Manual IP-name mappings (local override) | `127.0.0.1 localhost` |
+| **/etc/nsswitch.conf** | Sets name lookup order | `hosts: files dns` (check hosts file first, then DNS) |
+
+[*] /etc/resolv.conf Example
+
+nameserver 8.8.8.8
+nameserver 1.1.1.1			# These are Google and Cloudflare DNS servers.
+
+[*] /etc/hosts Example
+
+127.0.0.1   localhost
+192.168.1.10  myserver.local			# Useful for custom name-IP mapping (no DNS query needed).
+
+How to Set DNS Permanently
+
+1. Using GUI (Network Manager)
+- Go to Network Settings → Edit connection → Set DNS manually
+
+2. Using Netplan (Ubuntu 18+)
+# /etc/netplan/*.yaml
+nameservers:
+  addresses: [8.8.8.8, 1.1.1.1]
+
+Then apply:
+$ sudo netplan apply
+
+3. Using systemd-resolved (Modern Systems)
+$ sudo resolvectl dns eth0 8.8.8.8 1.1.1.1
+
+DNS Troubleshooting Tips
+
+| Problem | What to Do |
+|--------|-------------|
+| DNS not working | Try `ping 8.8.8.8` to see if internet is working |
+| Wrong name resolution | Check `/etc/resolv.conf` |
+| Cache issue | Run `sudo systemd-resolve --flush-caches` |
+| Name not found | Check `/etc/hosts` and DNS server settings |
+
+
+- DNS translates names to IPs  
+- Lookup tools: `nslookup`, `host`, `dig`  
+- Config files: `/etc/resolv.conf`, `/etc/hosts`  
+- Set DNS permanently with Netplan, GUI, or `resolvectl`  
+- Fix issues by checking config and flushing DNS cache  

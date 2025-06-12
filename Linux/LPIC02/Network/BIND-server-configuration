@@ -1,0 +1,142 @@
+SETTING UP CACHING DNS SERVER WITH BIND9 (Berkley Internet Name Domain)
+
+---
+
+OBJECTIVE
+
+* Install and configure **BIND9 DNS server**
+* Use BIND as a **caching server**
+* Allow only specific devices using **ACL**
+* Test using `dig` queries
+
+---
+
+Common DNS Server Tools
+
+| Tool       | Purpose                         |
+| ---------- | ------------------------------- |
+| `dnsmasq`  | Lightweight DNS and DHCP server |
+| `PowerDNS` | DNS server with load balancing  |
+| `djbdns`   | DNS server focused on security  |
+
+---
+
+DNS Server Types
+
+| Server Type       | Description                                           |
+| ----------------- | ----------------------------------------------------- |
+| **Authoritative** | Stores and serves official DNS records                |
+| **Forwarding**    | Forwards requests to other DNS servers                |
+| **Caching**       | Saves previous DNS results to answer faster next time |
+
+---
+
+STEP-BY-STEP: Configure BIND as Caching DNS Server
+
+---
+
+STEP 1: Install BIND9
+
+$ sudo apt update -y
+$ sudo apt install bind9 -y
+
+---
+
+STEP 2: Install BIND Utilities
+
+$ sudo apt install bind9utils
+
+---
+
+STEP 3: Edit BIND Configuration
+
+Go to the config folder:
+
+$ cd /etc/bind
+
+Edit options file:
+
+$ sudo nano named.conf.options
+
+In the `options` block, set:
+
+** recursion yes; ** 
+
+➡️ This allows DNS server to cache and answer external queries.
+
+---
+
+STEP 4: Check Configuration Syntax
+
+$ sudo named-checkconf
+
+➡️ No output = No errors ✅
+
+---
+
+STEP 5: Restart BIND9 Service
+
+$ sudo service bind9 restart
+
+---
+
+STEP 6: Test Caching DNS
+
+Query a website through localhost:
+
+$ dig @localhost google.com
+
+➡️ First time will fetch from internet
+➡️ Next time will be **faster** (fetched from cache)
+
+---
+
+Configure ACL (Access Control List)
+
+STEP 7: Add ACL in `named.conf.options`
+
+At the **top** of `named.conf.options`, add:
+
+acl alloweddevices {
+    192.168.0.0/24;
+    localhost;
+};
+
+Then inside the `options` block, add:
+
+allow-query { alloweddevices; };
+
+➡️ This allows only **specific IPs/subnets** to use your DNS server.
+
+---
+
+STEP 8: Reload Config and Test Again
+
+$ sudo named-checkconf
+$ sudo service bind9 restart
+$ dig @localhost cbtnuggets.com
+
+- Query should work only from allowed devices.
+
+---
+
+Important Admin Command
+
+$ rndc reload
+
+➡️ Reloads BIND without restarting the service.
+
+---
+
+Summary
+
+| Task                           | Command / File                 |
+| ------------------------------ | ------------------------------ |
+| Install BIND                   | `sudo apt install bind9`       |
+| Edit config file               | `/etc/bind/named.conf.options` |
+| Enable recursion               | `recursion yes;`               |
+| Allow only your subnet         | `acl alloweddevices { ... };`  |
+| Restart service                | `sudo service bind9 restart`   |
+| Test with dig                  | `dig @localhost domain.com`    |
+| Check config syntax            | `sudo named-checkconf`         |
+| Reload DNS config (no restart) | `rndc reload`                  |

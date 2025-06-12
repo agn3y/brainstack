@@ -1,0 +1,65 @@
+HOSTNAME CONFIGURATION (System Name)
+
+What is a hostname?
+* It is the **name of your computer** on a network (example: `ubuntu-machine`).
+* Other systems use this name to identify your system.
+
+$ hostname						# View Current Hostname
+$ sudo hostname new-name		# Temporarily Change Hostname (Lost after reboot)
+
+Check change: `hostname`
+Will reset after reboot.
+
+METHOD 1 : Permanently Change Hostname
+
+$ sudo nano /etc/hostname		# Edit file
+
+* Change the name inside and **save**.
+* Also edit `/etc/hosts` and replace old hostname with new one.
+
+
+METHOD 2 : (Preferred & Easy): Use hostnamectl
+
+$ sudo hostnamectl set-hostname new-name
+
+* Then **reboot**:
+
+$ sudo reboot
+
+Important Files for Hostname & Network Identification
+
+| File Path       | Purpose                                    |
+| --------------- | ------------------------------------------ |
+| `/etc/hostname` | Stores system hostname (permanent setting) |
+| `/etc/hosts`    | Maps IP address to hostname (local DNS)    |
+
+
+TCP WRAPPERS (Basic Access Control)
+
+What is TCP Wrapper?
+* A **security tool** for Linux to control access to **network services** like SSH.
+* Only works with programs **compiled with `libwrap`**.
+
+Important Files
+
+| File               | Purpose                                |
+| ------------------ | -------------------------------------- |
+| `/etc/hosts.allow` | List of IPs allowed to access services |
+| `/etc/hosts.deny`  | List of IPs denied access              |
+
+The system **checks `hosts.allow` first**, then `hosts.deny`.
+
+Example Rule
+
+[*] Allow only one IP for SSH:
+# /etc/hosts.allow
+sshd: 192.168.1.100
+
+[*] Block all others:
+# /etc/hosts.deny
+sshd: ALL
+
+
+HIERCHY
+[1] ALLOW
+[2] DENY
