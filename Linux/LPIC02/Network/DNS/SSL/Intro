@@ -1,0 +1,43 @@
+SSL/TLS: Secure Web Communication  
+
+Purpose:
+- To understand how SSL/TLS encrypts web traffic and establishes secure connections using certificates and key exchange.  
+- Certificates: The Trust Factor
+
+1. What It Is:
+- SSL (Secure Socket Layer) → Older protocol for encrypting web traffic.  
+- TLS (Transport Layer Security) → Newer, more secure replacement for SSL.  
+
+2. Ports:
+   - HTTP (Unsecure): Port `80`  
+   - HTTPS (Secure): Port `443`  
+
+Types of Certificates: 
+
+1. Self-Signed:
+- Created by anyone (no third-party validation).  
+- Risk: Can be spoofed (fake certificates).  
+
+2. CA (Certificate Authority):
+- Issued by trusted authorities (e.g., Let’s Encrypt, DigiCert).  
+- Secure: Validates website authenticity.  
+
+How HTTPS Works (Step-by-Step):
+
+1. Client Requests HTTPS:  
+   - You visit `https://youtube.com`.  
+
+2. Server Sends Certificate + Public Key: 
+   - Web server provides its **certificate** and **public key** to your browser.  
+
+3. Browser Verifies Certificate:  
+   - Checks if the certificate is **valid/trusted** (using the public key).  
+
+4. Session Key Exchange:  
+- Browser generates a symmetric session key (faster encryption).  
+- Encrypts the session key with the server’s **public key** → sends it.  
+- Server decrypts it with its **private key**.  
+
+5. Secure Communication Established:  
+- All further data is encrypted with the **session key** (symmetric encryption).  
+- SSL/TLS turns insecure HTTP into secure HTTPS (port 443). Websites prove their identity with certificates (CA = trusted, self-signed = risky). Your browser and the server exchange a secret session key to encrypt all data—like a locked diary only you and the website can read.
