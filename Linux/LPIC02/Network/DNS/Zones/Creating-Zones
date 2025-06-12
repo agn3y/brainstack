@@ -1,0 +1,143 @@
+DNS ZONE CREATION WITH BIND9 – STEP BY STEP GUIDE
+
+WHAT ARE ZONES?
+
+- Zones are DNS database files that store DNS records for a domain.
+- They allow us to manage domains (like `example.com`) and their reverse lookups.
+- We define *Forward Zones* (name ➝ IP) and *Reverse Zones* (IP ➝ name).
+- Zones are managed on **authoritative DNS servers**, and in our case, we use **BIND9** to configure them.
+
+* STEP-BY-STEP ZONE CONFIGURATION
+
+---------------------------
+STEP 1: INSTALL BIND TOOLS
+---------------------------
+$ sudo apt install bind9 bind9utils
+
+-------------------------
+STEP 2: SET DNS RESOLVER
+-------------------------
+$ sudo nano /etc/resolv.conf
+
+Add:
+
+nameserver 10.10.10.10  # Your custom DNS IP
+
+--------------------------------
+STEP 3: RESTART NETWORK SERVICE
+--------------------------------
+$ sudo service networking restart
+
+-----------------------------------
+STEP 4: CHECK INCLUDED CONFIG FILES
+-----------------------------------
+$ sudo nano /etc/bind/named.conf		# See which files are included like `named.conf.options` & `named.conf.local`
+
+STEP 5: EDIT named.conf.options
+
+$ sudo nano /etc/bind/named.conf.options
+
+Add inside `options {}` block:
+
+listen-on { 192.10.10.132; };
+recursion yes;
+
+--------------------
+STEP 6: DEFINE ZONES
+--------------------
+
+* Edit `named.conf.local`
+$ sudo nano /etc/bind/named.conf.local
+
+Add:
+
+# Forward Zone (Domain ➝ IP)
+zone "choduchaman.com" {
+    type master;
+    file "/etc/bind/choduchaman.com.db";
+    allow-update { none; };
+};
+
+# Reverse Zone (IP ➝ Domain)
+zone "10.132.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/10.132.192.db";
+    allow-update { none; };
+};
+
+-----------------------------------
+STEP 7: CREATE ZONE DATABASE FILES
+-----------------------------------
+$ cd /etc/bind
+$ sudo touch choduchaman.com.db  # Forward Zone DB
+$ sudo touch 10.132.192.db       # Reverse Zone DB
+
+
+COPY TEMPLATE TO FORWARD ZONE FILE
+
+$ sudo cp db.local choduchaman.com.db
+$ sudo nano choduchaman.com.db
+
+Update:
+
+* Replace `localhost.` ➝ `myserver.choduchaman.com.`
+* Replace `root.localhost.` ➝ `root.choduchaman.com.`
+* Increment Serial number (left of `; Serial`) ➝ example: `4 ; Serial`
+
+ADD DNS RECORDS
+
+@	IN	NS	myserver.choduchaman.com.
+myserver    IN  A   192.153.44.2
+emailserver IN  A   192.153.44.3
+```
+
+REVERSE ZONE FILE
+
+$ sudo cp db.127 10.132.192.db
+$ sudo nano 10.132.192.db
+
+Add:
+
+@   IN  NS  myserver.choduchaman.com.
+132 IN  PTR myserver.choduchaman.com.
+3   IN  PTR emailserver.choduchaman.com.
+
+--------------------
+STEP 8: VERIFY ZONES
+--------------------
+
+$ named-checkzone choduchaman.com choduchaman.com.db
+$ named-checkzone 10.132.192.in-addr.arpa 10.132.192.db
+
+➡️ If Serial number appears ➝ Config is valid ✅
+
+Restart BIND
+
+$ sudo service bind9 restart
+
+-------------------
+STEP 9: TEST ZONES
+-------------------
+
+Use dig to test:
+
+$ dig @192.153.44.2 choduchaman.com
+$ dig @192.153.44.2 emailserver.choduchaman.com
+
+=================
+Add CNAME (Alias)
+=================
+$ sudo nano /etc/bind/choduchaman.com.db
+
+At end of file:
+
+mail    IN  CNAME   emailserver.choduchaman.com.
+
+➡️ Update Serial again (e.g., `5 ; Serial`)
+➡️ Restart BIND
+
+$ sudo service bind9 restart
+
+Test CNAME using nslookup:
+
+$ nslookup mail.choduchaman.com 192.10.10.132
