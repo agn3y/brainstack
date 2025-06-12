@@ -1,0 +1,10 @@
+NAME OF DAEMON WHICH IS RESPONSIBLE FOR NETWORK MANAGEMENT IN MODERN LINUX SYSTEMS
+
+* networkmanager
+- ALLOW THINGS TO BE HANDLED EASILY AND AUTOMATICALLY
+- $ sudo apt install nework-manager AND THEN USE $ nmcli
+- $ nmcli dev		# LIST NETWORK DEVICES
+- $ nmcli dev show	# MORE DETAILED INFORMATION
+- $ nmcli con		# SHOW ACTIVE CONNECTION
+- $ sudo nmcli con down interface_name		# DOWN PARTICULAR NETWORK INTERFACE
+- $ sudo nmcli con up interface_name		# REESTABLISH NETWORK INTERFACE 
