@@ -1,0 +1,34 @@
+BIND to Jail (DNS Protection)
+
+- To protect private DNS from attackers by isolating the BIND service in a "jail" (*chroot*), limiting damage even if the system is compromised.
+
+Core Idea:
+
+- Hypothetical Attack Scenario:
+- Attacker compromises DNS → gains access to root file system (but not root *user*).  
+- Goal: Minimize damage by restricting attacker’s access to **only DNS-related files**.  
+
+- Solution :`chroot`  
+- Changes the **apparent root directory** (`/`) for the BIND service.  
+- Attacker sees **only `/etc/bind/`** (not the real root filesystem).  
+
+Steps to Implement:
+
+1. Create the Jail Directory:
+$ sudo mkdir -p /chroot/named  
+$ cd /chroot/named  
+
+2. Edit BIND9 Startup Options:
+$ cd /etc/default/  
+$ nano bind9  
+
+Add this line to restrict BIND to the jail:  
+
+OPTIONS="-u bind -t /chroot/named"  
+
+3. Copy BIND Files to the Jail:
+- Copy all BIND9 files from `/etc/` to `/chroot/named/`.  
+
+Why This Works:
+- Isolation: BIND service **only "sees"** its own files (`/chroot/named/etc/bind/`).  
+- Attacker’s View: If compromised, they **can’t access** the real root (`/`) — only the jailed subset.  

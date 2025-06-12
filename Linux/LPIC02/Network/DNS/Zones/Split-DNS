@@ -1,0 +1,79 @@
+Split DNS?
+
+Split DNS (Split-Horizon DNS) is when a DNS server **resolves domain names differently** based on **who is making the request**:
+
+* 🔒 **Internal users** (inside organization) get **private IPs**
+* 🌐 **External users** (outside world) get **public IPs**
+
+Why is Split DNS Needed?
+
+| Need                            | Reason                                                                |
+| ------------------------------- | --------------------------------------------------------------------- |
+| Security                        | Hide internal systems from the public                                 |
+| Performance                     | Route internal users to faster, private resources                     |
+| Access Control                  | Let internal users access different servers or services               |
+| Same domain, different views    | Use `example.com` for both inside and outside, but give different IPs |
+
+
+Google.com Example
+
+Google uses Split DNS to serve users efficiently.
+
+| User Type                 | What They See                                                                      |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| You at Home               | `google.com` → **Public IP** (like `142.250.70.46`)                                |
+| Google Employee in Office | `google.com` → **Private IP** (like `10.10.1.15`) for internal testing or services |
+
+This helps Google:
+* Reduce load on public systems
+* Keep internal apps hidden
+* Test features only inside office
+
+How Split DNS Works (Basic View)
+
+1. Two **zone files** are created for the same domain:
+
+* One for **internal network** (served on internal interface)
+* One for **external users** (served on external interface)
+
+2. BIND or other DNS servers are configured with ACLs like:
+
+# CONFIG STARTS FROM HERE
+
+acl internal {
+    192.168.0.0/24;
+    localhost;
+};
+
+view "internal" {
+    match-clients { internal; };
+    zone "example.com" {
+        type master;
+        file "/etc/bind/db.example.internal";
+    };
+}
+
+view "external" {
+    match-clients { any; };
+    zone "example.com" {
+        type master;
+        file "/etc/bind/db.example.external";
+    };
+}
+
+Simple Use Case Example
+
+Suppose your domain is `shunlab.com`:
+
+| User            | DNS Reply                    |
+| --------------- | ---------------------------- |
+| Inside Home Lab | `shunlab.com → 192.168.1.10` |
+| Outside World   | `shunlab.com → 45.55.66.77`  |
+
+
+| Key Point           | Description                                     |
+| ------------------- | ----------------------------------------------- |
+| Split DNS           | Serves different DNS results to different users |
+| Use Cases           | Security, speed, internal testing               |
+| Tools               | BIND9, PowerDNS, dnsmasq                        |
+| Main Config Element | `view` blocks and `match-clients` in BIND       |
