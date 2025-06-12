@@ -1,0 +1,101 @@
+USING MODULES WITH APACHE (Focus: PHP Module)
+
+---
+
+GOAL
+
+- We want Apache to **understand and run PHP code**.
+- To do that, we must **install the PHP module for Apache**.
+
+---
+
+WHAT ARE APACHE MODULES?
+
+Apache modules are **extra features** we can add to Apache.
+For example:
+
+* PHP module → lets Apache **understand `.php` files**
+* SSL module → adds **HTTPS support**
+* Rewrite module → allows **URL rewriting**
+
+---
+
+EXAMPLE: SETUP PHP WITH APACHE
+
+---
+
+STEP 1: Create a PHP File
+
+$ sudo touch index.php
+
+Now edit the file and add:
+
+<!DOCTYPE html>
+	<html>
+	<body>
+		<?php 
+		echo "message one!<br>";
+		echo "Ma ka b26347!<br>";
+		?>
+	</body>
+</html>
+
+---
+
+STEP 2: Install PHP Module for Apache
+
+$ sudo apt install libapache2-mod-php -y		# allows Apache to **run PHP files**.
+
+---
+
+STEP 3: Test the PHP File
+
+* Place `index.php` in your web directory:
+  `/var/www/html/index.php`
+
+* Restart Apache:
+
+$ sudo systemctl restart apache2
+
+* Open browser and go to:
+  `http://localhost/index.php`
+
+---
+
+CHECK MODULE STATUS
+
+---
+
+Check if PHP module is **installed**
+$ ls /etc/apache2/mods-available | grep php
+
+If you see something like `php8.1.load` or `php.load`, it’s installed.
+
+---
+
+Check if PHP module is **enabled**
+$ ls /etc/apache2/mods-enabled | grep php
+
+If it shows the same file, PHP is enabled.
+
+---
+
+(Optional) Enable Module Manually
+
+If it's not enabled, use:
+
+$ sudo a2enmod php
+$ sudo systemctl restart apache2
+
+---
+
+SUMMARY TABLE
+
+| Task                       | Command                                  |            |
+| -------------------------- | ---------------------------------------- | ---------- |
+| Create PHP file            | `sudo touch index.php`                   |            |
+| Install PHP module         | `sudo apt install libapache2-mod-php -y` |            |
+| Check if PHP module exists | \`ls /etc/apache2/mods-available         | grep php\` |
+| Check if PHP is enabled    | \`ls /etc/apache2/mods-enabled           | grep php\` |
+| Enable PHP manually        | `sudo a2enmod php`                       |            |
+| Restart Apache             | `sudo systemctl restart apache2`         |            |

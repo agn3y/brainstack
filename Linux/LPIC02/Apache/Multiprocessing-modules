@@ -1,0 +1,48 @@
+Apache MPM (Multi-Processing Modules)
+
+Controls **how Apache handles requests** (process/thread model).
+Only **one MPM** is active at a time.
+
+---
+
+Types of MPM
+
+| MPM     | How It Works                  | Best For     |
+| ------- | ----------------------------- | ------------ |
+| prefork | 1 process per request         | PHP sites    |
+| worker  | 1 process → many threads      | Static sites |
+| event   | worker + idle connection mgmt | Busy servers |
+
+---
+
+Check Active MPM
+$ apache2ctl -V | grep -i mpm
+
+OR
+
+$ ls /etc/apache2/mods-enabled | grep mpm
+
+---
+
+Enable / Disable MPM
+
+$ sudo a2dismod mpm_prefork     # Disable current
+$ sudo a2enmod mpm_event        # Enable new
+$ sudo systemctl restart apache2
+
+---
+
+View Config/Load Files
+
+$ cat /etc/apache2/mods-enabled/mpm_event.conf
+$ cat /etc/apache2/mods-enabled/mpm_event.load
+
+
+# SIMPLE EXAMPLE : 
+You have a website with 100 users:
+
+MPM	What Happens
+
+prefork	Creates 100 separate processes (heavy but safe)
+worker	Creates 10 processes, each handles 10 users (light)
+event	Same as worker, but handles idle users better
