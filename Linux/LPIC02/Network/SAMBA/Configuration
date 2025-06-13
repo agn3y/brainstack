@@ -1,0 +1,9 @@
+CONFIGURATION FILE LOCATED AT /etc/samba/smb.conf
+
+[global] INDICATES GLOBAL SETTINGS
+# and ; meant to be comments
+
+; is used to make paertular line inactive
+
+
+

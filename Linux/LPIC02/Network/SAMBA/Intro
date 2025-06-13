@@ -1,0 +1,69 @@
+SAMBA - File Sharing Over Network (Linux to Windows)
+
+What is Samba?
+
+* Samba allows **sharing files and printers** over a **network**.
+* It enables **Linux systems to communicate with Windows systems** using the **SMB protocol**.
+* It is **Linux’s version of SMB (Server Message Block)**, which is used in Windows for file and printer sharing.
+
+Why Use Samba?
+
+* Share **folders and printers** between **Linux and Windows**.
+* Works over **TCP/IP** in a **LAN (Local Area Network)**.
+* Makes **Linux behave like a Windows file server**.
+* Useful in **mixed OS environments** (Linux and Windows together).
+
+SMB in Windows
+
+* **SMB (Server Message Block)** is the protocol used by **Windows** to share files and printers.
+* It supports **file access, printer sharing**, and even **serial port sharing** over a network.
+
+Samba in Linux
+
+* Samba implements **SMB protocol on Linux**.
+* It allows **Windows clients to access Linux files and printers**.
+* It translates Linux filesystem permissions to Windows-style access.
+
+Samba Components
+
+| Component | Full Name                    | Function                                                              |
+| --------- | ---------------------------- | --------------------------------------------------------------------- |
+| `nmbd`    | NetBIOS Message Block Daemon | Handles **NetBIOS name resolution** and **network browsing**          |
+| `smbd`    | Server Message Block Daemon  | Handles **file sharing, printer sharing, authentication** over TCP/IP |
+
+Documentation Path
+
+You can find official documentation at:
+
+/usr/share/doc/samba-4.0.0/htmldocs/index.html
+
+How to Install Samba
+
+$ sudo apt update
+$ sudo apt install samba samba-client samba-common -y
+
+Samba Configuration File
+
+Main config file:
+
+/etc/samba/smb.conf
+
+Samba User Security Types
+
+[1] User Security (default)
+
+* Each user must provide **username + password**.
+* Common and secure method.
+* Users are created on the system and added to Samba using:
+
+$ sudo smbpasswd -a username
+
+[2] Share Security
+
+* **Only password** is required to access the shared folder.
+* Username is **not checked** at connection time.
+* Weak security model.
+* Example problem:
+
+* If user1 connects using the password of user3, Samba **treats them as user3**.
+* Mostly used for **public or low-security folders**.
