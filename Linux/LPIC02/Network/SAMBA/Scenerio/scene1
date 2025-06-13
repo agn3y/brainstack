@@ -1,0 +1,84 @@
+Scenario 1: Samba Server in an Office (Windows + Linux Users on Same Network)
+
+- Boss asked you to install a **Samba file server** so all employees (some on Windows, some on Linux) can share files easily over the same LAN (Wi-Fi or Ethernet).
+
+* Create a shared folder on Linux server.
+* Make it accessible to **both Windows and Linux users**.
+* Everyone is on the **same router**, either wired or wireless.
+* Keep it **simple and open** for now (no password).
+
+1. Install Samba on the Linux Server
+
+$ sudo apt update
+$ sudo apt install samba samba-common samba-client -y
+
+2. Create a Shared Folder
+
+$ sudo mkdir -p /srv/samba/public
+$ sudo chmod -R 777 /srv/samba/public
+
+Explanation:
+
+* `777` → full access (read/write) for everyone
+* This is for open sharing in LAN (you can make it secure later)
+
+3. Configure Samba Share
+
+$ sudo nano /etc/samba/smb.conf
+
+At the **bottom**, add:
+
+[PublicShare]
+   comment = Public Folder for All Employees
+   path = /srv/samba/public
+   guest ok = yes
+   read only = no
+   force user = nobody
+   browsable = yes
+# Save and Exit
+
+4. Test Configuration and Restart Services
+
+$ testparm
+
+If no error:
+
+$ sudo systemctl restart smbd
+$ sudo systemctl restart nmbd
+
+5. Find Server IP Address
+
+On the Samba server, run:
+
+$ ip a
+
+Look for something like:
+
+inet 192.168.1.100
+
+This IP will be used by others to connect.
+
+6. Access Samba Share from Client Machines
+
+From Windows:
+
+* Open **Run (Win + R)** → type:
+
+  \\192.168.1.100\PublicShare
+
+* Press Enter → folder opens → no login needed
+
+From Linux:
+
+* Open file manager → Go to:
+
+  smb://192.168.1.100/PublicShare
+
+* Or mount with command:
+
+$ sudo mount -t cifs //192.168.1.100/PublicShare /mnt
+
+
+*** Optional: Allow Samba Through Firewall (if enabled)
+
+$ sudo ufw allow 'Samba'
