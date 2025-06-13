@@ -1,0 +1,122 @@
+Network File System (NFS)   
+
+1. Introduction to NFS
+- Definition : NFS (Network File System) is a distributed file system protocol that allows remote file access over a network.  
+- Developed by: Sun Microsystems (now Oracle) in 1984.  
+- Purpose: Enables sharing of files and directories across systems in a network as if they were local.  
+- Versions:  
+  - NFSv2 (1989): Basic features, limited performance.  
+  - NFSv3 (1995): Added support for larger files, asynchronous writes, and improved error handling.  
+  - NFSv4 (2000): Introduced stateful protocol, security enhancements, and better performance.  
+  - NFSv4.1 (2010): Added parallel access (pNFS) for scalability.  
+  - NFSv4.2 (2016): Enhanced features like server-side copy and sparse files.  
+
+2. How NFS Works
+
+- Client-Server Model :  
+  - Server : Exports (shares) directories.  
+  - Client : Mounts the exported directory to access files.  
+
+- Protocols Used :  
+  - RPC (Remote Procedure Call) : NFS relies on RPC for communication.  
+  - Portmapper (rpcbind) : Maps RPC services to ports (typically port **111**).  
+
+- Stateless vs Stateful:  
+  - NFSv2 & NFSv3 : Stateless (server does not track client state).  
+  - NFSv4+ : Stateful (server maintains client connections for better performance).  
+
+3. Key Components  
+
+- Server-Side Components  
+- `exportfs` : Manages exported directories (`/etc/exports` file).  
+- `rpc.nfsd` : NFS server daemon handling client requests.  
+- `rpc.mountd` : Handles mount requests and permissions.  
+- `rpc.statd` : Monitors server crashes for recovery (used in NFSv3).  
+
+* Client-Side Components  
+- `mount.nfs`: Mounts remote NFS shares.  
+- `nfsstat`  : Displays NFS statistics.  
+- `showmount`: Lists exported directories from a server.  
+
+4. NFS Configuration  
+
+* Server Configuration
+ 
+1. Install NFS Server :  
+$ sudo apt install nfs-kernel-server   # Debian/Ubuntu
+$ sudo yum install nfs-utils           # RHEL/CentOS
+
+2. Edit `/etc/exports` :  
+
+ /shared/dir client_IP(rw,sync,no_subtree_check)
+
+Options :  
+- `rw` (read-write) / `ro` (read-only)  
+- `sync` (writes are synchronous)  
+- `no_root_squash` (root access preserved)  
+- `all_squash` (all users mapped to anonymous)  
+
+3. Apply Exports :  
+$ sudo exportfs -a
+$ sudo systemctl restart nfs-server
+
+* Client Configuration
+  
+1. Install NFS Client :  
+$ sudo apt install nfs-common   # Debian/Ubuntu
+$ sudo yum install nfs-utils    # RHEL/CentOS
+
+2. Mount NFS Share :  
+$  sudo mount -t nfs server_IP:/shared/dir /local/mount/point
+
+3. Auto-mount at Boot (via `/etc/fstab`) :
+
+	server_IP:/shared/dir  /local/mount/point  nfs  defaults  0  0
+
+5. Security Considerations  
+
+- Authentication**:  
+  - Traditional : Uses host-based access (`/etc/exports`).  
+  - NFSv4+: Supports Kerberos (krb5) for encryption & authentication.  
+
+- Firewall Rules :  
+  - Open TCP/UDP 2049 (NFS).  
+  - Open TCP/UDP 111 (portmapper).  
+
+- Best Practices :  
+  - Restrict exports to trusted clients.  
+  - Use `no_root_squash` cautiously.  
+  - Prefer NFSv4 for better security.  
+
+6. Performance Tuning
+  
+- Use `async` exports (if data consistency is less critical).  
+- Increase NFS threads (edit `/etc/default/nfs-kernel-server`).  
+- Use TCP instead of UDP for reliability.  
+- Enable jumbo frames (MTU 9000) for high-speed networks.  
+
+7. Troubleshooting  
+
+- Check NFS Status :  
+$ sudo systemctl status nfs-server
+
+- Verify Exports :  
+$ sudo exportfs -v
+$ showmount -e server_IP
+  
+- Debug Mount Issues :  
+$ sudo mount -v -t nfs server_IP:/share /mnt
+
+- Logs :  
+$ tail -f /var/log/syslog   # Debian/Ubuntu
+$ journalctl -u nfs-server  # RHEL/CentOS
+
+8. Use Cases  
+- Centralized Home Directories (for multi-user environments).  
+- Shared Storage for Clusters (e.g., Kubernetes, VMs).  
+- Media & Backup Servers (large file sharing).  
+
+9. Alternatives to NFS  
+- SMB/CIFS (Windows-compatible file sharing).  
+- GlusterFS (scalable distributed file system).  
+- CephFS (highly scalable, fault-tolerant storage).  

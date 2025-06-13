@@ -1,0 +1,104 @@
+Real-World Scenario: Reverse Proxy Server Setup Using NGINX
+
+Goal:
+
+You work in a company. There are **multiple web servers** running on **different machines** like:
+
+| Web Server | IP Address      | Purpose         |
+| ---------- | --------------- | --------------- |
+| Server 1   | `192.168.1.101` | HR Web App      |
+| Server 2   | `192.168.1.102` | Employee Portal |
+| Server 3   | `192.168.1.103` | Admin Panel     |
+
+You want to put **one central server in front** of them that:
+
+* Accepts all incoming HTTP requests
+* Forwards them to correct backend server
+* **Hides backend server IPs**
+* Makes **load balancing**, **security**, and **central logging** easier
+
+This is what a **Reverse Proxy** does ✅
+
+Tool We'll Use: **NGINX**
+
+1. Choose and Prepare the Reverse Proxy Machine
+
+Pick one Linux machine that will become the **reverse proxy gateway**.
+
+Find its IP:
+
+ip a
+
+Let’s say: `192.168.1.100`
+
+2. Install NGINX
+
+$ sudo apt update
+$ sudo apt install nginx -y
+
+3. Configure Reverse Proxy Rules
+
+$ sudo nano /etc/nginx/sites-available/reverse-proxy.conf
+
+Paste this example config:
+
+
+server {
+    listen 80;
+
+    server_name _;
+
+    location /hr {
+        proxy_pass http://192.168.1.101;      # HR Web App
+    }
+
+    location /employee {
+        proxy_pass http://192.168.1.102;      # Employee Portal
+    }
+
+    location /admin {
+        proxy_pass http://192.168.1.103;      # Admin Panel
+    }
+}
+
+
+4. Enable the Configuration
+
+$ sudo ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/
+
+Test config:
+
+$ sudo nginx -t
+
+Restart NGINX:
+
+sudo systemctl restart nginx
+
+5. Accessing From Clients
+
+Client Usage (LAN)
+
+* Visit in browser:
+
+  * `http://192.168.1.100/hr` → goes to `192.168.1.101`
+  * `http://192.168.1.100/employee` → goes to `192.168.1.102`
+  * `http://192.168.1.100/admin` → goes to `192.168.1.103`
+
+* Final Setup Summary
+
+| Component    | IP Address      | Purpose                       |
+| ------------ | --------------- | ----------------------------- |
+| NGINX Proxy  | `192.168.1.100` | Accept & route client traffic |
+| HR Web App   | `192.168.1.101` | Backend 1                     |
+| Employee App | `192.168.1.102` | Backend 2                     |
+| Admin App    | `192.168.1.103` | Backend 3                     |
+
+* Why Reverse Proxy?
+
+| Feature            | Benefit                                  |
+| ------------------ | ---------------------------------------- |
+| IP hiding          | Backend server IPs hidden from users     |
+| Load balancing     | Distribute load between multiple servers |
+| SSL termination    | Add HTTPS at proxy only                  |
+| Centralized access | Only one entry point (easy to control)   |
+| Caching            | Faster response time for static content  |

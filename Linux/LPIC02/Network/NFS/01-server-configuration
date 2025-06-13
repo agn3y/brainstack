@@ -1,0 +1,165 @@
+* Ultimate Guide to Installing, Configuring, and Managing NFS (Server & Client)  
+
+========================================
+Part 1: Installing NFS (Server & Client)  
+========================================
+
+-----------------
+On the NFS Server
+-----------------  
+- This is the machine that will share its directories with others
+
+Step 1: Install NFS Server Packages
+
+# For Ubuntu/Debian:
+$ sudo apt update
+$ sudo apt install nfs-kernel-server rpcbind -y
+
+# For RHEL/CentOS/Fedora:
+$ sudo yum install nfs-utils rpcbind -y
+
+- What’s happening?
+  - `nfs-kernel-server` (Debian) / `nfs-utils` (RHEL) → The main NFS server package.  
+  - `rpcbind` → Required for communication between NFS server and clients.  
+
+Step 2: Enable & Start NFS Services
+
+# For Ubuntu/Debian:
+$ sudo systemctl enable --now nfs-kernel-server rpcbind
+
+# For RHEL/CentOS:
+$ sudo systemctl enable --now nfs-server rpcbind
+
+**What’s happening?**  
+- `enable --now` → Starts the service immediately and enables it at boot.  
+
+-----------------
+On the NFS Client  
+-----------------
+- This is the machine that will access the shared folders from the server. 
+
+Step 1: Install NFS Client Packages
+
+# For Ubuntu/Debian:
+$ sudo apt update
+$ sudo apt install nfs-common rpcbind -y
+
+# For RHEL/CentOS:
+$ sudo yum install nfs-utils rpcbind -y
+
+- What’s happening?  
+  - `nfs-common` (Debian) / `nfs-utils` (RHEL) → Provides NFS client tools.  
+  - `rpcbind` → Helps the client communicate with the NFS server.  
+
+Step 2: Start Required Services	  
+
+$ sudo systemctl start rpcbind
+
+*(No need to enable unless using older NFS versions.)*  
+
+==================================
+Part 2: Configuring the NFS Server 
+==================================
+
+Step 1: Choose a Directory to Share  
+
+$ sudo mkdir -p /mnt/nfs_share
+$ sudo chown nobody:nogroup /mnt/nfs_share  # Makes it accessible by all clients
+$ sudo chmod 777 /mnt/nfs_share             # Gives full permissions (adjust for security)
+
+- What’s happening?  
+  - `mkdir -p` → Creates a directory.  
+  - `chown nobody:nogroup` → Ensures no single user owns it (for multi-user access).  
+  - `chmod 777` → Temporary full access (we’ll restrict later).  
+
+Step 2: Edit `/etc/exports` (Defines Shared Folders)
+
+$ sudo nano /etc/exports
+
+Add the following line (adjust `client_IP`):  
+
+/mnt/nfs_share client_IP(rw,sync,no_subtree_check,no_root_squash)
+
+- Explanation of Options :  
+  - `rw` → Read & Write permissions.  
+  - `sync` → Ensures changes are written immediately (safer).  
+  - `no_subtree_check` → Improves reliability (disables subtree checks).  
+  - `no_root_squash` → Allows root access from clients (use cautiously!).  
+
+*(Replace `client_IP` with the actual IP or subnet like `192.168.1.0/24` for multiple clients.)*  
+
+Step 3: Apply the Exports & Restart NFS  
+
+$ sudo exportfs -a   # Applies all exports
+$ sudo systemctl restart nfs-kernel-server
+
+- What’s happening?
+  - `exportfs -a` → Updates the NFS server with new shares.  
+
+Part 3: Configuring the NFS Client  
+
+Step 1: Create a Local Mount Point
+
+$ sudo mkdir -p /mnt/nfs_client_share
+
+- This is where the server’s shared folder will appear locally.
+
+Step 2: Mount the NFS Share Manually (Temporary)  
+
+$ sudo mount -t nfs server_IP:/mnt/nfs_share /mnt/nfs_client_share
+
+- What’s happening?  
+  - `-t nfs` → Specifies the filesystem type.  
+  - `server_IP:/mnt/nfs_share` → The server’s shared folder.  
+  - `/mnt/nfs_client_share` → Local mount point.  
+
+Step 3: Verify the Mount Worked  
+
+$ df -h | grep nfs
+
+*(Should show the mounted NFS share.)*  
+
+Part 4: Controlling Access (Security) 
+
+Option 1: Restrict by IP (Best for Security) 
+Edit `/etc/exports` on the **server**:  
+
+/mnt/nfs_share 192.168.1.100(rw) 192.168.1.101(ro)
+
+- `192.168.1.100` → Read-Write access.  
+- `192.168.1.101` → Read-Only access.  
+
+Option 2: User-Based Permissions  
+
+$ sudo chmod 750 /mnt/nfs_share      # Restrict permissions
+$ sudo chown user:group /mnt/nfs_share  # Assign ownership
+
+*(Replace `user:group` with actual users.)*  
+
+Option 3: Firewall Rules (If Using a Firewall) 
+
+# For UFW (Ubuntu):
+$ sudo ufw allow from client_IP to any port nfs
+
+# For firewalld (RHEL/CentOS):
+$ sudo firewall-cmd --add-service=nfs --permanent
+$ sudo firewall-cmd --reload
+
+Part 5: Automatic Mounting at Boot (Permanent Setup)**  
+
+Edit `/etc/fstab` on the Client**  
+
+$ sudo nano /etc/fstab
+
+Add this line:  
+
+server_IP:/mnt/nfs_share  /mnt/nfs_client_share  nfs  defaults,_netdev  0  0
+
+- **What’s happening?**  
+  - `defaults` → Standard mount options.  
+  - `_netdev` → Ensures mount happens only after network is available.  
+
+Test & Apply  
+$ sudo mount -a   # Tests fstab entries
+
+*(If no errors, it will auto-mount on reboot.)*  
