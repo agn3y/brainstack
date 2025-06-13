@@ -1,0 +1,108 @@
+Scenario 2: Samba Server with Public and Secure Shares (Same Network) Based on scene - 1
+
+* Office has employees using **Windows and Linux**, all on the **same LAN**.
+* You must:
+
+* Final Setup Goal:
+
+| Share Name    | Access Type    | Who Can Access?               |
+| ------------- | -------------- | ----------------------------- |
+| `PublicShare` | Open           | Anyone on LAN (no login)      |
+| `SecureShare` | User + Pass 🔒 | Only trusted users (e.g., HR) |
+
+1. Install Samba
+
+$ sudo apt update
+$ sudo apt install samba samba-common samba-client -y
+
+2. Create Public and Secure Folders
+
+$ sudo mkdir -p /srv/samba/public
+$ sudo mkdir -p /srv/samba/secure
+
+$ sudo chmod -R 777 /srv/samba/public
+$ sudo chmod -R 770 /srv/samba/secure
+
+$ sudo chown -R nobody:nogroup /srv/samba/public
+4 sudo chown -R root:sambashare /srv/samba/secure
+
+> `770` means only **owner and group** can access secure folder.
+
+3. Create User for Secure Share
+
+$ sudo adduser shun
+$ sudo smbpasswd -a shun
+$ sudo usermod -aG sambashare shun
+
+4. Configure Samba
+
+$ sudo nano /etc/samba/smb.conf
+
+Add this **at the bottom**:
+
+[PublicShare]
+   comment = Open Folder
+   path = /srv/samba/public
+   guest ok = yes
+   read only = no
+   browsable = yes
+   force user = nobody
+
+[SecureShare]
+   comment = Restricted Folder
+   path = /srv/samba/secure
+   valid users = shun
+   guest ok = no
+   read only = no
+   browsable = yes
+
+5. Test and Restart Samba
+
+$ testparm
+
+$ sudo systemctl restart smbd
+$ sudo systemctl restart nmbd
+
+6. Get Server IP
+
+$ ip a
+
+Example output:
+
+inet 192.168.1.100
+
+Access From Client Machines
+
+Public Share (No Login)
+
+Windows:
+
+* Open Run → `\\192.168.1.100\PublicShare`
+
+Linux:
+
+* File Manager: `smb://192.168.1.100/PublicShare`
+
+Secure Share (With Login)
+
+Windows:
+
+* Open Run → `\\192.168.1.100\SecureShare`
+* Enter:
+
+  * Username: `shun`
+  * Password: (from `smbpasswd`)
+
+Linux:
+
+$ sudo mount -t cifs -o username=shun //192.168.1.100/SecureShare /mnt
+
+SECURITY CHECKS SEPARATED
+
+| Checkpoint            | Public Share | Secure Share |
+| --------------------- | ------------ | ------------ |
+| Needs login?          | ❌ No         | ✅ Yes        |
+| Guest OK              | ✅ Yes        | ❌ No         |
+| Valid users           | ❌ None       | ✅ shun       |
+| Permission (chmod)    | 777          | 770          |
+| User check + password | ❌ Skipped    | ✅ Required   |

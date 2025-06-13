@@ -1,0 +1,95 @@
+Squid Proxy
+
+* Forward Proxy setup server
+
+- Control and monitor traffic  
+- Improve security  
+- Help with caching  
+- Block or allow specific websites  
+- Hide internal user IPs from outside  
+
+* Situation:
+
+- All users (wired or Wi-Fi) are on the **same network** (e.g., `192.168.1.0/24`)
+- You will install **Squid** on one Linux machine
+- All clients will be configured to **send their traffic through the proxy**
+- The proxy will then **forward requests** to the real internet
+
+1. Install Squid on Proxy Server Machine
+
+$ sudo apt update
+$ sudo apt install squid -y
+
+2. Find Your Server's IP Address
+
+$ ip a
+
+Assume: `192.168.1.100` ← This is your **proxy server IP**
+
+3. Configure Squid for LAN
+
+$ sudo nano /etc/squid/squid.conf
+
+Find and update these parts (or add new):
+
+# Allow your LAN network
+acl localnet src 192.168.1.0/24
+
+# Allow access to proxy from localnet
+http_access allow localnet
+
+# Define the port proxy will listen on (default 3128)
+http_port 3128
+
+# SAVE - EXIT	
+
+4. Restart Squid to Apply Changes
+
+$ sudo systemctl restart squid
+$ sudo systemctl enable squid
+
+5. Configure Client Devices
+
+On every device (Windows/Linux):
+
+- Go to: **Control Panel > Internet Options > Connections > LAN Settings**
+- Enable: **Use a proxy server**
+- Address: `192.168.1.100`  
+- Port: `3128`
+
+Linux:
+
+You can set proxy globally or in browsers:
+
+export http_proxy="http://192.168.1.100:3128"
+export https_proxy="http://192.168.1.100:3128"
+
+Or configure browser (Firefox/Chrome) proxy settings manually.
+
+* Test
+
+Try to visit a website. If everything works — all traffic is now going through your proxy.
+Check logs:
+
+$ cat /var/log/squid/access.log
+
+You’ll see each request being logged.
+
+* Why This Is Safer?
+
+- **IP masking**: Outside world only sees proxy IP
+- **Block sites**: You can add rules to block social media, etc.
+- **Monitor usage**: Log and analyze who accessed what
+- **Filter content**: Only allow safe domains
+
+* Summary Table
+
+| Step                | Command / Info                        |
+|---------------------|----------------------------------------|
+| Install Squid       | `sudo apt install squid -y`           |
+| Config file         | `/etc/squid/squid.conf`              |
+| Server IP (example) | `192.168.1.100`                       |
+| Proxy port          | `3128` (default)                      |
+| Test logs           | `/var/log/squid/access.log`          |
+| Client setting      | Proxy IP = 192.168.1.100, Port = 3128 |
+
