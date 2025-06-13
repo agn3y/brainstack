@@ -1,9 +1,117 @@
-CONFIGURATION FILE LOCATED AT /etc/samba/smb.conf
+* SAMBA SERVER CONFIGURATION (REAL-LIFE USAGE)
 
-[global] INDICATES GLOBAL SETTINGS
-# and ; meant to be comments
+* Samba allows **file and printer sharing** between **Linux and Windows**.
+* It uses **SMB (Server Message Block)** protocol.
+* Makes Linux act like a **Windows-compatible file server**.
 
-; is used to make paertular line inactive
+* INSTALLING SAMBA
 
+$ sudo apt update
+$ sudo apt install samba samba-client samba-common -y
 
+* Check version:
 
+$ smbd --version
+
+* CREATE A DIRECTORY TO SHARE
+
+$ sudo mkdir -p /srv/samba/share
+$ sudo chmod -R 777 /srv/samba/share
+
+* CONFIGURATION FILE LOCATION
+
+/etc/samba/smb.conf
+
+* `[global]` → section for **global settings**
+* `#` or `;` → lines starting with these are **comments**
+* `;` also used to **disable specific options**
+
+* ADD A NEW SHARE IN smb.conf
+
+$ sudo nano /etc/samba/smb.conf
+
+Add at the bottom:
+
+[SharedFolder]
+   comment = Public Share
+   path = /srv/samba/share
+   guest ok = yes
+   read only = no
+   browsable = yes
+
+For secure user-based share:
+
+[PrivateShare]
+   path = /srv/samba/secure
+   valid users = shun
+   read only = no
+
+* ADDING USERS FOR SECURE ACCESS
+
+$ sudo adduser shun
+$ sudo smbpasswd -a shun
+
+* CHECKING CONFIGURATION BEFORE RESTART
+
+$ testparm
+
+* RESTART SAMBA SERVICES
+
+$ sudo systemctl restart smbd
+$ sudo systemctl restart nmbd
+
+* Check status:
+
+$ sudo systemctl status smbd
+
+* NETWORK DISCOVERY (OPTIONAL BUT USEFUL)
+
+* To find Samba host on LAN:
+
+$ nmblookup <hostname>
+
+* To find workgroup:
+
+$ nmblookup -S <hostname>
+
+* ACCESSING THE SAMBA SHARE
+
+* Open **Run (Win + R)** → type:
+
+\\<Linux-IP>\SharedFolder
+
+Example:
+
+\\192.168.1.100\SharedFolder
+
+* Enter username/password if required.
+
+From Linux:
+
+Mount it (for user-based access):
+
+$ sudo mount -t cifs -o username=shun //192.168.1.100/SharedFolder /mnt
+
+Or use the file manager:
+`Go to → smb://192.168.1.100/SharedFolder`
+
+TYPES OF SECURITY
+
+[1] **User Security** (Default)
+
+* Requires **username + password**
+* Safer and used in most real setups
+
+[2] **Share Security**
+
+* Only asks for **password**
+* No username checking
+* **Less secure** (anyone with password can impersonate)
+
+* DOCUMENTATION PATH
+
+/usr/share/doc/samba-4.0.0/htmldocs/index.html
+
+* FIREWALL (IF UFW ENABLED)
+
+$ sudo ufw allow 'Samba'
