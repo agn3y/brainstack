@@ -1,0 +1,36 @@
+NOTE: 
+
+- TCP Wrappers (`hosts.allow`/`hosts.deny`) only work with NFSv3 and older — NFSv4+ uses firewalls/Kerberos instead.
+- For modern systems, use `/etc/exports` + `firewalld`/`ufw`.)
+
+
+
+CONTROLLING ACCESS USING TCP WRAPPERS
+
+REMEMBER WE TALKED ABOUT THIS FILES
+[1] /etc/hosts.allow
+[2] /etc/hosts.deny 
+
+- WE ALSO REMEMBER HOW WILL CONFLICT WILL BE SOLVED.
+- REMEMBER DEAFULT SETTING IS ALLOWED.
+- RCPWARPPERS CAN OVERWRITE WHAT IS WITHIN exports FILE.
+
+- NOW TO CONTROL ACCESS GO TO 
+$ sudo nano /etc/hosts.allow 
+
+- THEN ADD THIS LINE AND SAVE EXIT 
+
+  portmap: 192.168.0.68
+
+- AND THEN GO 
+$ sudo nano /etc/hosts.deny
+
+- AND ADD THIS LINE
+- THIS LINE WILL DENY ALL ENTRY FROM THE NETWORK EXCEPT ABOVE DESCRIBED BEACUSE YOU KNOW HOW THIS HIERCHY WORKS
+
+  portmap: 192.168.0.0/24
+
+- OR WE CAN ADD THIS LINE WHICH WILL DENY ALL ENTRIES
+
+  portmap: ALL
+	
