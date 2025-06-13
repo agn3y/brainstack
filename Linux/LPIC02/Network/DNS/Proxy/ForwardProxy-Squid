@@ -1,0 +1,151 @@
+*** FORWARD PROXY AND SQUID – COMPLETE NOTE
+
+* What is a Proxy?
+
+A proxy is a server that acts as a middleman between a client and another server. The client sends requests to the proxy, and the proxy forwards those requests to the destination server. The server then sends the response back to the proxy, which finally sends it back to the client.
+
+* What is a Forward Proxy?
+
+A forward proxy is the most common type of proxy. It sits between internal clients (like users in a company) and the external internet.
+
+Purpose of a Forward Proxy:
+
+* Controls what users can access on the internet.
+* Hides the identity (IP address) of internal users.
+* Monitors and logs outgoing traffic.
+* Caches frequently accessed data.
+* Helps in saving bandwidth and improving performance.
+
+Example Flow:
+
+If a user types `http://example.com`, the request goes to the forward proxy server first, not directly to the website. The proxy then contacts the website, gets the content, and sends it back to the user.
+
+--- Squid – A Forward Proxy Server
+
+Squid is a powerful open-source forward proxy server that supports:
+
+* HTTP, HTTPS, FTP protocols.
+* Caching of content.
+* Access control and filtering.
+* Logging and monitoring.
+* Authentication.
+
+Key Features of Squid:
+
+1. Caching
+* Speeds up repeated access by storing copies of previously visited pages.
+
+2. Access Control
+* Blocks or allows specific websites or IPs based on rules.
+
+3. Authentication
+* Limits access using username/password.
+
+4. Logging
+* Tracks all requests made by clients.
+
+5. Bandwidth Management
+* Saves bandwidth by reusing cached responses.
+
+6. HTTPS Filtering
+* Can inspect or block encrypted traffic (with extra setup).
+
+Installing Squid on Ubuntu:
+
+$ sudo apt update
+$ sudo apt install squid
+
+Default config file:
+
+`/etc/squid/squid.conf`
+
+Default port: `3128`
+
+## Basic Configuration Examples:
+
+* Allow Only Local Network:
+
+acl localnet src 192.168.1.0/24
+http_access allow localnet
+http_access deny all
+
+* Block Specific Websites:
+
+acl bad_sites dstdomain .facebook.com .youtube.com
+http_access deny bad_sites
+
+* Set Proxy Listening Port:
+
+http_port 3128
+
+Caching Configuration:
+
+cache_mem 256 MB
+maximum_object_size 50 MB
+cache_dir ufs /var/spool/squid 100 16 256
+
+Enable Authentication (Username/Password):
+
+1. Install tool:
+
+$ sudo apt install apache2-utils
+
+2. Create user:
+
+$ sudo htpasswd -c /etc/squid/passwd user1
+
+3. Add to squid.conf:
+
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+acl authenticated proxy_auth REQUIRED
+http_access allow authenticated
+
+* Common Squid Commands:
+
+$ sudo systemctl restart squid         # Restart Squid service
+$ sudo systemctl status squid          # Check if it's running
+$ tail -f /var/log/squid/access.log    # Watch live logs
+
+Where Squid is Used in the Industry:
+
+1. Corporate Offices / Enterprises
+
+   * Restrict access to certain websites (e.g., social media).
+   * Monitor employee internet usage.
+   * Save internet cost using caching.
+   * Improve performance by caching OS or app updates.
+
+2. Schools & Colleges
+
+   * Block adult content or distracting sites.
+   * Filter specific domains.
+   * Save bandwidth by caching learning resources.
+
+3. ISP Providers
+
+   * Use large-scale Squid deployment to cache websites.
+   * Serve frequently visited content from the cache to reduce external data use.
+
+4. Data Centers
+
+   * Control and filter outgoing traffic from internal servers.
+   * Add an authentication layer for internal systems before allowing access to the internet.
+
+5. Testing and Debugging
+
+   * Squid can be used to simulate or log HTTP traffic from systems in development and QA environments.
+
+6. Secure Environments
+
+   * Enforce security by blocking unknown or harmful domains.
+   * Track and audit all outgoing traffic for compliance.
+
+| Component     | Description                                                    |
+| ------------- | -------------------------------------------------------------- |
+| Proxy         | Middleman server between client and target server              |
+| Forward Proxy | Sends client’s requests to internet on behalf of the client    |
+| Squid         | Open-source software to implement a forward proxy              |
+| Config File   | `/etc/squid/squid.conf`                                        |
+| Default Port  | `3128`                                                         |
+| Main Uses     | Caching, filtering, logging, controlling, and saving bandwidth |
+| Log File      | `/var/log/squid/access.log`                                    |

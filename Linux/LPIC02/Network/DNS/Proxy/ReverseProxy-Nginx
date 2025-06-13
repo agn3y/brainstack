@@ -1,0 +1,50 @@
+Reverse Proxy Using NGINX
+- A reverse proxy is a middleman between the user and the actual server, but it is set up on the server side.
+- A reverse proxy is a middleman between the user and the actual server.
+
+* It is set up on the **server-side**, not on the client-side.
+* It helps in:
+  * Load balancing
+  * Improving efficiency
+  * Hiding the real server from the outside world
+
+* Install NGINX
+
+$ sudo apt install nginx -y
+
+
+* Important File Locations
+
+* Configuration file:
+  `/etc/nginx/nginx.conf`
+
+* Web root directory:
+  `/var/www/html`
+
+* Another possible location for web files:
+  `/usr/share/nginx`
+
+* Configure NGINX as a Reverse Proxy
+
+Step 1: Open the configuration file
+$ sudo nano /etc/nginx/nginx.conf
+
+Step 2: Add the following inside the `http` block
+
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://192.168.0.100;		# add proxy domain or ip
+    }
+}
+
+
+Explanation:
+
+* `listen 80` — tells NGINX to listen on port 80 (HTTP)
+* `proxy_pass` — forwards requests to the actual server at IP `192.168.0.100`
+
+Restart NGINX
+$ sudo systemctl restart nginx
