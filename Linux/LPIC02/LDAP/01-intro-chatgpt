@@ -1,0 +1,129 @@
+LDAP (Lightweight Directory Access Protocol)** is a protocol used to **access and manage directory services** over a network. A **directory** is like a **database**, but it’s designed to be **read-heavy** and **fast for searching user and resource info** (like usernames, passwords, groups, emails, etc.).
+
+# Where is LDAP used?
+
+* Centralized **user authentication**
+* **Single Sign-On (SSO)** systems
+* Managing **user groups, roles**
+* Controlling **access to services** like SSH, Samba, Mail servers, etc.
+
+# Example Use Case
+
+Instead of creating users on every server, you add users in **LDAP server**, and all systems use LDAP to authenticate them.
+
+# Common LDAP Implementations
+
+| Name          | Description                        |
+| ------------- | ---------------------------------- |
+| **OpenLDAP**  | Most common, open-source LDAP      |
+| Microsoft AD  | Microsoft’s LDAP + Kerberos server |
+| 389 Directory | Red Hat-based LDAP server          |
+| ApacheDS      | LDAP server written in Java        |
+
+# LDAP Hierarchy Structure
+
+LDAP stores data in a **tree-like structure**:
+
+Root (dc=com)
+ └── dc=example
+      ├── ou=People
+      │    ├── uid=luffy
+      │    ├── uid=zoro
+      └── ou=Groups
+           └── cn=admins
+
+* **dc** = Domain Component (e.g. `dc=example,dc=com`)
+* **ou** = Organizational Unit (like folders: People, Groups)
+* **uid** = User ID (a specific user)
+* **cn** = Common Name (often for groups)
+
+# LDAP Entry
+
+Each item in LDAP is called an **entry**, made up of:
+
+* **DN (Distinguished Name)** → unique path of the object
+  Example: `uid=luffy,ou=People,dc=example,dc=com`
+* **Attributes** → key-value info
+
+  Example:
+
+  uid: luffy
+  cn: Monkey D. Luffy
+  sn: Luffy
+  mail: luffy@example.com
+ 
+# Important LDAP Terms
+
+| Term            | Meaning                                                   |
+| --------------- | --------------------------------------------------------- |
+| **DN**          | Full unique path of an entry                              |
+| **RDN**         | Last part of DN (e.g., `uid=luffy`)                       |
+| **Attribute**   | Info like name, email, password, etc.                     |
+| **ObjectClass** | Defines what kind of entry it is (person, user, group)    |
+| **LDIF**        | LDAP Data Interchange Format – used to import/export data |
+
+# LDAP Ports
+
+| Port | Protocol | Description       |
+| ---- | -------- | ----------------- |
+| 389  | LDAP     | Plain LDAP        |
+| 636  | LDAPS    | LDAP over SSL/TLS |
+
+
+# Common LDAP Commands (using `ldap-utils`)
+
+# Install
+$ sudo apt install ldap-utils		
+# Search:
+
+ldapsearch -x -H ldap://localhost -b "dc=example,dc=com"
+
+# Add Entry (from `.ldif`):
+
+ldapadd -x -D "cn=admin,dc=example,dc=com" -W -f user.ldif
+
+#  Modify:
+
+ldapmodify -x -D "cn=admin,dc=example,dc=com" -W -f change.ldif
+
+# Sample `user.ldif` file
+
+dn: uid=luffy,ou=People,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: luffy
+cn: Monkey D. Luffy
+sn: Luffy
+mail: luffy@example.com
+uidNumber: 1001
+gidNumber: 1001
+homeDirectory: /home/luffy
+loginShell: /bin/bash
+userPassword: {SSHA}HashedPasswordHere
+
+# Authentication with LDAP
+
+To use LDAP for login in Linux systems:
+
+* Install `libnss-ldap`, `libpam-ldap`, or `sssd`
+* Configure `/etc/nsswitch.conf` for users, groups
+* Configure `/etc/ldap.conf` or `/etc/sssd/sssd.conf`
+
+# Simple Diagram
+
++-----------+     LDAP Query     +--------------+
+|  Client   | -----------------> |  LDAP Server |
+| (ssh, app)| <----------------- | (OpenLDAP)   |
++-----------+     Response       +--------------+
+
+# Summary
+
+| Concept     | Simple Meaning                                |
+| ----------- | --------------------------------------------- |
+| LDAP        | Protocol to manage users and groups centrally |
+| Entry       | One record in LDAP (user, group)              |
+| DN          | Full path to the entry                        |
+| LDIF        | File format for adding/modifying entries      |
+| ObjectClass | Defines type of entry (user, group, etc.)     |
+| OpenLDAP    | Popular open-source LDAP server               |

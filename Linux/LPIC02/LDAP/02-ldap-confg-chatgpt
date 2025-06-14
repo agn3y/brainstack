@@ -1,0 +1,123 @@
+LDAP Configuration with `slapd`
+
+# Installing LDAP
+
+Step 1: Install `slapd` daemon (Stand-Alone LDAP Daemon)
+
+$ sudo apt install slapd -y
+
+# You will be asked to **set the LDAP admin password** during the install.
+
+Step 2: Install LDAP utility tools
+
+$ sudo apt install ldap-utils -y
+
+# Reconfigure LDAP Domain Name
+
+$ sudo dpkg-reconfigure slapd
+
+During this process:
+
+* Select **No** when asked to omit configuration.
+* Enter your **domain name** (e.g., `ipvzero.com`).
+* Set **organization name** (e.g., `MyOrg`).
+* Set **admin password**.
+* Choose **MDB (modern database backend)**.
+* Choose **No** for "Remove database when slapd is purged".
+* Choose **Yes** to allow database move.
+
+# Important Files and Directories
+
+# Read current configuration:
+
+$ sudo slapcat
+
+# Schema files location:
+
+$ cd /etc/ldap/schema/
+
+* Files ending with `.schema` are **schema definition files**
+* Files ending with `.ldif` are **LDAP Data Interchange Format** files
+
+In Vim, you can search inside files using `/`, e.g.,
+
+/objectclass
+
+to search for class definitions.
+These files tell what **attributes must** or **may** be present for an LDAP entry.
+
+# Configuration File Locations
+
+* Traditional config file:
+
+  /etc/ldap/slapd.conf
+
+* Modern (default) configuration directory:
+
+  /etc/ldap/slapd.d/
+
+  Look for files under `cn=config/` inside this directory.
+
+# Controlling the LDAP Service
+
+$ sudo systemctl start slapd
+$ sudo systemctl status slapd
+
+# Adding Entries into LDAP Database
+
+Step 1: Create an LDIF file
+
+$ sudo nano /etc/ldap/file.ldif
+
+Paste the following:
+
+dn: o=myorg,dc=ipvzero,dc=com
+objectClass: organization
+description: This is a test file
+o: myorg
+
+
+Save and exit.
+
+# Step 2: Add the entry to LDAP
+
+$ sudo ldapadd -x -D "cn=admin,dc=ipvzero,dc=com" -W -f /etc/ldap/file.ldif
+
+* `-x` uses simple authentication
+* `-D` specifies the bind DN
+* `-W` asks for password
+* `-f` specifies the LDIF file
+
+Step 3: View the current entries
+
+$ sudo slapcat
+
+If the database is large, you can filter the view:
+
+$ sudo ldapsearch -x -b "dc=ipvzero,dc=com"
+$ sudo ldapsearch -x -b "o=myorg,dc=ipvzero,dc=com"
+
+# Deleting Entries
+
+# Local delete:
+
+$ sudo ldapdelete "o=myorg,dc=ipvzero,dc=com" -x -D "cn=admin,dc=ipvzero,dc=com" -W
+
+# Remote delete (over network):
+
+$ sudo ldapdelete -h 192.168.0.44 "o=myorg,dc=ipvzero,dc=com" -x -D "cn=admin,dc=ipvzero,dc=com" -W
+
+---
+
+## 📦 Real-World Example (Simple Use Case)
+
+**Scenario**:
+You are working in a company with 100 Linux servers. Each developer needs access to all servers with **one username and password**. Managing users locally on each machine is hard.
+
+**Solution using LDAP**:
+
+* Set up **LDAP server** with all users (dev1, dev2, dev3, etc.).
+* All 100 servers are configured to **authenticate users using LDAP**.
+* Now if a new user joins, you just **add them in LDAP once**, and they can log in to all servers.
+
+This is why LDAP is **commonly used** in enterprise environments for **centralized user management**.

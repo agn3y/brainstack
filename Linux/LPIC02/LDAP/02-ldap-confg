@@ -1,0 +1,80 @@
+MAIN DEAMON WHICH CONTROL IS slapd DAEMON
+STAND ALONE LDAP DAEMON 
+
+TO INSTALL LDAP
+$ sudo apt install slapd -y
+
+ENTER PASSWORD FOR LDAP
+
+THEN INSTALL UTILS
+$ sudo apt install ldap-utils -y
+
+NOW CONFIGRUE THE DOMAIN NAME
+$ sudo dpkg-reconfigure slapd
+
+NO > ENTER DOMAIN NAME	> ORGNAME > ADMIN PASSWORD > MDB BACKEND > NO ( DATABASE NOT REMOVED ) > YES
+
+NOW TO READ LDAP CONFIGURATION USE 
+$ sudo slapcat
+
+NOW TO SEE FILES RELATED SCHMA WE CAN FIND THEM 
+$ cd /etc/slapd/schema/
+
+FILES ENDING WITH .schema ARE SCHEMA FILES
+FILES ENDING WITH .ldif ARE LDAP DATA INTERCHANGE FORMAT FILE
+
+WE CAN DO / TO SERACH WITHIN vim
+
+FIND CLASS NAMED objectclass
+OR SERACH FOR ORGANIZATION
+
+WE WILL FIND WHAT WE MUST SUPPLY AND WHAT WE MAY SUPPLY IN THIS LDIF FILES
+
+NOW WALL THISINFORMATION (ALL LDIF FILES) INCLUDED IN A FILE LOCATED AT /etc/slapd.conf
+
+WE WILL HAVE ANOTHER DIRECTORY CALLED / LOCATED ->  /etc/ldap/slapd
+
+
+IN MODERN WAY THERE IS ANOTHER WAY ALL THIS CONFIGURATION WILL BE MANAGED
+$ cd /etc/ldap/slapd.d/ and then look for 'cn=config' 
+
+TO START SLAPD SERVICE
+$ sudo systemctl service slapd start
+
+TO CHECK STATUS 
+$ sudo systemctl service slapd status
+
+TRY ADDING SOME DATABASE BY USING THIS COMMAND
+$ sudo nano /etc/ldap/file.ldif
+
+ADD THIS CONTENT IN THE FILE
+
+dn: o=myorg,dc=username,dc=com
+objectclass: organization
+description: This is a test file
+o: myorg
+
+SAVE AND EXIT 
+
+ADD SOMETHING IN THIS DIRECTORY
+$ sudo ldapadd -x -D "cn=admin,dc=ipvzero,dc=com" -W -f file.ldif
+
+ENTER YOUR LDAP PASSWORD
+
+NOW AGAIN CHECK ALL ENTRIES USING
+$ sudo slpacat
+
+IF THE DIRECTORY IS PRETTY BIG WE CAN USE
+$ sudo ldapsearch -x -b "dc=ipvzero,dc=com" 
+$ sudo ldapsearch -x -b "o=myorg,dc=ipvzero,dc=com"
+
+# OPTIONAL COMMAND
+
+WE CAN ALSO PERFORM OPERATION REMOTELY USING DOMAIN
+$ sudo ldapdelete -h 192.168.0.44 "o=myorg,dc=ipvzero,dc=com" -x -D "cn=admin,dc=ipvzero,dc=com" -W
+
+TO DELETE ENTRIES WE CAN USE THIS COMMAND
+$ sudo ldapdelete "o=myorg,dc=username,dc-com" -x -D "cn=admin,dc=ipvzero,dc=com" -W 
+
+NOW CHECK USING
+$ sudo slapcat 

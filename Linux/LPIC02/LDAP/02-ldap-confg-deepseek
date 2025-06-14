@@ -1,0 +1,136 @@
+What is LDAP ?
+- LDAP (**Lightweight Directory Access Protocol**) is a protocol used to access and manage directory services. A **directory service** is like a database, but optimized for reading rather than writing (e.g., user authentication, contact lists, network resource lookup).  
+
+Common Uses of LDAP
+- Centralized user authentication (replacing local `/etc/passwd` and `/etc/shadow`)  
+- Storing employee details (email, phone numbers, departments)  
+- Managing access control (who can log in to which systems)  
+- Integrating with services like **SSH, email, VPN, and web apps**  
+
+* Key Components of LDAP
+
+1. slapd (Standalone LDAP Daemon)
+- The main **LDAP server** that stores and manages directory data.  
+- Runs as a background service (`slapd`).  
+
+2. LDAP Directory Structure (DIT - Directory Information Tree)
+- Data is organized in a **tree-like structure**.  
+- Example:  
+  
+  dc=example,dc=com  
+    ├── ou=people (users)  
+    ├── ou=groups (user groups)  
+    └── ou=services (applications)  
+  
+- **dn (Distinguished Name)** = Unique identifier for each entry (e.g., `uid=johndoe,ou=people,dc=example,dc=com`).  
+
+3. Schemas  
+- Define **what kind of data** can be stored (like database tables).  
+- Stored in `/etc/ldap/schema/` (e.g., `inetOrgPerson` for user details).  
+
+4. LDIF (LDAP Data Interchange Format)
+- A text format for **adding, modifying, or deleting LDAP entries**.  
+- Example:  
+  
+  dn: uid=johndoe,ou=people,dc=example,dc=com  
+  objectClass: inetOrgPerson  
+  uid: johndoe  
+  cn: John Doe  
+  sn: Doe  
+  mail: johndoe@example.com  
+
+* Step-by-Step LDAP Setup
+
+1. Install OpenLDAP (slapd & ldap-utils)
+
+$ sudo apt update  
+$ sudo apt install slapd ldap-utils -y  
+
+- `slapd` = LDAP server  
+- `ldap-utils` = Command-line tools to manage LDAP  
+
+2. Configure slapd (Set Domain & Admin Password)**  
+
+$ sudo dpkg-reconfigure slapd  
+
+Follow prompts:  
+- **No** (Don’t omit configuration)  
+- **Domain Name** (e.g., `example.com` → `dc=example,dc=com`)  
+- **Organization Name** (e.g., "MyCompany")  
+- **Admin Password** (Must be strong!)  
+- **Database Backend**: Choose **MDB** (recommended)  
+- **Remove old database?** → **No**  
+- **Move old database?** → **Yes**  
+
+3. Check if LDAP is Running
+
+$ sudo systemctl status slapd  
+
+- If not running: `sudo systemctl start slapd`  
+
+4. Verify LDAP Data
+
+$ sudo slapcat  
+
+- Shows all entries in the LDAP database.  
+
+* Adding Data to LDAP (Example: Adding a User)
+
+1. Create an LDIF File (`add_user.ldif`)
+
+dn: uid=johndoe,ou=people,dc=example,dc=com  
+objectClass: inetOrgPerson  
+objectClass: posixAccount  
+uid: johndoe  
+cn: John Doe  
+sn: Doe  
+userPassword: {CRYPT}x  
+uidNumber: 1000  
+gidNumber: 1000  
+homeDirectory: /home/johndoe  
+loginShell: /bin/bash  
+mail: johndoe@example.com  
+
+2. Add the User to LDAP
+
+$ ldapadd -x -D "cn=admin,dc=example,dc=com" -W -f add_user.ldif  
+
+- `-x` = Simple authentication  
+- `-D` = Admin account  
+- `-W` = Prompt for password  
+
+3. Set a Password for the User
+
+$ ldappasswd -x -D "cn=admin,dc=example,dc=com" -W -S "uid=johndoe,ou=people,dc=example,dc=com"  
+
+- You’ll be asked to enter a new password.  
+
+4. Search for the User
+
+$ ldapsearch -x -b "dc=example,dc=com" "(uid=johndoe)"  
+
+- `-b` = Base search (start from `dc=example,dc=com`)  
+- `"(uid=johndoe)"` = Filter to find this user  
+
+# Deleting an Entry
+
+$ ldapdelete -x -D "cn=admin,dc=example,dc=com" -W "uid=johndoe,ou=people,dc=example,dc=com"  
+
+- Removes the user from LDAP.  
+
+# Securing LDAP (TLS Encryption)
+
+1. Install Certbot for SSL Certificates  
+   
+$ sudo apt install certbot  
+$ sudo certbot certonly --standalone -d ldap.example.com  
+
+2. **Configure LDAP to Use TLS**  
+- Edit `/etc/ldap/ldap.conf`:  
+   
+   TLS_CACERT /etc/ssl/certs/ca-certificates.crt  
+   TLS_REQCERT allow  
+   
+3. **Restart slapd**  
+
+$ sudo systemctl restart slapd  
