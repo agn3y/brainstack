@@ -1,0 +1,83 @@
+DHCP Relay – Simplified Explanation and Setup Guide
+
+- When a client device is **not on the same network** as the DHCP server, it **cannot get an IP directly**.
+- In this case, we use a **DHCP Relay Agent** – a device that **forwards DHCP requests** between the client and the server, **acting as a bridge**.
+
+Scenario:
+
+* A **client** on one network wants an IP.
+* The **DHCP server** is on a **different network**.
+* A **middle device (relay agent)** helps them communicate.
+
+Steps to Configure DHCP Relay
+
+Step 1: Configure DHCP Server
+
+Go to your **main DHCP server** and **add a new IP pool** for the remote network.
+
+Edit the DHCP config file:
+
+$ sudo nano /etc/dhcp/dhcpd.conf
+
+Add this configuration block:
+
+
+subnet 172.16.1.0 netmask 255.255.255.0 {
+    range 172.16.1.25 172.16.1.200;
+    option routers 172.16.1.15;
+    default-lease-time 2000;
+    max-lease-time 5000;
+    option domain-name "choduchaman.com";
+    option domain-name-servers 8.8.8.8;
+}
+
+🔸 `172.16.1.15` is the IP of the **relay agent** (middle device).
+🔸 Save and exit the file.
+
+Restart the DHCP server:
+
+$ sudo systemctl restart isc-dhcp-server
+
+
+Step 2: Configure Relay Agent (Middle Device)
+
+1. Set the correct IP on your interface:
+
+Remove the current IP:
+
+$ sudo ip addr del <CURRENT_IP>/24 dev enp0s3
+
+Add the IP from the subnet you configured:
+
+$ sudo ip addr add 172.16.1.15/24 dev enp0s3
+
+Replace `enp0s3` with your actual network interface name.
+You can check interfaces using `ip a`.
+
+2. Install DHCP Relay Package:
+
+$ sudo apt install isc-dhcp-relay -y
+
+3. Configure the DHCP Relay:
+
+Edit the relay config file:
+
+$ sudo nano /etc/default/isc-dhcp-relay
+
+Set the following:
+
+
+SERVERS="10.10.1.10"            # IP of your main DHCP server
+INTERFACES="enp0s3"             # Interface connected to the client
+OPTIONS=""
+
+
+4. Restart the Relay Service:
+
+$ sudo systemctl restart isc-dhcp-relay
+
+Summary:
+
+* DHCP Relay allows IP assignment **across different networks**.
+* The **relay agent forwards** DHCP packets between **client** and **server**.
+* You configure the **DHCP server with the correct subnet**, and the **relay with correct routes and interfaces

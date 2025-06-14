@@ -1,0 +1,132 @@
+* Deeply Detailed Guide: Configuring a DHCP Server
+
+1. Introduction to DHCP  
+- Dynamic Host Configuration Protocol (DHCP)  automates IP address assignment, subnet masks, default gateways, DNS servers, and other network parameters. It eliminates manual configuration errors and simplifies network management.  
+
+Key DHCP Components
+-  DHCP Server : Assigns IP addresses and network configurations.  
+- DHCP Client : Requests and receives configurations.  
+- DHCP Lease : Temporary assignment of an IP address (default lease time varies).  
+- DHCP Scope : Range of IP addresses available for assignment.  
+- DHCP Relay : Forwards requests across subnets (if the server is not local).  
+
+2. Prerequisites for DHCP Server Setup  
+Before setting up a DHCP server, ensure:  
+- A static IP address is assigned to the DHCP server.  
+- Administrative privileges (root/sudo on Linux, Admin on Windows).  
+- Network topology knowledge (subnets, reserved IPs, exclusions).  
+- Compatible OS (Linux with `isc-dhcp-server` or Windows Server).  
+
+3. Installing a DHCP Server  
+
+Linux (ISC DHCP Server)  
+On Debian/Ubuntu  
+
+$ sudo apt update  
+$ sudo apt install isc-dhcp-server -y  
+
+On RHEL/CentOS:  
+$  sudo yum install dhcp -y   
+
+Enable & Start DHCP Service  
+$ sudo systemctl enable isc-dhcp-server  
+$ sudo systemctl start isc-dhcp-server    
+
+Windows Server 
+1. Open Server Manager → Add Roles and Features.  
+2. Select DHCP Server → Complete installation.  
+3. Post-install,  authorize the DHCP server in Active Directory (if applicable).  
+
+4. Configuring DHCP Server  
+
+Basic DHCP Configuration  
+
+Linux (`/etc/dhcp/dhcpd.conf`)
+
+# Global Settings  
+option domain-name "example.com";  
+option domain-name-servers 8.8.8.8, 8.8.4.4;  
+default-lease-time 600;  
+max-lease-time 7200;  
+authoritative;  
+
+# Subnet Declaration  
+subnet 192.168.1.0 netmask 255.255.255.0 {  
+    range 192.168.1.100 192.168.1.200;  
+    option routers 192.168.1.1;  
+    option subnet-mask 255.255.255.0;  
+}    
+
+Windows Server DHCP Configuration  
+1. Open DHCP Manager .  
+2. Right-click IPv4 → New Scope.  
+3. Define:  
+   - **Scope Name & Description**  
+   - **IP Range (Start & End)**  
+   - **Subnet Mask & Default Gateway**  
+   - **DNS & WINS Servers**  
+   - **Lease Duration**  
+
+Advanced DHCP Options  
+- Reservations (Static IPs for specific MACs)  
+  
+  host printer {  
+      hardware ethernet 00:1A:2B:3C:4D:5E;  
+      fixed-address 192.168.1.50;  
+  }  
+   
+- Custom Options (e.g., TFTP, NTP, PXE Boot)  
+  
+  option tftp-server-address "192.168.1.10";  
+    
+- Class-Based Allocation  (for different device types)  
+
+5. DHCP Lease Management  
+-  View Leases (Linux):  
+
+$ cat /var/lib/dhcp/dhcpd.leases  
+  
+- Windows: Check Address Leases in DHCP Manager.  
+- Release/Reassign Leases:
+  - Client-side: `ipconfig /release` & `ipconfig /renew` (Windows)  
+  - Server-side: Remove leases manually if needed.  
+
+6. DHCP Failover & Redundancy  
+Linux (ISC DHCP Failover)  
+
+failover peer "dhcp-failover" {  
+    primary;  
+    address 192.168.1.2;  
+    peer address 192.168.1.3;  
+    max-response-delay 60;  
+    max-unacked-updates 10;  
+    load balance max seconds 3;  
+}    
+
+Windows Server DHCP Failover
+
+1. Right-click IPv4 → Configure Failover.  
+2. Select partner server & configure Load Balancing / Hot Standby  
+
+7. Troubleshooting DHCP Issues  
+- Server Not Assigning IPs?  
+  - Verify `dhcpd` service status (`systemctl status isc-dhcp-server`).  
+  - Check firewall rules (`ufw allow 67/udp`).  
+- Client Not Receiving IP?  
+  - Run `dhclient -v` (Linux) or `ipconfig /all` (Windows).  
+-  DHCP Logs:  
+  - Linux: `/var/log/syslog`  
+  - Windows:  Event Viewer → DHCP Server Events  
+
+8. Security Best Practices  
+-  Use DHCP Snooping  (on switches to prevent rogue DHCP servers).  
+-  Implement MAC Filtering for untrusted devices.  
+-  Disable Unused Scopes to prevent IP conflicts.  
+-  Regularly Backup DHCP Config  (`/etc/dhcp/dhcpd.conf` or Windows export).  
+
+9. Conclusion  
+A properly configured DHCP server simplifies IP management, reduces errors, and enhances network reliability. Whether on Linux or Windows, following best practices ensures secure and efficient DHCP operations.  
+
+Next Steps
+- Explore  DHCPv6 for IPv6 networks.  
+- Implement  DHCP Relay Agents for multi-subnet environments.  

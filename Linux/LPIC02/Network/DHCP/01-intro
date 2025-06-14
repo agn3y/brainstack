@@ -1,0 +1,27 @@
+DHCP - DYNAMIC HOST CONFIGURATION PROTOCOL
+- DHCP is a system that gives IP addresses automatically to devices (like your phone or computer) so they can connect to the network without you setting IP manually.
+
+* DHCP POOL
+- A DHCP Pool is a group or range of IP addresses that the DHCP server can give out to devices.
+- Example: IPs from 192.168.1.100 to 192.168.1.200 are in the pool. When a device connects, it gets one IP from this pool.
+
+* How DHCP Works — Remember with DORA:
+
+* D = DISCOVER:** Your device asks “Who is there? I need an IP.”
+* O = OFFER:** DHCP server says “I have this IP for you.”
+* R = REQUEST:** Your device says “I want that IP.”
+* A = ACKNOWLEDGE:** DHCP server says “OK, this IP is yours now.”
+
+* Lease Time
+- When DHCP gives an IP, it’s only for some time. This is called the **lease time**. After lease time ends, the device must ask again for an IP (or renew the same one). This helps manage IPs efficiently.
+
+* Types of IP Addresses DHCP Can Assign:
+
+* Dynamic IP:** Random IP from the DHCP pool given for lease time.
+* Static IP (Reserved IP):** You can tell DHCP to always give the same IP to a device based on its MAC address (like a fixed home address).
+
+* Extra simple example:
+
+- Think of DHCP like a hotel receptionist giving room keys:
+
+* You arrive (DISCOVER) → receptionist offers a room (OFFER) → you say “I’ll take this one” (REQUEST) → receptionist gives you the key (ACKNOWLEDGE) with a checkout time (lease time).

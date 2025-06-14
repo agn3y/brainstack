@@ -1,0 +1,78 @@
+# **Dynamic Host Configuration Protocol (DHCP) - Complete Guide**  
+
+1. What is DHCP?  
+- DHCP (**Dynamic Host Configuration Protocol**) is a network protocol that automatically assigns IP addresses and other network configuration parameters (like subnet mask, default gateway, and DNS servers) to devices on a network. This eliminates the need for manual IP configuration.  
+
+Key Benefits of DHCP:  
+- Automation: No manual IP assignment required.  
+- Centralized Management: IP settings are managed from a DHCP server.  
+- Reduced Errors: Minimizes IP conflicts.  
+- Efficient IP Usage: IPs are leased temporarily and reused when not needed.  
+
+2. DHCP Configuration  
+
+Basic DHCP Server Configuration (Example: Cisco Router)  
+To configure a Cisco router as a DHCP server:  
+
+Router(config)# ip dhcp pool LAN_POOL  
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0  
+Router(dhcp-config)# default-router 192.168.1.1  
+Router(dhcp-config)# dns-server 8.8.8.8 8.8.4.4  
+Router(dhcp-config)# lease 7  # Lease time in days  
+Router(dhcp-config)# exit  
+
+# Exclude reserved IPs (e.g., for servers)  
+Router(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10   
+
+Key DHCP Parameters:  
+- Network: The subnet to assign IPs from (e.g., `192.168.1.0/24`).  
+- Default Gateway: The router’s IP (`192.168.1.1`).  
+- DNS Server: Provides domain name resolution.  
+- Lease Time: How long a device keeps the IP before renewal.  
+
+3. DHCP Relay (DHCP Helper)  
+
+# What is DHCP Relay?  
+- In large networks, DHCP servers may not be on the same subnet as clients. A **DHCP Relay Agent** forwards DHCP requests from clients to a DHCP server in another subnet.  
+
+# Why Use DHCP Relay?  
+- Allows a single DHCP server to manage multiple subnets.  
+- Eliminates the need for a DHCP server on every subnet.  
+
+# DHCP Relay Configuration (Cisco Router/Switch)
+Router(config)# interface GigabitEthernet0/0  
+Router(config-if)# ip helper-address 10.0.0.2  # IP of DHCP server  `  
+
+# How DHCP Relay Works: 
+1. A client broadcasts a **DHCP Discover** message.  
+2. The relay agent (router) receives it and forwards it as a **unicast** to the DHCP server.  
+3. The DHCP server responds with an offer, sent back via the relay agent.  
+
+
+# 4. Important DHCP Messages**  
+- **DHCP Discover** – Client broadcasts to find a DHCP server.  
+- **DHCP Offer** – Server responds with an available IP.  
+- **DHCP Request** – Client requests the offered IP.  
+- **DHCP Ack** – Server confirms the lease.  
+- **DHCP Release** – Client voluntarily releases the IP.  
+- **DHCP NAK** – Server denies a request (e.g., if lease expired).  
+
+---  
+
+## **5. Troubleshooting DHCP**  
+- **Check Lease Assignments:**  
+  ```bash
+  show ip dhcp binding  # (Cisco)  
+  ```  
+- **Verify DHCP Pool:**  
+  ```bash
+  show ip dhcp pool  
+  ```  
+- **Test Client Connectivity:**  
+  - Use `ipconfig /release` & `ipconfig /renew` (Windows).  
+  - Use `dhclient -r` & `dhclient` (Linux).  
+
+
+## **6. Security Considerations**  
+- **DHCP Snooping (Switch Security Feature):** Prevents rogue DHCP servers.  
+- **IP Reservations:** Assign fixed IPs to critical devices (like servers).  

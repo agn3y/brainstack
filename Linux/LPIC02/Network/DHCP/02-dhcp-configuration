@@ -1,0 +1,89 @@
+* DHCP – Dynamic Host Configuration Protocol
+- Main Job: Automatically gives IP addresses and other network info (gateway, DNS, etc.) to devices.
+
+* Install DHCP Server
+
+$ sudo apt update
+$ sudo apt install isc-dhcp-server
+
+* IMPORTANT DHCP FILES
+
+| File Location                  | Purpose                                                  |
+| ------------------------------ | -------------------------------------------------------- |
+| `/etc/dhcp/dhcpd.conf`         | **Main config file** where we define subnet, range, etc. |
+| `/etc/default/isc-dhcp-server` | Sets **which interface** DHCP server should use.         |
+| `/var/lib/dhcp/dhcpd.leases`   | Stores **active leases** given to clients.               |
+
+* CONFIGURE DHCP SERVER
+
+Step 2: Edit DHCP Configuration File
+$ sudo nano /etc/dhcp/dhcpd.conf
+
+* Add Subnet and IP Range:
+
+
+subnet 10.1.1.0 netmask 255.255.255.0 {
+    range 10.1.1.10 10.1.1.100;
+    option routers 10.1.1.1;                        # Default Gateway
+    option domain-name "choduchaman.com";           # Optional
+    option domain-name-servers 8.8.8.8, 8.8.4.4;    # DNS Servers
+    default-lease-time 2000;                        # Optional
+    max-lease-time 7200;                            # Optional
+}
+
+
+Step 3: Set Interface to Listen On
+$ sudo nano /etc/default/isc-dhcp-server
+
+Find this line and set your network interface (e.g., `eth0`, `ens33`, etc.)
+
+INTERFACESv4="eth0"
+
+You can find your interface name using:
+$ ip a
+
+* STATIC IP RESERVATION (Fixed IP)
+
+You can give a device the **same IP always** by using its MAC address:
+
+host shun-pc {
+    hardware ethernet 00:11:22:33:44:55;
+    fixed-address 10.1.1.50;
+}
+
+Put this **inside the subnet block** or outside, as needed.
+
+Step 4: Restart DHCP Server
+$ sudo systemctl restart isc-dhcp-server
+$ sudo systemctl status isc-dhcp-server
+
+Enable on boot:
+$ sudo systemctl enable isc-dhcp-server
+
+Step 5: Check IP Leases Given Out
+$ cat /var/lib/dhcp/dhcpd.leases
+
+Shows which IPs are leased and their expiry.
+
+TESTING DHCP SERVER
+
+- From a **client PC** (same network), set the network config to **"Automatic (DHCP)"** and restart networking or reconnect.
+- Check if the client gets IP in the defined range (`10.1.1.10 - 10.1.1.100`).
+
+EXTRA OPTIONS (Optional but Useful)
+
+Add inside subnet block:
+
+option broadcast-address 10.1.1.255;
+option subnet-mask 255.255.255.0;
+
+You can also define **multiple subnets**, one per block.
+
+QUICK TROUBLESHOOT TIPS
+
+| Problem               | Fix                                                                 |
+| --------------------- | ------------------------------------------------------------------- |
+| Service not starting  | Check logs: `journalctl -xe` or `cat /var/log/syslog`               |
+| No IP given to client | Ensure DHCP server and client are in same network                   |
+| Interface not set     | Make sure `/etc/default/isc-dhcp-server` has correct interface name |
+| Syntax error          | Check `/etc/dhcp/dhcpd.conf` for typos or missing `;`               |

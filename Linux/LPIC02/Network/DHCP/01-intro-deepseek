@@ -1,0 +1,59 @@
+Dynamic Host Configuration Protocol (DHCP) 
+
+1. Introduction
+- The Dynamic Host Configuration Protocol (DHCP) is a network management protocol used to automate the assignment of IP addresses and other communication parameters to devices on a network. It eliminates the need for manual IP configuration, reducing administrative overhead and minimizing errors. DHCP operates on a client-server model and is defined by **RFC 2131** (IPv4) and **RFC 3315** (IPv6 for DHCPv6).  
+
+2. How DHCP Works  
+
+	1. Discover (DHCPDISCOVER) – The client broadcasts a request for an IP address.  
+	2. Offer (DHCPOFFER) – The DHCP server responds with an available IP address.  
+	3. Request (DHCPREQUEST) – The client requests the offered IP.  
+	4. Acknowledge (DHCPACK) – The server confirms the lease and provides configuration details.  
+
+In case of renewal:  
+- At **50% lease time**, the client attempts renewal (unicast DHCPREQUEST).  
+- At **87.5% lease time**, it broadcasts a request if renewal fails.  
+- If no response, the IP is released at **100% lease time**.  
+
+---
+
+3. Key Components  
+- DHCP Server :  Assigns and manages IP leases (e.g., routers, dedicated servers).  
+- DHCP Client : Requests and uses the assigned IP (e.g., PCs, smartphones).  
+- DHCP Relay Agent : Forwards requests across subnets (used in large networks).  
+- Lease Time : Duration an IP is reserved (configurable, e.g., 24 hours).  
+- Scope : A range of assignable IP addresses (e.g., 192.168.1.100–200).  
+- Reservations : Static IP assignments for specific MAC addresses.  
+
+4. DHCP Packet Structure
+  
+A DHCP packet includes:  
+- Operation Code (Opcode) : Request (1) or Reply (2).  
+- Hardware Type : Ethernet (1), WiFi (6), etc.  
+- Client & Server IPs : 0.0.0.0 initially, filled during DORA.  
+- Options Field : Subnet mask, gateway, DNS, lease time, etc.  
+
+5. Security Considerations  
+- DHCP Snooping : Mitigates rogue DHCP servers (common in switches).  
+- Dynamic ARP Inspection (DAI) : Prevents ARP spoofing alongside DHCP snooping.  
+- Authentication : RFC 3118 introduces DHCP authentication (rarely used).  
+
+6. DHCPv6 (For IPv6)  
+- Uses Solicit-Advertise-Request-Reply (SARR) instead of DORA.  
+- Supports stateless autoconfiguration (SLAAC) alongside DHCPv6.  
+- Assigns IPv6 addresses, prefixes, and DNS configurations.  
+
+7. Common Issues & Troubleshooting**  
+- IP Exhaustion : Scope too small; expand or reduce lease time.  
+- Rogue DHCP Servers : Use DHCP snooping on switches.  
+- Lease Conflicts : Check for static IP overlaps.  
+- Relay Agent Misconfig : Ensure correct gateway IP in relay settings.  
+
+8. Practical Use Cases**  
+- Enterprise Networks : Centralized IP management.  
+- ISPs : Dynamic IP assignment for customers.  
+- IoT Devices : Plug-and-play connectivity.  
+
+9. Conclusion  
+DHCP is fundamental to modern networking, enabling scalable and efficient IP management. Understanding its operation, security risks, and troubleshooting methods is essential for network administrators.  
+
