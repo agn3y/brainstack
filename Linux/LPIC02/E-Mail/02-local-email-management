@@ -1,0 +1,69 @@
+MAIL STORED IN /var/spool/mail/username OR SOMETIME JUST /var/mail/username
+
+NEW FILE WILL BE APPENDED TO SAME FILE username IN OUR CASE
+
+solution to this is procmail which put mails 
+
+two way procmail can operate
+
+[1] mbox
+- well it kind work same as above mentioned thats why it not preferwd method.
+- only differnce that it changes the location of the file and this will be user specific so it will be in every users home directory
+
+[2]MAILDIR
+-THIS WILL STORE EMAIL INDIVIDUALLY /etc/user/inbox
+
+NOW TO INSTALL PROCMAIL
+$ sudo apt install procmail
+
+NOW WE ARE GONNA ACTUALLY USE POSTFIX FOR THIS SO NAVIGATE TO
+$ sudo nano /etc/postfix/main.cf
+
+GO TO EOF AND ADD THIS CONTENT
+
+mailbox_command=procmail	# done and save and reload service 
+
+WE CAN ALSO DO IT OTHER WAY USING THIS COMMAND
+$ postconf	# works without reloading server 
+
+ACTUAL COMMAND FOR CONFIGUARTION WOULD BE  
+$ sudo postconf -e  "mailbox_command=procmail"
+
+IT CAN BE CONFIGURED GLOBALLY TO WORK WILL EVERY USER ON SYSTEM
+PARTICULAR USERS WITH PARTICULAR SETTINGS
+weARE CREATING A FILE ACTUALLLY IN /etc/procmailrc
+
+AND ADD THIS CONTENT IN FILE
+
+MAILDIR=$HOME/mail
+DEFAULT=$HOME/mail/inbox				# MBOX FIRST METHOD
+DEFAULT=$HOME/mail/inbox/msg-stored-here		# MBOX SECOND METHOD
+
+to make mail command work with first method we will have to specify wherebouts of inbox file we can done it using
+
+$ mail -f /home/agn3y/mail/inbox	# now mail command have the access to the messages
+
+SECOND METHOD
+
+create file in users home directory
+
+$ touch .procmailrc 
+
+ADD THIS CONTENT IN FILE
+
+:0:
+* ^TOroot
+rootfile
+
+OR WE CAN ADD SOMETHING LIKE
+
+:0:
+* ^Subject: priority
+priorityfile
+
+## THIS ABOVE GIVEN FILE KINDA WORK AS FILTER SO EVERYTIME WE HAVE priority IT WILL CREATE A SEPRATE PRIORITY FILE NOT TO SIMPLE MAIL FILE 
+
+LEARN REGEX AND REGEXPATTERN TO UNDERSTAND WHATIS THE CONTENT
+
+
+	

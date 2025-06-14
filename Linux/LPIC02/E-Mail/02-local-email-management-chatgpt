@@ -1,0 +1,115 @@
+Local Email Management using Postfix and Procmail
+
+### Where is Mail Stored by Default?
+
+* By default, all user emails are stored in:
+
+  * `/var/spool/mail/username`  **OR**
+  * `/var/mail/username`
+
+* All new mails are appended** to the same file (`username` file), which can make it large and hard to manage.
+
+Solution: Procmail
+
+Procmail is a **mail processing utility**. It can filter, sort, and store emails better than the default method.
+
+Procmail Operating Modes
+
+1. mbox Format (Not preferred)
+
+* Same idea as the default `/var/mail/username`
+* But moves email file to user's home:
+
+  * Example: `/home/agn3y/mail/inbox`
+* Still stores all emails in one file — not efficient
+
+2. Maildir Format (Preferred)
+
+* Stores each email as a separate file
+* Structure: `/home/username/Maildir/new/`
+* Helps manage mail efficiently
+* Many modern tools prefer this format
+
+### Installing Procmail
+
+$ sudo apt install procmail
+
+### Setting Up Postfix to Use Procmail
+
+#### Edit Postfix config:
+
+$ sudo nano /etc/postfix/main.cf
+
+Go to the **end of file (EOF)** and add:
+
+mailbox_command = procmail
+
+Then restart/reload Postfix:
+
+$ sudo systemctl reload postfix
+
+#### Alternate method without editing manually:
+
+$ sudo postconf -e "mailbox_command=procmail"
+
+### Global vs Per-User Configuration
+
+#### Global Settings (`/etc/procmailrc`)
+
+Create the file (if it doesn’t exist):
+
+$ sudo nano /etc/procmailrc
+
+Add this:
+
+MAILDIR=$HOME/mail
+DEFAULT=$MAILDIR/inbox        # mbox style
+# DEFAULT=$MAILDIR/inbox/new  # if using Maildir-style
+
+#### User-Specific Settings (`~/.procmailrc`)
+
+Create in user’s home directory:
+
+$ touch ~/.procmailrc
+$ nano ~/.procmailrc
+
+Example to filter mail with recipient `root`:
+
+:0:
+* ^TOroot
+rootfile
+
+Another example to filter by subject line:
+
+:0:
+* ^Subject:.*priority
+priorityfile
+
+These rules work like filters. If mail matches, it's saved in that file instead of inbox.
+
+### Accessing the Mailbox
+
+To read mails using the `mail` command and custom inbox:
+
+$ mail -f /home/agn3y/mail/inbox
+
+### Real-Life Example 1 — Filter Root Mails
+
+You are getting system emails from `root`, but you want them in a separate file:
+
+:0:
+* ^TOroot
+/home/agn3y/mail/root-mails
+
+Real-Life Example 2 — Filter Priority Alerts
+
+Suppose your app sends email with subject "priority alert". You want those in a different folder:
+
+:0:
+* ^Subject:.*priority alert
+/home/agn3y/mail/alerts
+
+* Regex is important to match email subjects, headers, and senders:
+
+  * `^TO` — Matches recipients
+  * `^Subject:` — Matches subject lines
