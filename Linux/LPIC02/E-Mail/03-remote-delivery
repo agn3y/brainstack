@@ -1,0 +1,37 @@
+WE ARE TALKING ABOUT DE;IVERY 
+
+1 COURIES SERVER
+
+INSTALL USING
+$ sudo apt install courier-pop -y
+
+THEN
+$ sudo apt install courier-imap
+
+NOW GO TO
+$ sudo nano /etc/courier/authdaemonrc
+
+FOR POP3 CONFIG FILE IS LOCATED AT
+/etc/courier/pop3d
+
+TO CHANGE PATH OF FILE EDIT IT AND INSERT THE RUOT
+
+AND SAME FOR IMAP 
+$ sudo nano /etc/courier/imapd
+
+NOW RESTART THE SERVICE
+$ sudo service courier-pop restart
+$ sdup service courier-imap restart
+
+[2] deovecto server
+
+INSTALL
+$ sudo apt install dovecot-imapd dovecote-pop3d -y
+
+NAVIGATE TO FIND CONFIGURATION FILE
+/etc/dovecot/conf.d
+or 
+/etc/dovecot/dovecote.conf
+
+ACTUALLY WE SHOULD USE THIS COMMAND NAME
+$ dovecot -n 		# shows dovecot configuration
