@@ -1,0 +1,6 @@
+THERE ARE 4 MODULES WE SHOULD BE CONSIDER ABOUT
+
+[1] pam_unix	# use man with it
+[2] pam_cracklib	# man 
+[3] pam_limits		# man
+[4] pam_listfile	# man

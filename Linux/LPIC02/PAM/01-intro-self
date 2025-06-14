@@ -1,0 +1,93 @@
+PAM INTRODUCTION 
+
+**PAM** stands for **Pluggable Authentication Modules**.
+It is a **modular authentication system** used in **Linux and Unix** to manage things like:
+
+* Login verification
+* Password rules
+* Access control
+* Session handling
+
+Instead of every service (like SSH, sudo, su, etc.) having its own logic for authentication, PAM allows the system to use **common, centralized rules**.
+
+All PAM service config files are located in:
+
+/etc/pam.d/
+
+* Each file in that folder controls PAM behavior for **a specific service** — for example:
+
+* `/etc/pam.d/sshd` → for SSH login
+* `/etc/pam.d/sudo` → for sudo command
+* `/etc/pam.d/common-password` → for password rules
+
+WE CAN USE PAM TO CONTROL BEHAVIOUR OF SYSTEM
+
+FOR A SCENARIO:
+
+I added a new user:
+
+$ sudo useradd luffy
+$ passwd
+
+Suppose the password is:
+
+KINGOFPIRATES
+
+Now we will have one example of how to use this.
+
+GO TO `/etc/pam.d/common-password`
+
+(This is the file responsible for setting password-related rules via PAM.)
+
+Now **below "PRIMARY BLOCK" line**, go to the **end of that line** and add this content:
+
+minlen=18		# This will set the **password to be minimum 18 characters**.
+
+We can also use:
+
+maxlen=20		# This will **limit password length to 20 characters**.
+
+Full Example Line in File:
+
+Before:
+
+password requisite pam_pwquality.so retry=3
+
+After editing:
+
+password requisite pam_pwquality.so retry=3 minlen=18 maxlen=20
+
+ADDITIONAL OPTIONS FOR PASSWORD STRENGTH
+
+| Option       | What It Does                                   |
+| ------------ | ---------------------------------------------- |
+| `minlen=18`  | Minimum password length must be 18 characters  |
+| `maxlen=20`  | Password cannot be longer than 20 characters   |
+| `retry=3`    | Allow 3 attempts before fail                   |
+| `ucredit=-1` | At least 1 **uppercase letter**                |
+| `lcredit=-1` | At least 1 **lowercase letter**                |
+| `dcredit=-1` | At least 1 **digit (0–9)**                     |
+| `ocredit=-1` | At least 1 **special character** (`@!#`, etc.) |
+
+* Example With All:
+
+password requisite pam_pwquality.so retry=3 minlen=18 maxlen=20 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1
+
+This forces:
+
+* Password length between 18 and 20
+* At least 1 uppercase, 1 lowercase, 1 digit, and 1 special symbol
+
+ALWAYS BACKUP BEFORE EDITING:
+
+sudo cp /etc/pam.d/common-password /etc/pam.d/common-password.bak
+
+Because wrong PAM rules can lock even `sudo` access.
+
+**Summary of Your Note (Merged + Expanded)**:
+
+* PAM is used for **controlling system auth behavior**
+* You can edit password rules in `/etc/pam.d/common-password`
+* You added `minlen=18` to force strong passwords
+* You can also add `maxlen`, `ucredit`, etc.
+* All your commands and actions are valid and now fully explained

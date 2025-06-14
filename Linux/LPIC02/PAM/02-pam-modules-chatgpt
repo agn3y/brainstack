@@ -1,0 +1,149 @@
+PAM (Pluggable Authentication Modules) – Functional Note
+
+PAM helps control **authentication, account, password, and session** management in Linux systems. It is **modular**, meaning each function is handled by a separate plugin/module.
+
+### PAM Module Types (Management Groups)
+
+Each PAM config line is associated with one of these 4 types:
+
+| Type         | Purpose                                                              |
+| ------------ | -------------------------------------------------------------------- |
+| **auth**     | Authentication, identity check (e.g., password check)                |
+| **account**  | Account limits, expiration, access control                           |
+| **password** | Changing or updating passwords                                       |
+| **session**  | Setup or cleanup tasks (e.g., mount home, set environment variables) |
+
+## Key PAM Modules
+
+[1] `pam_unix.so`
+
+This is the **default** module for traditional **UNIX authentication** (uses `/etc/passwd` and `/etc/shadow`).
+
+**Used in:** all four control groups (auth, account, password, session)
+
+**Example Configuration:**
+
+auth       required     pam_unix.so
+account    required     pam_unix.so
+password   required     pam_unix.so
+session    required     pam_unix.so
+
+**Features:**
+
+* Authenticates users using local system password
+* Checks account expiry
+* Changes passwords securely
+* Sets up sessions
+
+# Run `man pam_unix` for full options
+
+[2] `pam_cracklib.so`
+
+Used to **enforce strong passwords** during creation or change.
+
+**Used in:** `password` group
+
+**Example Configuration:**
+
+password   required     pam_cracklib.so retry=3 minlen=8 difok=3
+
+**Common Options:**
+
+* `retry=N`: how many times to retry password entry
+* `minlen=N`: minimum password length
+* `difok=N`: how many characters must differ from old password
+* `ucredit`, `lcredit`, `dcredit`, `ocredit`: require uppercase/lowercase/digit/special chars
+
+# Run `man pam_cracklib` for full explanation
+
+[3] `pam_limits.so`
+
+Used to **apply user resource limits** from `/etc/security/limits.conf`.
+
+**Used in:** `session` group
+
+**Example Configuration:**
+
+session    required     pam_limits.so
+
+**Can control:**
+
+* Max number of processes (`nproc`)
+* Max file size (`fsize`)
+* Max open files (`nofile`)
+* CPU time (`cpu`)
+* Memory use (`rss`)
+
+**limits.conf example:**
+
+luffy    hard    nproc     100
+zoro     soft    nofile    4096
+
+# Run `man pam_limits` for full details
+
+[4] `pam_listfile.so`
+
+Used to **allow or deny** access based on usernames listed in a file.
+
+**Used in:** usually `auth` or `account` group
+
+**Example Configuration:**
+
+auth required pam_listfile.so onerr=fail item=user sense=deny file=/etc/denied_users
+
+**Options:**
+
+* `item`: what to check (user, tty, rhost, group, shell)
+* `sense=allow|deny`: whether to allow or deny listed items
+* `file`: file path containing list of users, groups, etc.
+* `onerr=fail|succeed`: behavior if error reading file
+
+# Run `man pam_listfile` for all options
+
+## Control Flags
+
+Each PAM module line has a **control flag**:
+
+| Flag       | Meaning                                                                |
+| ---------- | ---------------------------------------------------------------------- |
+| required   | Must succeed; even if it fails, other modules still run                |
+| requisite  | Must succeed; if fails, immediately return error                       |
+| sufficient | If successful, skip remaining modules (unless a required module fails) |
+| optional   | Not important unless it's the only module for that service             |
+| include    | Include another PAM config file                                        |
+
+
+Example: `/etc/pam.d/sshd`
+
+auth       required     pam_sepermit.so
+auth       substack     password-auth
+auth       include      postlogin
+
+account    required     pam_nologin.so
+account    include      password-auth
+
+password   include      password-auth
+
+session    optional     pam_keyinit.so force revoke
+session    include      password-auth
+session    include      postlogin
+
+##  PAM Config File Locations
+
+* Global configs: `/etc/pam.conf` (rarely used)
+* Service-specific configs: `/etc/pam.d/*`
+  Examples:
+
+  * `/etc/pam.d/login`
+  * `/etc/pam.d/sshd`
+  * `/etc/pam.d/sudo`
+
+
+## Summary Table
+
+| Module            | Purpose                        | Used In      | Common Option Example                   |
+| ----------------- | ------------------------------ | ------------ | --------------------------------------- |
+| `pam_unix.so`     | Local user auth & session mgmt | all          | `nullok`, `md5`, `shadow`               |
+| `pam_cracklib.so` | Password strength checker      | password     | `retry=3 minlen=8 difok=3`              |
+| `pam_limits.so`   | Set user resource limits       | session      | None (uses `/etc/security/limits.conf`) |
+| `pam_listfile.so` | Allow/deny by list             | auth/account | `file=/etc/denied_users sense=deny`     |

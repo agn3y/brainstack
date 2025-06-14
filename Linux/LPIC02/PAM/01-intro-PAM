@@ -1,0 +1,144 @@
+What is PAM?
+
+**PAM** stands for **Pluggable Authentication Modules**.
+- It is a **framework** in Linux/Unix systems that allows **authentication methods** (like passwords, fingerprints, OTPs) to be **plugged in** easily for different services like SSH, sudo, su, login, etc.
+- Instead of hardcoding authentication logic inside each program, PAM provides a **common and modular way** to handle it.
+
+How PAM Works (Simple View)
+
+When a service (e.g., `sudo`, `ssh`, `login`) needs to **authenticate a user**, it checks:
+
+1. PAM Config file for that service → /etc/pam.d/<service_name>
+2. That file lists a stack of PAM modules
+3. Each module does a task (check password, set limits, log attempts, etc.)
+4. Based on result (success/failure), access is allowed or denied
+
+Important PAM Directories and Files
+
+| Location                               | Description                                                             |
+| -------------------------------------- | ----------------------------------------------------------------------- |
+| `/etc/pam.d/`                          | Directory with PAM config files for each service (e.g., `sudo`, `sshd`) |
+| `/etc/pam.conf`                        | Global PAM config file (rarely used now)                                |
+| `/lib/security/` or `/lib64/security/` | Location of PAM module files (e.g., `pam_unix.so`, `pam_tally2.so`)     |
+
+Basic PAM Configuration File Format
+
+Each line in a PAM config file has this format:
+
+<type> <control_flag> <module_path> <module_arguments>
+
+Example:
+
+auth  required  pam_unix.so nullok
+
+Explanation of parts:
+
+| Field         | Meaning                                                                    |
+| ------------- | -------------------------------------------------------------------------- |
+| `auth`        | Handles authentication (e.g., password check)                              |
+| `required`    | This module **must pass**, otherwise access fails (even if others succeed) |
+| `pam_unix.so` | PAM module (in this case, for UNIX password)                               |
+| `nullok`      | Allows empty passwords if permitted                                        |
+
+## Types of PAM Module Entries
+
+| Type       | What it does                                                           |
+| ---------- | ---------------------------------------------------------------------- |
+| `auth`     | Verifies identity (password, fingerprint, OTP)                         |
+| `account`  | Checks account status (e.g., expired?)                                 |
+| `password` | Changes password or updates auth tokens                                |
+| `session`  | Starts or ends a session (e.g., logging login time, mounting home dir) |
+
+## Control Flags
+
+| Flag         | Description                                                           |
+| ------------ | --------------------------------------------------------------------- |
+| `required`   | Must succeed, but continue checking others                            |
+| `requisite`  | Must succeed; if fails, stop immediately                              |
+| `sufficient` | If succeeds, skip remaining modules of same type                      |
+| `optional`   | Success/failure doesn’t matter unless it's the only line of that type |
+
+## Example: PAM Config for sudo
+
+File: `/etc/pam.d/sudo`
+
+auth       required   pam_env.so
+auth       required   pam_unix.so
+account    required   pam_unix.so
+session    required   pam_env.so
+session    required   pam_unix.so
+
+Common PAM Modules (Used in Config Files)
+
+| Module                              | Purpose                                          |
+| ----------------------------------- | ------------------------------------------------ |
+| `pam_unix.so`                       | Basic username/password check                    |
+| `pam_securetty.so`                  | Prevents root login from insecure terminals      |
+| `pam_nologin.so`                    | Deny login if `/etc/nologin` exists              |
+| `pam_limits.so`                     | Enforces limits from `/etc/security/limits.conf` |
+| `pam_tally2.so` / `pam_faillock.so` | Track failed login attempts (lock user)          |
+| `pam_env.so`                        | Set environment variables                        |
+| `pam_exec.so`                       | Run custom scripts on login                      |
+
+## PAM Configuration Example: Enforce Password Rules
+
+To force strong password rules, modify:
+
+/etc/pam.d/common-password
+
+Add:
+
+password required pam_pwquality.so retry=3 minlen=10 difok=3
+
+This means:
+
+* Minimum length: 10
+* Must differ by 3 characters from old password
+* Retry 3 times before failing
+
+## Lock User After Failed Attempts (pam\_tally2 or pam\_faillock)
+
+Add to `/etc/pam.d/sshd`:
+
+auth required pam_tally2.so deny=3 unlock_time=300 onerr=fail audit
+account required pam_tally2.so
+
+This means:
+
+* After 3 failed tries, user is locked for 5 minutes.
+
+## 📋 Useful Commands
+
+| Command                      | Description                              |
+| ---------------------------- | ---------------------------------------- |
+| `pam_tally2`                 | Show failed login attempts               |
+| `pam-auth-update`            | TUI to manage PAM profiles (Ubuntu only) |
+| `faillock --user <username>` | Show or clear failed login attempts      |
+
+## Example Workflow (SSH Authentication)
+
+1. User connects with SSH
+2. `/etc/pam.d/sshd` is checked
+3. Each line is processed (e.g., check password, log attempt)
+4. If all required modules pass → access granted
+
+---
+Backup and Safety Tip
+
+Before changing any PAM file:
+
+$ sudo cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
+
+If misconfigured, **you can lock yourself out**, even from `sudo`.
+Have a **live CD/USB or root shell access** ready in case of mistake.
+
+
+## Summary
+
+| Feature         | PAM                                            |
+| --------------- | ---------------------------------------------- |
+| What is it?     | Linux authentication framework                 |
+| Purpose         | Handles login, sudo, ssh, password rules       |
+| Config location | `/etc/pam.d/`                                  |
+| Modules         | `pam_unix`, `pam_limits`, `pam_faillock`, etc. |
+| Risk            | Misconfig can lock access                      |
