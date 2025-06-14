@@ -1,0 +1,112 @@
+Email Server Configuration (Postfix, SMTP, POP3, IMAP)
+
+## Basic Terms (Must Know)
+
+### SMTP (Simple Mail Transfer Protocol)
+
+* Used to send email
+* Runs on Port 25
+* Responsible for transferring email between servers.
+
+### POP3 (Post Office Protocol v3)
+
+* Downloads emails from the server to your machine.
+* After downloading, the mail is deleted from the server
+* Best for single-device access
+
+### IMAP (Internet Message Access Protocol)
+
+* Reads emails directly from the server
+* Mails stay on the server
+* Best for multi-device access (e.g., mobile + desktop).
+
+## Email Workflow Components
+
+| Component                     | Role                                  | Example              |
+| ----------------------------- | ------------------------------------- | -------------------- |
+| **MUA** (Mail User Agent)     | Email client used by the user         | Thunderbird, Outlook |
+| **MTA** (Mail Transfer Agent) | Transfers email from sender to server | Postfix, Sendmail    |
+| **MDA** (Mail Delivery Agent) | Delivers mail to user’s mailbox       | Procmail, Dovecot    |
+
+## Install and Configure Postfix (Mail Server)
+
+Step 1: Install required packages
+
+$ sudo apt install postfix mailutils -y
+
+* During setup:
+
+  * Select: **Internet Site**
+  * Enter your domain name (e.g., `example.com`)
+
+Step 2: Configuration File Location
+
+$ sudo nano /etc/postfix/main.cf
+
+**Do not touch `relayhost`** unless you know what you're doing — it can break delivery.
+
+Step 3: Test Sending Mail
+
+$ mail -s "Subject goes here" yourmail@domain.com
+
+* `cc:` → leave empty
+* Type your message
+* End it by pressing `Ctrl + D`
+
+Step 4: Check Mail Locally
+
+$ mail
+
+Step 5: Send Mail to Local User
+
+$ sudo mail -s "Testing Local Mail" root@localhost
+
+* Leave `cc:` empty
+* Type message
+* Press `Ctrl + D`
+
+To read it:
+
+$ sudo su   # become root
+$ mail
+
+## Email Aliases (Forwarding Mails)
+
+### Step 1: Edit alias file
+
+$ sudo nano /etc/aliases
+
+Add an alias like:
+
+admin: root
+shun: agn3y
+
+Step 2: Update aliases
+
+$ sudo newaliases
+
+## Scenario:
+
+You are managing a server where **system logs and alerts** are sent to your email. Instead of checking logs manually, you want critical services (like cron or fail2ban to notify you via email.
+
+Solution:
+
+* Install **Postfix** as a local mail server.
+* Set up email alias so that `root` emails are forwarded to your email.
+* Now, whenever something important happens (e.g., cron job fails), you'll **automatically get an email**.
+
+Example:
+
+$ echo "Disk usage critical" | mail -s "Disk Alert" root@localhost
+
+This is used in **DevOps monitoring setups**, alert systems, or service notifications.
+
+| Topic          | Purpose                                             |
+| -------------- | --------------------------------------------------- |
+| SMTP           | Send email between servers                          |
+| POP3           | Download mail to local machine, deletes from server |
+| IMAP           | Read mail from server, keeps sync                   |
+| Postfix        | Mail server software (MTA)                          |
+| mailutils      | CLI email client to send/receive/test               |
+| aliases        | Forward emails to other users                       |
+| `mail` command | Check emails from terminal                          |
