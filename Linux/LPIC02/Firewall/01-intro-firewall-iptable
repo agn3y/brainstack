@@ -1,0 +1,109 @@
+INTRODUCTION TO FIREWALLS
+
+A **firewall** controls network traffic — it decides what traffic is allowed or blocked based on rules.
+
+There are two types of firewalls on Linux:
+
+### firewalld
+
+* Modern firewall management daemon
+* Uses zones and services (easy to manage)
+* Comes with `firewalld` package
+* Works with `iptables` or `nftables` in background
+
+###  iptables
+
+* Older but powerful command-line tool
+* Works directly with rules, chains, and tables
+* We focus on `iptables` in this note
+
+## IPTABLES STRUCTURE
+
+Firewall using `iptables` has 3 main parts :
+
+# [1] TABLES – "What you want to do"
+
+A table is a collection of rules, each with a **specific purpose**.
+
+| Table Name | Purpose                                     |
+| ---------- | ------------------------------------------- |
+| `filter`   | Default, used for allowing/blocking traffic |
+| `nat`      | Used for NAT (e.g. IP masquerading)         |
+| `mangle`   | Used to modify packets (e.g. TTL, TOS)      |
+| `raw`      | Used for packet exceptions (skip conntrack) |
+| `security` | Used with SELinux policies                  |
+
+# [2] CHAINS – When the rule applies
+
+A chain is a set of rules applied at a specific point in the packet's path.
+
+| Chain Name    | Direction                | Used in Tables      |
+| ------------- | ------------------------ | ------------------- |
+| `PREROUTING`  | Before routing           | nat, mangle, raw    |
+| `INPUT`       | To local system          | filter, mangle      |
+| `FORWARD`     | Routed to another system | filter, mangle      |
+| `OUTPUT`      | From local system        | filter, nat, mangle |
+| `POSTROUTING` | After routing            | nat, mangle         |
+
+# [3] RULES – What action to take
+
+A rule = Table + Chain + Match + Action
+
+Examples of Actions:
+
+* `ACCEPT` – allow the packet
+* `DROP` – silently drop the packet
+* `REJECT` – reject with error
+* `LOG` – log the packet
+
+Rules are added using:
+
+iptables -A <CHAIN> -t <TABLE> -j <ACTION> [options]
+
+## TABLE + CHAIN RELATION
+
+| Table      | Available Chains                                          |
+| ---------- | --------------------------------------------------------- |
+| `filter`   | `INPUT`, `FORWARD`, `OUTPUT`                              |
+| `nat`      | `PREROUTING`, `OUTPUT`, `POSTROUTING`                     |
+| `mangle`   | `PREROUTING`, `INPUT`, `FORWARD`, `OUTPUT`, `POSTROUTING` |
+| `raw`      | `PREROUTING`, `OUTPUT`                                    |
+| `security` | `INPUT`, `OUTPUT`, `FORWARD`                              |
+
+## TRAFFIC DIRECTIONS
+
+| Type          | Description                            |
+| ------------- | -------------------------------------- |
+| **Inbound**   | Traffic **coming into** the system     |
+| **Outbound**  | Traffic **going out** from the system  |
+| **Forwarded** | Traffic **passing through** the system |
+
+## COMMON IPTABLES COMMANDS
+
+* List rules:
+
+  iptables -L -v
+  
+* Add a rule:
+
+  iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+  
+* Delete a rule:
+
+  iptables -D INPUT 1
+ 
+* Save rules:
+
+  sudo iptables-save > /etc/iptables/rules.v4
+
+* Restore rules:
+
+  sudo iptables-restore < /etc/iptables/rules.v4
+
+# QUICK RECAP
+
+* `firewalld` = modern, zone-based
+* `iptables` = classic, table-based
+* 3 core parts: **Tables → Chains → Rules**
+* Choose correct table and chain based on traffic flow
+* Rules define what to allow, block, or modify

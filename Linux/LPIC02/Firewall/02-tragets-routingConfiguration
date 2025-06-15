@@ -1,0 +1,19 @@
+TARGET 
+
+[1] DROP 	# DROPS THE TARGET
+[2] ACCEPT	# ACCEPT THE TRAFFIC
+[3] EXTENSION TARGETS 		# LOG PACKET
+[4] REJECT 	# REPORT AND DROP PACKETS
+
+IMPORTANT LOCATION WE WANT TO REMEMBER 
+$ cd /proc/sys/net/ipv4 
+$ cat ip_forward	# if we want our computer to wokr like a router use this file modify it change it to 1
+$ echo "1" > ip_forward
+
+# THIS CHANGES ARE NOT PERMANENT TO MAKE IT PERMANENT 
+
+$ sudo nano /etc/sysctl.conf
+
+LOOK FOR 
+
+"net.ipv4.ip_forward=1"		# UNCOMMENT IT 

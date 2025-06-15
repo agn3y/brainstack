@@ -1,0 +1,19 @@
+NAT - NETWORK ADDRESS TRANSLATION
+
+PRIVATE IP RANGES
+
+10.0.0.0 - 10.255.255.255
+172.16.0.0 - 172.31.255.255
+192.168.0.0 - 192.16.255.255
+
+TO SET NAT ON A ROUTER USE THIS COMMAND
+$ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+TO DROP TRAFFIC COMING FROM SPECIFIC NETWORK
+$ sudo iptables -t filter -A INPUT -s 172.16.0.0/16 -j DROP
+
+TO LIST FILTER TABLE
+$ sudo iptable -t fliter -L INPUT
+
+$ sudo iptable -f filter -A INPUT -p icmp DROP OR
+$ sudo iptable -f filter -A INPUT -p icmp ACEPT 
