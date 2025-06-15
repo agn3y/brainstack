@@ -1,0 +1,18 @@
+TOOLS WE NEED TO BE FAMILIAR WITH
+
+[1] IPTABLES
+[2] telnet - ssh
+[3] nc
+[4] nmap
+[5] openvas
+[6] snort	# IDS
+
+[7] FAIL2BAN	# specofy ip in logfile so they want login
+
+INSTALLATION
+$ sudo apt install fail2ban -y
+
+PRIMARY CONFIGURATION FILE / JAIL FILE
+/etc/fail2ban/jail.conf
+
+WE CAN INCLUDE A BLACKLIST AND WHITE LIST TO PERFORM CERTAIN OPERATION

@@ -1,0 +1,40 @@
+GO TO GITHUB AND INSTALL IT MANUALLY OR USE PACKAGE MANAGER
+
+THEN START / STOP SERVICE
+$ sudo service openvpn start
+$ sudo service openvpn stop
+
+NOW GENERATE KEY
+$ openvpn --genkey --secret keyname.key
+$ cat keyname.key
+
+THEN COPY IT TO OTHER SERVER
+$ scp keyname.key username@10.10.10.10:/home/username/Downloads/
+AND THEN YES AND ENTER THE PASSWORD
+
+CREATE CONFIGURATION FILE
+$ sudo nano server.conf
+
+ADD THIS CONTENT
+
+dev tun
+ifconfig 10.20.30.1 10.20.30.2
+secret /home/agn3y/mykey.key
+
+NOW START THIS
+$ sudo openvpn --config server.conf
+
+GENERATE THE CONF FILE HERE ASWELL AND ADD THIS CONTENT IN THE FILE
+
+remote 192.168.4.29	# YOUR PUBLIC IP	 
+dev tun
+ifconfig 10.20.30.2 10.20.30.1
+secret mykey.key
+
+NOW RUN THIS COMMAND
+
+$ sudo openvpn --config client.conf 
+
+
+# WE CAN CHECK THE TUNNEL CONNECTION
+$ ip addr 	# ON BOTH SIDE
