@@ -1,0 +1,35 @@
+[1] Generate a New SSH Key for GitHub
+$ ssh-keygen -t ed25519 -C "your_email@example.com"
+
+* Replace `your_email@example.com` with the email you use on GitHub.
+* When asked for file location, press `Enter` to accept default: `~/.ssh/id_ed25519`
+
+[2] Add SSH Key to ssh-agent
+$ eval "$(ssh-agent -s)"
+$ ssh-add ~/.ssh/id_ed25519
+
+[3] Copy the Public Key
+$ cat ~/.ssh/id_ed25519.pub
+
+[4] Add Key to GitHub Website
+
+1. Go to [GitHub → Settings → SSH and GPG keys](https://github.com/settings/keys)
+2. Click **“New SSH key”**
+3. Give it a name (e.g., "My Laptop")
+4. Paste your public key and click **“Add SSH key”**
+
+[5] Create SSH Config File for GitHub Alias
+$ nano ~/.ssh/config
+
+Add this:
+
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+
+[6] Test the Connection
+$ ssh -T github
+
+[7] Clone Repo Using SSH (Not HTTPS)
+$ git clone git@github.com:username/repo-name.git

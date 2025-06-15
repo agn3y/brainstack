@@ -1,0 +1,23 @@
+Generate SSH Key
+$ ssh-keygen -t rsa  # You used `-t dsa`, but **DSA is outdated and insecure** — better to use `rsa` or `ed25519`.)
+
+Copy Public Key to Server
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub agn3y@10.10.10.22
+
+Create SSH Alias (Shortcut) to Avoid Repeating Login Command
+
+1. Create SSH config file if it doesn't exist:
+$ touch ~/.ssh/config
+
+2. Edit it and add this content:
+
+Host github
+    HostName github.com
+    User agn3y
+    
+You can also add a specific identity file (optional):
+
+    IdentityFile ~/.ssh/id_rsa
+    
+Now, Simply Use
+$ ssh github

@@ -1,0 +1,25 @@
+TO GENERATE KEY 
+
+$ man ssh-keygen
+$ sudo ssh-keygen -t dsa 
+
+TO COPY IT TO SERVER
+$ ssh-copy-id -i id_rsa.pub agn3y@10.10.10.22
+
+CREATE ALIAS SO WE DONT HAVE TO TYPE THE LOGIN COMMAND EVERYTIME 
+
+first create a config file
+$ touch ~/.ssh/config
+
+then add this content in that file
+
+Host Github
+	HostName github.com
+	User agn3y
+	
+
+NOW IF YOU USE
+
+$ ssh agn3y Github
+
+YOU WILL BE LOGGED IN DIRECTLY
