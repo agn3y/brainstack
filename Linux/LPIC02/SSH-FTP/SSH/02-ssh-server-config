@@ -1,0 +1,70 @@
+SSH SERVER CONFIGURATION FILES
+
+FIRS INSTALL SSH SERVER
+$ sudo apt install open-ssh server -y
+
+TO CONNECT 
+$ ssh username@192.168.2.11
+
+SSH SERVER SYSTEMWIDE CONFIGURATION 
+$ sudo nano /etc/ssh/sshd_config
+
+* TO MODIFY FILE TO WHICH TYPE OF LOGGING INFORMATION WE NEED WE SHOULD GO TO
+
+TYPE OF LOGS WE CAN ORDER THIS FILE TO GENERATE ARE 
+[1] QUIET
+[2] FATAL
+[3] ERROR
+[4] INFO
+[5] VERBOSE
+[6] DEBUG1
+[7] DEBUG2
+[8] DEBUG3
+
+
+HERE BELOW 
+
+# Logging
+# LogLevel INFO
+
+* TO MODIFY AUTHENTICATION LOOK FOR 
+
+# Authentication  - from here we can modify settings
+
+AFTER MODIFYING THE CONFIGURATION WE NEED TO RESTART THE SERVICES USING
+$ sudo service sshd restart
+
+WE CAN ALSO ALLOW AND DENY USER BY MODIFYING THIS FILE AND ADDIG FOLLOWING CONTENT RIGHT BELLOW AUTHNTICATION
+
+AllowUsers username, agn3y, W33knd
+or 
+DenyUsers john, ripp3r, d3vil
+
+we shoulld always keep the setting same means not modify it which is
+
+#PermintEmptyPasswords
+
+
+THERE IS ALSO SOME SETTING WHICH IS 
+
+#PrintMotd no
+
+It means message of the day (motd) 
+We can specify this message in /etc/motd file
+Also change the  [[****** Printmotd yes *******]] BYDAFULT IT WILL BE NO
+THEN RESTART THE DAY
+REMEMBER THIS MESSAGE WILL BE DISPLAYED AFTER LOGGING IN 
+
+IF WE WANT SOME BANNER WHEN SOMEONE ATTEMPT TO LOGIN THEN WE WILL FOLLOW THIS STEPS
+BEFORE AUTHENTICATION
+AFTER 
+#ListenAddress ::
+
+ADD
+
+Banner /etc/ssh/banner
+
+NOW CREATING THIS FILE AND ADD THE CONTENT YOU WANT IN IT
+
+$ sudo touch /etc/shh/banner
+$ sudo service sshd restart

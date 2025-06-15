@@ -1,0 +1,22 @@
+CONFIG FILE LOCATED AT
+THIS FILE CONTAIN USER SETTINGS
+
+/etc/ssh/ssh_config
+
+Now THIS FILE HAS TO COMPETE TO HIERCHY FOR AUTORITY LEVEL
+
+[1] ssh_config		# comes at lowest level
+[2] ~/.ssh/config	# comes at second level
+[3] cli commands 	# comes at first level
+
+use $ man ssh for more information
+
+NOW LOOKING INTO CONFIG FILE
+
+$ sudo vim /etc/ssh/ssh_config
+
+WE CAN MANIPULATE MULTIPLE SETTINGS SUCH AS DEFAULT PORT WHER SSH AGENT WILL TRY TO LOGIN
+
+TO MAKE YOUR OWN CONFIG FILE 
+$ touch ~/.ssh/config
+
