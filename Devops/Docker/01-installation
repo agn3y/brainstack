@@ -1,0 +1,16 @@
+INSTALLATION ON UBUNTU
+
+TO CHECK UBUNTU VERSION		# OPTIONAL
+$ lsb_release -a
+
+TO INSTALL FOLLOW COMMAND OR RUN THIS BASH SCRIPT
+
+$ sudo apt install -f
+$ sudo apt install update -y
+$ sudo apt install upgrade -y
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+$ sudo systemctl status docker
+
+# OPTIONAL TO START DOCKER CONTAINER
+# $ sudo docker run server1
