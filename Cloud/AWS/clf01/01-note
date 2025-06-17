@@ -1,0 +1,26 @@
+* CLOUD MIGRATION STRATEGIES
+
+Rehost : "lift and shift"		# moving traditional data center to cloud 
+Revise : "lift- tinker and shift" 	 
+Refactor :
+Replace :
+Retain or retire :
+
+* Type of cloud
+1. Public cloud
+2. Private cloud
+
+* cloud service models
+
+[1] IAAS - infrastructure as a service
+- You have control over infrastructure
+- such as which server to use ubuntu, redhat
+- ec2, vpc
+
+[2] PAAS - platform as a service
+- you write you code and then use some platform to take it online
+- Heroku, Google app engine
+
+[3] SAAS - software as a service
+- use software directly without worrying about anything
+- gmail, chatgpt
