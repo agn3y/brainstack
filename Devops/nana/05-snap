@@ -1,3 +1,26 @@
-install and remove software
+Snap – Install and Remove Software
 
-when we download with snap all data which includes deoendencies and the core components for application to run will be installed like an all in one package
+Snap is a **package manager** used to install and manage software on Linux.
+
+* All-in-one package :  
+When we install software using `snap`, it includes everything the app needs — like dependencies, libraries, and configurations — in one bundle. This makes the app work independently from the system.
+
+* Works across Linux distros :  
+Snap works on many Linux systems (Ubuntu, Fedora, Arch, etc.), so developers can make one package that runs everywhere.
+
+* Automatic updates :  
+Snap apps update automatically in the background. You don’t have to check for updates manually.
+
+* Sandboxed apps :  
+Snap apps run in isolation (sandbox), so they don’t affect other parts of the system. This increases security.
+
+* Basic Commands :
+ 
+$ sudo apt install snapd		# Install snapd
+$ sudo snap install <package-name>	# Install package
+$ snap list				# List snap packages  
+$ sudo snap remove <package-name>	# Remove Package
+
+* Snap files are stored in :  
+
+/snap/ and /var/snap/

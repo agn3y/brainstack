@@ -1,7 +1,56 @@
-os related command
+### OS Related Commands
 
-$ uname -a
-$ cat /etc/os_release
-$ lsb_release -a
-$ lscpu
-$ lsmem
+$ uname -a             # Show system information (kernel, architecture, etc.)
+$ cat /etc/os-release  # Show OS name and version
+$ lsb_release -a       # Show detailed Linux distribution info
+$ lscpu                # Show CPU details
+$ lsmem                # Show memory details
+
+### User and Group Management Commands
+
+* Use these high-level (safer) commands when managing users and groups:
+
+$ adduser <username>    # Add a new user (interactive, user-friendly)
+$ deluser <username>    # Delete an existing user
+$ addgroup <groupname>  # Add a new group
+$ delgroup <groupname>  # Delete an existing group
+
+* Use these low-level (manual) commands with caution:
+
+$ useradd <username>     # Low-level command to add user (no prompts)
+$ userdel <username>     # Delete a user
+$ groupadd <groupname>   # Create a group
+$ groupdel <groupname>   # Delete a group
+
+* `adduser` and `addgroup` are **scripts** that use `useradd` and `groupadd` in the background but provide easier interaction.
+
+* Adding and Removing Users from Groups
+
+$ sudo usermod -aG <groupname> <username>   # Add a user to a group
+$ sudo gpasswd -d user group				# Remove user from group
+$ groups                                    # Show groups the current user belongs to
+
+* Add User to Group at Time of Creation
+
+$ sudo useradd -m -G devops nicole
+
+### File Permission and Ownership
+
+$ sudo chown username:groupname filename	# Change ownership of file 
+$ sudo chown username filename				# Only changes files ownership
+$ sudo chgrp groupname filename				# Only changes group ownership
+
+TypeOfFile:OwnerPermission:GroupPermission:Other	
+
+$ sudo chmod +rwx dirname		# Add permission for all
+$ sudo chmod -rwx dirname		# Remove permission for all
+
+u = user, g = group, o = other
+
+$ sudo chmod u-w filename		# Removing writing permission of user
+$ sudo chmod g+w filename		# Adding writting permission to group
+$ sudo chmod u=rw- filename		# Applying multiple permission at once
+
+1 = Execute, 2 = Write, 4 = Read
+
+$ sudo chmod 777 dirname		$ Using number for assigning permission

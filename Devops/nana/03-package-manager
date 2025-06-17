@@ -1,11 +1,30 @@
-COMMAND
+* A **package manager** helps you install, update, search, and remove software on Linux.
 
-* apt
-$ man apt
-$ sudo apt update 
-$ sudo apt upgrade
-$ sudo apt search openjdk
-$ sudo apt remove openjdk
+* APT (Advanced Package Tool) – for Debian/Ubuntu based systems
 
-* apt-get
-$ sudo apt-get install openjdk
+- $ man apt                     → Show help/manual  
+- $ sudo apt update             → Update package list  
+- $ sudo apt upgrade            → Upgrade all installed packages  
+- $ sudo apt search openjdk     → Search for a package  
+- $ sudo apt install openjdk    → Install a package  
+- $ sudo apt remove openjdk     → Remove a package
+
+* APT-GET
+
+- Older tool, works like apt, often used in scripts  
+- $ sudo apt-get install openjdk  → Install package  
+
+* DNF – for newer Fedora, CentOS, RHEL versions
+
+- $ sudo dnf update              → Update system packages  
+- $ sudo dnf install <package>   → Install a package  
+- $ sudo dnf remove <package>    → Remove a package  
+- $ sudo dnf search <package>    → Search for a package  
+
+* YUM – for older CentOS, RHEL versions
+
+- Works like dnf but older and slower  
+- $ sudo yum update              → Update system packages  
+- $ sudo yum install <package>   → Install a package  
+- $ sudo yum remove <package>    → Remove a package  
+- $ sudo yum search <package>    → Search for a package  
