@@ -1,0 +1,25 @@
+vim - vi improved
+
++---------------------------------------------------------------+
+|  Command  		|	Description			|
++-----------------------+---------------------------------------+
+| dd			| delete whole line			|
+| d3 			| delete next 3 line			|
++-----------------------+---------------------------------------+
+| u 			| to undo				| 
+| r 			| to redo				|
++-----------------------+---------------------------------------+
+| / and n  		| searching and next result		|
++-----------------------+---------------------------------------+
+| set number 		| to see line number			|
+| set relativenumber 	| to see relative number		|
+| set nonumber  	| remove damn numbers			|
++-----------------------+---------------------------------------+
+| shift + a or $ 	| to go to end of line			|
+| 0 			| to go to start of line		|
++-----------------------+---------------------------------------+
+| 12G			| jumps to line number 12		|
++-----------------------+---------------------------------------+
+| :%s/old/new		| s for string / replace old word with	|
+|			| new Exp -  :%s/nginx/jalebi		|
++-----------------------+---------------------------------------+
