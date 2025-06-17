@@ -5,7 +5,7 @@
 * Main file for software sources: /etc/apt/sources.list
 
 ---------
-Method 1: Add repo using command (PPA – recommended for PPAs)
+Method 1: Add repo using command (PPA – Personal Package Archive)
 
 $ sudo add-apt-repository ppa:<repo-name>
 $ sudo apt update
