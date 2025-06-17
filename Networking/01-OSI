@@ -1,0 +1,41 @@
+* OSI - OPEN SYSTEMS INTERCONNECTION MODEL
+
+PLEASE DO NOT THROW SAUSAGE PIZZA AWAY
+
+TOP DOWN APPROCAH
+
++-----------------+
+| APPLICATION   T |  # PROVIDE NETWORK ACCESS, DHCP, FTP, HTTP, DNS, POP3
++-----------------+
+| PEWSENTATION  T |  # FORMAT DATA , SSH, SSL, COMPORESSION 
++-----------------+
+| SESSION       T |  # MAINTAIN SESSIONS, NetBIOS, RPC, SMB, SOCKERS 
++-----------------+
+| TRANSPORT     B |  # HOW PACKET WILL TRAVEL, TCP AND UDP 
++-----------------+
+| NETWORK       B |  # ROUTING & LOGICAL ADDRESSING, IP, ICMP, NAT, OSPF
++-----------------+
+| DATALINK      B |  # FLOW CONTROL, ERROR DETECTION, ACKNOWLEDGEMENTS, MAC, LLC (Loigucal Link Control), ethernet, ATM, MPLS, PPP, STP 
++-----------------+
+| PHYSICAL      B |  # HOW DATA WILL FLOW WIRE, WIRELESS, COPER WIRES, OPTICAL CABLES, Bits
++-----------------+
+
+
+* TCP / IP MODEL
+
++-------------------+
+| APPLICATION       |  # SMTP,DNS,HTTP,FTP,RIP, PROVIDES NETWORK ACCESS, FPRMATING, ENCRYPTION, COMPRESSION
++-------------------+
+| TRANSPORT         |  # TCP, UDP , DATA INTEGRITY, RELIABLE COMMUNNICATION 
++-------------------+
+| INTERNET          |  # IP ADDRESSING ROUTING, IP, ICMP, NAT
++-------------------+
+| NETWORK INTERFACE |  # ETHERNET, FIBER,COPPER, 802.11
++-------------------+
+
+Application --> Application + Presentation +  Session
+Transport --> Transport
+Network --> Internet
+Network Interface --> Datalink + Physical
+
+* ENCAPSULATION : 
