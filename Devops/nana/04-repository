@@ -1,0 +1,36 @@
+* Software Repositories – Ubuntu
+
+* When we want to install software that is **not in Ubuntu's default repositories**, we can **add its own repository**. This lets us install and update it using `apt`.
+
+* Main file for software sources: /etc/apt/sources.list
+
+---------
+Method 1: Add repo using command (PPA – recommended for PPAs)
+
+$ sudo add-apt-repository ppa:<repo-name>
+$ sudo apt update
+
+---------
+Method 2: Add repo manually (without GPG key check)
+
+$ echo "deb [trusted=yes] https://choduchaman.com stable main" >> /etc/apt/sources.list.d/choduchaman.list
+$ sudo apt update
+
+---------
+Method 3: Add repo with GPG key
+
+Step 1: Download the GPG key
+
+Open your browser and go to => https://packages.microsoft.com/keys/
+
+Download the file => microsoft.asc
+
+Step 2: Save the key to the standard location
+
+$ sudo gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg ~/Downloads/microsoft.asc
+
+Step 3: Add the Microsoft Teams repo
+
+$ echo "deb [signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/ms-teams stable main" >> /etc/apt/sources.list.d/microsoft-teams.list
+$ sudo apt update
+$ sudo apt install teams

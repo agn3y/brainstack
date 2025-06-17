@@ -1,0 +1,7 @@
+os related command
+
+$ uname -a
+$ cat /etc/os_release
+$ lsb_release -a
+$ lscpu
+$ lsmem

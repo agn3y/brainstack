@@ -1,0 +1,11 @@
+COMMAND
+
+* apt
+$ man apt
+$ sudo apt update 
+$ sudo apt upgrade
+$ sudo apt search openjdk
+$ sudo apt remove openjdk
+
+* apt-get
+$ sudo apt-get install openjdk
