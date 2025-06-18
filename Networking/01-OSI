@@ -1,41 +1,52 @@
-* OSI - OPEN SYSTEMS INTERCONNECTION MODEL
-
-PLEASE DO NOT THROW SAUSAGE PIZZA AWAY
-
-TOP DOWN APPROCAH
+# OSI - OPEN SYSTEMS INTERCONNECTION MODEL  
+*Please Do Not Throw Sausage Pizza Away*  
+TOP DOWN APPROACH
 
 +-----------------+
-| APPLICATION   T |  # PROVIDE NETWORK ACCESS, DHCP, FTP, HTTP, DNS, POP3
+| APPLICATION   T |  # PROVIDES NETWORK ACCESS TO APPS: DHCP, FTP, HTTP, DNS, POP3, SMTP
 +-----------------+
-| PEWSENTATION  T |  # FORMAT DATA , SSH, SSL, COMPORESSION 
+| PRESENTATION  T |  # FORMATS DATA, ENCRYPTS/DECRYPTS, COMPRESSION: SSL, SSH, TLS
 +-----------------+
-| SESSION       T |  # MAINTAIN SESSIONS, NetBIOS, RPC, SMB, SOCKERS 
+| SESSION       T |  # MAINTAINS SESSIONS: NetBIOS, RPC, SMB, SOCKETS
 +-----------------+
-| TRANSPORT     B |  # HOW PACKET WILL TRAVEL, TCP AND UDP 
+| TRANSPORT     B |  # CONTROLS HOW DATA TRAVELS: TCP (RELIABLE), UDP (FASTER, UNRELIABLE)
 +-----------------+
-| NETWORK       B |  # ROUTING & LOGICAL ADDRESSING, IP, ICMP, NAT, OSPF
+| NETWORK       B |  # ROUTING & LOGICAL ADDRESSING: IP, ICMP, NAT, OSPF
 +-----------------+
-| DATALINK      B |  # FLOW CONTROL, ERROR DETECTION, ACKNOWLEDGEMENTS, MAC, LLC (Loigucal Link Control), ethernet, ATM, MPLS, PPP, STP 
+| DATALINK      B |  # FLOW CONTROL, ERROR DETECTION, **MTU**, MAC ADDRESSES, FRAMES
+|                 |  # Protocols: Ethernet, LLC, MPLS, PPP, STP
 +-----------------+
-| PHYSICAL      B |  # HOW DATA WILL FLOW WIRE, WIRELESS, COPER WIRES, OPTICAL CABLES, Bits
+| PHYSICAL      B |  # SENDS RAW BITS OVER MEDIA: COPPER, FIBER, WIRELESS, VOLTAGE LEVELS
 +-----------------+
 
-
-* TCP / IP MODEL
+# 🌐 TCP / IP MODEL
 
 +-------------------+
-| APPLICATION       |  # SMTP,DNS,HTTP,FTP,RIP, PROVIDES NETWORK ACCESS, FPRMATING, ENCRYPTION, COMPRESSION
+| APPLICATION       |  # INCLUDES OSI LAYERS 5, 6, 7  
+|                   |  # Examples: HTTP, FTP, SMTP, DNS, RIP  
+|                   |  # Also handles formatting, encryption, compression
 +-------------------+
-| TRANSPORT         |  # TCP, UDP , DATA INTEGRITY, RELIABLE COMMUNNICATION 
+| TRANSPORT         |  # TCP, UDP — handles reliable/unreliable communication
 +-------------------+
-| INTERNET          |  # IP ADDRESSING ROUTING, IP, ICMP, NAT
+| INTERNET          |  # IP ADDRESSING, ROUTING: IP, ICMP, ARP, NAT
 +-------------------+
-| NETWORK INTERFACE |  # ETHERNET, FIBER,COPPER, 802.11
+| NETWORK INTERFACE |  # PHYSICAL + DATA LINK: Ethernet, Wi-Fi (802.11), DSL, Fiber, Copper
 +-------------------+
 
-Application --> Application + Presentation +  Session
-Transport --> Transport
-Network --> Internet
-Network Interface --> Datalink + Physical
+### ✅ Mapping OSI to TCP/IP:
 
-* ENCAPSULATION : 
+| TCP/IP Layer        | OSI Layers Covered               |
+|---------------------|----------------------------------|
+| Application         | Application + Presentation + Session |
+| Transport           | Transport                        |
+| Internet            | Network                          |
+| Network Interface   | Data Link + Physical             |
+
+# 📦 ENCAPSULATION (When sending data)
+
+1. **Application Layer:** creates data  
+2. **Transport Layer:** adds TCP/UDP header → becomes *segment*  
+3. **Network Layer:** adds IP header → becomes *packet*  
+4. **Data Link Layer:** adds MAC header + trailer → becomes *frame*  
+   - Also applies **MTU limit** here  
+5. **Physical Layer:** converts frame into raw bits and transmits
