@@ -19,7 +19,7 @@ TOP DOWN APPROACH
 | PHYSICAL      B |  # SENDS RAW BITS OVER MEDIA: COPPER, FIBER, WIRELESS, VOLTAGE LEVELS
 +-----------------+
 
-# 🌐 TCP / IP MODEL
+# TCP / IP MODEL
 
 +-------------------+
 | APPLICATION       |  # INCLUDES OSI LAYERS 5, 6, 7  
@@ -33,7 +33,7 @@ TOP DOWN APPROACH
 | NETWORK INTERFACE |  # PHYSICAL + DATA LINK: Ethernet, Wi-Fi (802.11), DSL, Fiber, Copper
 +-------------------+
 
-### ✅ Mapping OSI to TCP/IP:
+### Mapping OSI to TCP/IP:
 
 | TCP/IP Layer        | OSI Layers Covered               |
 |---------------------|----------------------------------|
@@ -42,7 +42,7 @@ TOP DOWN APPROACH
 | Internet            | Network                          |
 | Network Interface   | Data Link + Physical             |
 
-# 📦 ENCAPSULATION (When sending data)
+# ENCAPSULATION (When sending data)
 
 1. **Application Layer:** creates data  
 2. **Transport Layer:** adds TCP/UDP header → becomes *segment*  

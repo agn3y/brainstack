@@ -1,0 +1,17 @@
+### Shell and Shell Programming
+
+* Shell is a program that takes commands from us (the user) and talks to the operating system (kernel) to run those commands.
+
+* There are many types of shells, like **sh**, **bash**, **zsh**, and **csh (C shell)**.
+
+### Shell Programming (Shell Scripting)
+
+- Shell scripting means writing many commands together in a file to do a task automatically.
+- This helps us **automate** repetitive work.
+- Important: Starting a Shell Script
+- Always start your shell script with this line on the first line:
+
+#!/bin/bash
+
+my_name=agn3y
+echo "hostname is $my_name "
