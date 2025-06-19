@@ -1,0 +1,86 @@
+## Basic Git Setup
+
+$ git config --global user.name "Your Name"         # Set global username
+$ git config --global user.email "your@email.com"   # Set global email
+$ git config --global core.editor nano              # Set default editor
+$ git config --global init.defaultBranch main       # Set default branch name to 'main'
+
+## Project Initialization
+
+$ git init                              # Initialize a new Git repository
+$ git clone <repo-url>                  # Clone existing remote repo
+
+## Staging and Committing
+
+$ git status                            # Show status of changes
+$ git add file.txt                      # Add a specific file to staging
+$ git add .                             # Add all files to staging
+$ git commit -m "your message"          # Commit with a message
+$ git commit -am "msg"                  # Add + commit tracked files in one step
+
+## Branching and Merging
+
+$ git branch                            # List all local branches
+$ git branch new-feature                # Create a new branch (from current branch)
+$ git checkout new-feature              # Switch to the new branch
+$ git checkout -b new-feature           # Create and switch to new branch (shortcut)
+$ git switch -c new-feature             # Same as above (modern alternative)
+
+$ git merge new-feature                 # Merge a branch into the current branch
+$ git branch -d new-feature             # Delete a local branch (after merge)
+$ git branch -D new-feature             # Force delete a branch (even if not merged)
+
+## Remote Repositories
+
+$ git remote -v                         # Show remote URLs
+$ git remote add origin <url>           # Add a remote repository
+$ git push -u origin main               # Push local main branch and set upstream
+$ git push                              # Push local changes to remote
+$ git fetch                             # Download changes without merging
+
+$ git pull                              # Fetch + merge remote changes
+$ git pull --rebase                     # Fetch + rebase (cleaner than merge)
+$ git pull -r                           # Same as above (shortcut for --rebase)
+
+## Inspecting and Comparing
+
+$ git log                               # Show commit history
+$ git log --oneline --graph             # Compact, visual commit tree
+$ git show <commit-id>                  # Show details of a specific commit
+$ git diff                              # Show changes not staged
+$ git diff --staged                     # Show changes staged for commit
+
+## Undo and Fix Mistakes
+
+$ git restore file.txt                  # Undo changes in working directory
+$ git reset HEAD file.txt               # Unstage file (keep changes)
+$ git reset --hard                      # Discard all local changes (careful!)
+$ git revert <commit-id>                # Create a new commit to undo a previous one
+
+## Useful in DevOps Pipelines
+
+$ git describe --tags                   # Get current tag name (used in deployments)
+$ git rev-parse --short HEAD            # Get short commit hash (for Docker tags, CI builds)
+$ git clean -fd                         # Remove untracked files and directories
+
+## Tags (for Releases)
+
+$ git tag                               # List all tags
+$ git tag v1.0                          # Create a new tag
+$ git tag -a v1.0 -m "version 1.0"      # Create annotated tag
+$ git push origin v1.0                  # Push tag to remote
+
+## Rebase (Used in clean merges and CI flows)
+
+$ git rebase main                       # Rebase your current branch on top of main
+$ git rebase -i HEAD~3                  # Interactive rebase last 3 commits
+
+## Submodules (For nested repos)
+
+$ git submodule add <repo-url> path/   # Add a submodule
+$ git submodule update --init          # Initialize and pull submodules
+
+## Git Help
+
+$ git help                              # Open git help menu
+$ git <command> --help                  # Get help for a specific command

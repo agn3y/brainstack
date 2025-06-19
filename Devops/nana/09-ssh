@@ -1,0 +1,39 @@
+Method 01 :
+
+$ ssh-keygen -t rsa                 # Generate SSH key pair
+$ cat ~/.ssh/id_rsa.pub             # Show your public key to copy
+
+# On server, paste the copied key into ~/.ssh/authorized_keys
+
+$ chmod 700 ~/.ssh                  # Set .ssh folder permission on server
+$ chmod 600 ~/.ssh/authorized_keys  # Set authorized_keys permission on server
+$ ssh username@server-ip            # Connect to server using SSH
+
+
+Method 02 :
+
+* Steps to Use SSH Key to Connect to a Server
+
+$ ssh-keygen -t rsa			# Generate key
+$ cat ~/.ssh/id_rsa.pub                 # Copy the public key
+$ ssh username@server-ip                # Login to server
+$ mkdir -p ~/.ssh                       # Create .ssh folder if missing
+$ nano ~/.ssh/authorized_keys           # Open file to paste your key
+
+# Paste public key here, save and exit
+$ chmod 700 ~/.ssh                   	# Secure .ssh folder
+$ chmod 600 ~/.ssh/authorized_keys   	# Secure authorized_keys file
+
+$ nano ~/.ssh/config                 	# Create config file on client side 
+
+# Add this, replace username and server-ip:
+
+# Host myserver
+#    HostName server-ip
+#    User username
+#    IdentityFile ~/.ssh/id_rsa
+#    HashKnownHosts no
+
+
+IN CASE WH HAVE MULTIPLE LOGIN WE MUST PROVIDE PATH OF PARTICULAR KEY
+$ ssh -i .ssh/your-keyname user@ip-goes-here
