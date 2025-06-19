@@ -13,5 +13,84 @@
 
 #!/bin/bash
 
-my_name=agn3y
-echo "hostname is $my_name "
+### Conditions
+
+* if-else
+
+Example: 
+
+if [ -d "namehere" ]
+then 
+	echo "suck it"
+else
+	echo "fuck your mom"
+
+-----
+
+if [ -f file ]; then 
+echo "file exist"
+else
+echo "taste pussy first time" > file
+cat file
+fi
+
+### Operators
+
+## 1. **File Test Operators**
+
+| Operator          | Meaning                                                       |
+| ----------------- | ------------------------------------------------------------- |
+| `-e`              | File exists                                                   |
+| `-f`              | File exists and is a **regular file**                         |
+| `-d`              | File exists and is a **directory**                            |
+| `-s`              | File exists and is **not empty**                              |
+| `-r`              | File is readable                                              |
+| `-w`              | File is writable                                              |
+| `-x`              | File is executable                                            |
+| `-c`              | File is a character device (like `/dev/tty`)                  |
+| `-b`              | File is a block device (like `/dev/sda`)                      |
+| `-L`              | File is a symbolic link                                       |
+| `-h`              | Same as `-L` (symbolic link)                                  |
+| `-p`              | File is a named pipe (FIFO)                                   |
+| `-S`              | File is a socket                                              |
+| `-t`              | File descriptor is open and refers to terminal (e.g., `-t 1`) |
+| `file1 -nt file2` | file1 is **newer than** file2                                 |
+| `file1 -ot file2` | file1 is **older than** file2                                 |
+| `file1 -ef file2` | file1 and file2 are the **same file (inode)**                 |
+
+## 2. **Integer Comparison Operators**
+
+| Operator | Meaning                  | Example       |
+| -------- | ------------------------ | ------------- |
+| `-eq`    | Equal to                 | `[ 5 -eq 5 ]` |
+| `-ne`    | Not equal to             | `[ 5 -ne 3 ]` |
+| `-gt`    | Greater than             | `[ 7 -gt 4 ]` |
+| `-lt`    | Less than                | `[ 3 -lt 6 ]` |
+| `-ge`    | Greater than or equal to | `[ 7 -ge 7 ]` |
+| `-le`    | Less than or equal to    | `[ 3 -le 5 ]` |
+
+## 3. **String Comparison Operators**
+
+| Operator | Meaning                   | Example            |
+| -------- | ------------------------- | ------------------ |
+| `=`      | Strings are equal         | `[ "$a" = "$b" ]`  |
+| `!=`     | Strings are not equal     | `[ "$a" != "$b" ]` |
+| `<`      | String is less (ASCII)    | `[ "$a" \< "$b" ]` |
+| `>`      | String is greater (ASCII) | `[ "$a" \> "$b" ]` |
+| `-z`     | String is **empty**       | `[ -z "$a" ]`      |
+| `-n`     | String is **not empty**   | `[ -n "$a" ]`      |
+
+## 4. **Logical Operators**
+
+| Operator | Meaning                       | Example                    |
+| -------- | ----------------------------- | -------------------------- |
+| `!`      | NOT (negation)                | `[ ! -f file.txt ]`        |
+| `-a`     | AND (both conditions true)    | `[ -f a.txt -a -r a.txt ]` |
+| `-o`     | OR (either condition is true) | `[ -f a.txt -o -f b.txt ]` |
+
+## 5. **Extended Logical Test with `[[ ]]`**
+
+| Operator | Meaning | Example                       |    |                  |   |                |
+| -------- | ------- | ----------------------------- | -- | ---------------- | - | -------------- |
+| `&&`     | AND     | `[[ $a -gt 5 && $b -lt 10 ]]` |    |                  |   |                |
+| \`       |         | \`                            | OR | \`\[\[ \$a -eq 0 |   | \$b -eq 1 ]]\` |
