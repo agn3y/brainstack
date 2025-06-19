@@ -9,3 +9,20 @@ Private IPv4 Address Ranges:
 
 192.168.0.0 – 192.168.255.255
 (65,536 addresses)
+
+* Domain Name server 
+
+		  Root server 
+    		      |
+   		     TLD
+                      |
+  +---------------------------------------+			 
+  |	  |	  |       |  	  | 	  |	  |
+.mil	.edu	.com	.org	.net 	.gov
+  +-------+-------+-------+-------+-------+
+	              |
+          +------------------------+
+          |     |     |     |      |
+	.in    .ca   .pl   .us   .fr
+
+ICANN - Internet corporation assigned names and numbers
