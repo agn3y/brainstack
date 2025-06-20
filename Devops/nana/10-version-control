@@ -84,3 +84,11 @@ $ git submodule update --init          # Initialize and pull submodules
 
 $ git help                              # Open git help menu
 $ git <command> --help                  # Get help for a specific command
+
+#gitignore
+
+.gitignore 		# we can include file and directory which we don't want to push to github or gitlab
+
+* What to do folder is already pushed before creating .gitignore
+
+git rm -r .node-modules 		# give file or folder name 	
