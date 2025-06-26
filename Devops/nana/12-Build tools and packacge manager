@@ -1,0 +1,13 @@
+# Introduction to build tools
+
+artifact - a built source code
+attifact repository - a place where we keep copy of this artifact. Exp Nexus, JfrogArtifactory
+
+builing tools
+
+- needs java if project is in java
+- install build tools such as Java, Maven, Node+NPM
+
+# Installing tools on windows
+
+
