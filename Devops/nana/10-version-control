@@ -1,94 +1,111 @@
 ## Basic Git Setup
-
-$ git config --global user.name "Your Name"         # Set global username
-$ git config --global user.email "your@email.com"   # Set global email
-$ git config --global core.editor nano              # Set default editor
-$ git config --global init.defaultBranch main       # Set default branch name to 'main'
+git config --global user.name "Your Name"         # Set your name for all repos
+git config --global user.email "your@email.com"   # Set your email for all repos
+git config --global core.editor nano              # Set default text editor to nano
+git config --global init.defaultBranch main       # Make 'main' the default branch name
 
 ## Project Initialization
-
-$ git init                              # Initialize a new Git repository
-$ git clone <repo-url>                  # Clone existing remote repo
+git init                              # Start a new git repo in current folder
+git clone <repo-url>                  # Copy (clone) an existing remote repo to your system
 
 ## Staging and Committing
-
-$ git status                            # Show status of changes
-$ git add file.txt                      # Add a specific file to staging
-$ git add .                             # Add all files to staging
-$ git commit -m "your message"          # Commit with a message
-$ git commit -am "msg"                  # Add + commit tracked files in one step
+git status                            # Show what has changed and what is staged
+git add file.txt                      # Stage (add) one file for commit
+git add .                             # Stage all changed files
+git commit -m "your message"          # Save (commit) staged files with a message
+git commit -am "msg"                  # Add + commit only tracked files in one step
 
 ## Branching and Merging
+git branch                            # List all branches in current repo
+git branch new-feature                # Create a new branch from current branch
+git checkout new-feature              # Switch to the new-feature branch
+git checkout -b new-feature           # Create and switch to a new branch in one step
+git switch -c new-feature             # Same as above (modern command)
 
-$ git branch                            # List all local branches
-$ git branch new-feature                # Create a new branch (from current branch)
-$ git checkout new-feature              # Switch to the new branch
-$ git checkout -b new-feature           # Create and switch to new branch (shortcut)
-$ git switch -c new-feature             # Same as above (modern alternative)
-
-$ git merge new-feature                 # Merge a branch into the current branch
-$ git branch -d new-feature             # Delete a local branch (after merge)
-$ git branch -D new-feature             # Force delete a branch (even if not merged)
+git merge new-feature                 # Merge 'new-feature' into current branch
+git branch -d new-feature             # Delete 'new-feature' branch (only if merged)
+git branch -D new-feature             # Force delete a branch (even if not merged)
 
 ## Remote Repositories
+git remote -v                         # Show remote repository URLs
+git remote add origin <url>           # Link current repo to remote named 'origin'
+git push -u origin main               # Push and set 'main' branch as upstream
+git push                              # Push local commits to remote repo
+git fetch                             # Download new changes (but don't apply them yet)
 
-$ git remote -v                         # Show remote URLs
-$ git remote add origin <url>           # Add a remote repository
-$ git push -u origin main               # Push local main branch and set upstream
-$ git push                              # Push local changes to remote
-$ git fetch                             # Download changes without merging
-
-$ git pull                              # Fetch + merge remote changes
-$ git pull --rebase                     # Fetch + rebase (cleaner than merge)
-$ git pull -r                           # Same as above (shortcut for --rebase)
+git pull                              # Download + merge changes from remote
+git pull --rebase                     # Download + reapply your work (clean history)
+git pull -r                           # Same as above (shortcut)
 
 ## Inspecting and Comparing
-
-$ git log                               # Show commit history
-$ git log --oneline --graph             # Compact, visual commit tree
-$ git show <commit-id>                  # Show details of a specific commit
-$ git diff                              # Show changes not staged
-$ git diff --staged                     # Show changes staged for commit
+git log                               # Show list of all past commits
+git log --oneline --graph             # Show commit history as a graph (compact view)
+git show <commit-id>                  # See what a specific commit did
+git diff                              # Show unstaged changes
+git diff --staged                     # Show staged (to be committed) changes
 
 ## Undo and Fix Mistakes
-
-$ git restore file.txt                  # Undo changes in working directory
-$ git reset HEAD file.txt               # Unstage file (keep changes)
-$ git reset --hard                      # Discard all local changes (careful!)
-$ git revert <commit-id>                # Create a new commit to undo a previous one
+git restore file.txt                  # Undo changes in file (not staged)
+git reset HEAD file.txt               # Unstage file but keep changes
+git reset --hard                      # Remove all local changes (dangerous!)
+git revert <commit-id>                # Undo a commit safely by creating a new commit
 
 ## Useful in DevOps Pipelines
+git describe --tags                   # Show latest tag (used for versions/releases)
+git rev-parse --short HEAD            # Show short commit hash (used in CI/CD)
+git clean -fd                         # Delete untracked files and folders
 
-$ git describe --tags                   # Get current tag name (used in deployments)
-$ git rev-parse --short HEAD            # Get short commit hash (for Docker tags, CI builds)
-$ git clean -fd                         # Remove untracked files and directories
+## Tags (For Versions or Releases)
+git tag                               # List all tags
+git tag v1.0                          # Create a lightweight tag called v1.0
+git tag -a v1.0 -m "version 1.0"      # Create an annotated tag with a message
+git push origin v1.0                  # Push tag to remote
 
-## Tags (for Releases)
+## Rebase (Clean Merge History)
+git rebase main                       # Move your branch on top of main branch
+git rebase -i HEAD~3                  # Edit last 3 commits (interactive rebase)
 
-$ git tag                               # List all tags
-$ git tag v1.0                          # Create a new tag
-$ git tag -a v1.0 -m "version 1.0"      # Create annotated tag
-$ git push origin v1.0                  # Push tag to remote
-
-## Rebase (Used in clean merges and CI flows)
-
-$ git rebase main                       # Rebase your current branch on top of main
-$ git rebase -i HEAD~3                  # Interactive rebase last 3 commits
-
-## Submodules (For nested repos)
-
-$ git submodule add <repo-url> path/   # Add a submodule
-$ git submodule update --init          # Initialize and pull submodules
+## Submodules (Nested Repositories)
+git submodule add <repo-url> path/   # Add another repo inside current repo
+git submodule update --init          # Pull all submodule content
 
 ## Git Help
+git help                              # Show list of git help topics
+git <command> --help                  # Get help for a specific command like `git add --help`
 
-$ git help                              # Open git help menu
-$ git <command> --help                  # Get help for a specific command
+## .gitignore File
+# .gitignore is used to skip files or folders from being tracked by git
 
-#gitignore
+# If a folder was already tracked before adding .gitignore
+git rm -r --cached node_modules       # Remove 'node_modules' from git (but keep on disk)
 
-.gitignore 		# we can include file and directory which we don't want to push to github or gitlab
+## Stashing Changes
+git stash                 # Save all current changes temporarily
+git stash pop             # Restore last stashed changes
 
-* What to do folder is already pushed before creating .gitignore
+## Going Back to Past Commits
+git log                                 # See commit history
+git checkout <commit_hash>              # View old version of code (detached HEAD)
+git checkout branch-name                # Come back to current branch
 
-git rm -r .node-modules 		# give file or folder name 	
+## Undoing Local Commits
+# You made commits but haven’t pushed yet:
+git reset --hard HEAD~2                 # Delete last 2 commits and changes
+git reset HEAD~1                        # Uncommit last commit, keep changes
+git commit --amend                      # Add new changes to last commit
+
+# You already pushed wrong commit to remote:
+
+# Preferred (safe for team):
+git revert <commit_hash>                # Safely undo a commit by making a new one
+
+# Not Preferred (dangerous if working with others):
+git reset --hard HEAD~1
+git push --force
+
+## Merging Branches
+# Always switch to the branch where you want to bring changes
+git checkout bug-fix                    # Switch to bug-fix branch
+git merge master                        # Bring changes from master to bug-fix
+
+
