@@ -1,0 +1,68 @@
+# Types of Databases (with Examples and Use Cases)
+
+-------------------------------------------------
+1. Key-Value Databases
+-------------------------------------------------
+Examples: Redis, Memcached, etcd (used in Kubernetes)
+
+- Store data as simple key → value pairs
+- Extremely fast (data kept in memory)
+- Not good for large or complex data
+- Best for: Caching, Session storage, Message queues, Service discovery (etcd)
+
+-------------------------------------------------
+2. Wide-Column Databases
+-------------------------------------------------
+Examples: Cassandra, HBase
+
+- Similar to key-value but more flexible: values are split into multiple columns
+- Can handle large, unstructured data
+- Highly scalable and fault-tolerant
+- Best for: IoT data, Logs, Sensor data, Real-time analytics
+
+-------------------------------------------------
+3. Document Databases
+-------------------------------------------------
+Examples: MongoDB, DynamoDB, CouchDB
+
+- Store data in JSON-like documents (key-value structure inside)
+- Schema-less (flexible structure)
+- Fast for reads, slower for complex writes
+- Not good for highly related (relational) data
+- Best for: Mobile apps, Game data, CMS (content management systems), Product catalogs
+
+-------------------------------------------------
+4. Relational Databases (SQL)
+-------------------------------------------------
+Examples: MySQL, PostgreSQL, SQLite
+
+- Store structured data in tables (rows & columns)
+- Use SQL to query and manage data
+- Schema (structure) must be defined in advance
+- ACID compliant:
+  - Atomicity: all-or-nothing transactions
+  - Consistency: valid state before and after
+  - Isolation: parallel transactions don’t interfere
+  - Durability: data is safe after commit
+- Harder to scale horizontally
+- Best for: Financial systems, ERPs, Traditional web apps
+
+-------------------------------------------------
+5. Graph Databases
+-------------------------------------------------
+Examples: Neo4j, Dgraph
+
+- Data is stored as nodes and edges (like a network)
+- Best for finding relationships and paths
+- Very fast for graph traversal
+- Best for: Social networks, Fraud detection, Recommendation systems
+
+-------------------------------------------------
+6. Search Databases
+-------------------------------------------------
+Examples: Elasticsearch, Apache Solr
+
+- Designed for full-text search
+- Data stored like document DB, but indexed for fast search
+- Can search large text data with keywords, filters, etc.
+- Best for: Log analysis (ELK stack), Product search (eCommerce), Real-time analytics
