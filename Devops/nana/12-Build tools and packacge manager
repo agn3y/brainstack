@@ -1,13 +1,79 @@
-# Introduction to build tools
+# Introduction to Build Tools
 
-artifact - a built source code
-attifact repository - a place where we keep copy of this artifact. Exp Nexus, JfrogArtifactory
+## What is an Artifact?
 
-builing tools
+* An **artifact** is the **compiled output** of a project.
+Examples: `.jar`, `.war`, `.zip`
 
-- needs java if project is in java
-- install build tools such as Java, Maven, Node+NPM
+## What is an Artifact Repository?
 
-# Installing tools on windows
+* A place to **store, version, and share** build artifacts.    
+* Nexus, JFrog Artifactory
 
+## What is a Build Tool?
 
+* A build tool automates the process of:
+
+  * Compiling source code
+  * Downloading dependencies
+  * Running tests
+  * Packaging code into artifacts
+  * Deploying (optional)
+
+## What are Build Tool Dependencies?
+
+* Dependencies are **external libraries** or tools your project needs to work.
+Example: You might use `JUnit` for testing, `Spring Boot` for web, etc.
+
+* You **declare dependencies** in a file (like `pom.xml` or `build.gradle`), and the build tool **automatically downloads them** from a central repository.
+
+## Where do Build Tools Get Dependencies From?
+
++--------+----------------------------------------------------------------------------------------+
+| Tool   | Dependency Source                                                                      |
++--------+----------------------------------------------------------------------------------------+
+| Maven  | [Maven Central](https://search.maven.org)                                              |
+| Gradle | Maven Central, JCenter (deprecated), or any custom repository (like Nexus/Artifactory) |
++--------+----------------------------------------------------------------------------------------+
+
+These dependencies are downloaded to your local system's **dependency cache**:
+
+* Maven: `~/.m2/repository/`
+* Gradle: `~/.gradle/caches/`
+
+##  Build Tool Requirements
+
+### For Java Projects:
+
+* Install a **JDK**
+* Use a build tool:
+
+  * Maven  → uses `pom.xml`
+  * Gradle → uses `build.gradle`
+
+### For Node.js Projects:
+
+* Install Node.js
+* Use npm or yarn
+
+## Maven Project Info
+
+* Project has: `pom.xml`
+* Build command:
+
+  mvn clean install
+
+* Output `.jar` or `.war` will be in:
+
+  target/
+
+##  Gradle Project Info
+
+* Project has: `build.gradle` or `build.gradle.kts`
+* Build command:
+
+  gradle build
+
+* Output `.jar` will be in:
+
+  build/libs/

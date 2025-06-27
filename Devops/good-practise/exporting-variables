@@ -1,0 +1,24 @@
+# How to install Java and Maven manually on Linux (production-ready)
+
+1. Download and extract Java and Maven and Move extracted folders to `/opt`:
+
+2. Create environment file:
+
+$ sudo nano /etc/profile.d/devtools.sh
+
+3. Paste this inside the file:
+
+export JAVA_HOME=/opt/jdk-21
+export PATH=$JAVA_HOME/bin:$PATH
+
+export MAVEN_HOME=/opt/apache-maven-3.9.6
+export PATH=$MAVEN_HOME/bin:$PATH
+
+4. Apply changes now:
+
+$ source /etc/profile.d/devtools.sh
+
+5. Check if it worked:
+
+$ java -version
+$ mvn -v
