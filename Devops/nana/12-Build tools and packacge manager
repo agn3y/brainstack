@@ -61,11 +61,13 @@ These dependencies are downloaded to your local system's **dependency cache**:
 * Project has: `pom.xml`
 * Build command:
 
-  mvn clean install
+$ mvn clean install
 
 * Output `.jar` or `.war` will be in:
 
   target/
+
+- Use $ java -jar to start running java project
 
 ##  Gradle Project Info
 
@@ -77,3 +79,5 @@ These dependencies are downloaded to your local system's **dependency cache**:
 * Output `.jar` will be in:
 
   build/libs/
+
+## we can use npm pack to create zip of js project
