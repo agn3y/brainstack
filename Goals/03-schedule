@@ -1,0 +1,77 @@
+===========
+* Schedule 
+===========
+
+# Daily DevOps Mastery Schedule (11 AM - 10 PM)  
+*(6-8 Hours of Focused Learning + Breaks)*  
+
+### Morning Routine (11:00 AM - 12:30 PM) → Warm-up & Theory  
+
++-------------+-------------------------------------------------------------------------+----------------------------------+
+| Time        | Activity                                                                | Focus Area                       |
++-------------+-------------------------------------------------------------------------+----------------------------------+
+| 11:00-11:30 | Wake up, light exercise, coffee/tea                                     | -                                |
+| 11:30-12:30 | Study Theory (AWS docs, Kubernetes.io, DevOps books)                    | - AWS Services<br>- K8s Concepts |
++-------------+-------------------------------------------------------------------------+----------------------------------+
+
+### Deep Work Block (12:30 PM - 3:30 PM) → Hands-On Labs
+
++------------+--------------------------------------------------------------+----------------------------------+
+| Time       | Activity                                                     | Tools/Projects                   |
++------------+--------------------------------------------------------------+----------------------------------+
+| 12:30-2:30 | Lab 1: AWS/Terraform/K8s (e.g., Deploy EKS cluster)          | - Terraform<br>- EKS             |
+| 2:30-3:30  | Lab 2: Automation (e.g., Python/Bash script for log cleanup) | - Python<br>- Linux              |
++------------+--------------------------------------------------------------+----------------------------------+
+
+### Break (3:30 PM - 4:00 PM) 
+- Lunch + Short Walk (Avoid screens!)  
+
+### Project Work (4:00 PM - 7:00 PM) → Real-World Builds
+
++------------+-----------------------------------------------------------+----------------------------------+  
+| Time       | Activity                                                  |   Project Example                |
++------------+-----------------------------------------------------------+----------------------------------+
+| 4:00-6:00  | Project 1: CI/CD Pipeline (Jenkins/GitHub Actions on AWS) | - Deploy a Node.js app           |
+| 6:00-7:00  | Project 2: Security (e.g., IAM Policies + KMS Encryption) | - Secure S3 buckets              |
++------------+-----------------------------------------------------------+----------------------------------+
+
+### Dinner Break (7:00 PM - 8:00 PM)  
+- Relax, watch a DevOps-related video (e.g., AWS re:Invent talks).  
+
+### Night Review (8:00 PM - 10:00 PM) → Reinforcement
+
++------------+-----------------------------------------------------------------+--------------------------------------------+
+| Time       | Activity                                                        | Focus Area                                 |
++------------+-----------------------------------------------------------------+--------------------------------------------+
+| 8:00-9:00  | Troubleshooting Practice** (Break/fix labs on KodeKloud or AWS) | - Debug K8s pods<br>- Fix Terraform errors |
+| 9:00-10:00 | Community & Open Source** (GitHub, r/devops, write a blog post) | - Contribute to Terraform modules          |
++------------+-----------------------------------------------------------------+--------------------------------------------+
+
+# Weekly Focus Areas (Example)
+*(Align with the 6-month roadmap)*  
+
++----------+------------------------------------------+----------------------------------+
+| Day      | Primary Focus                            | Secondary Focus                  |
++----------+------------------------------------------+----------------------------------+
+| Monday   | AWS Core (EC2, IAM, VPC)                 | Bash/Python Scripting            |
+| Tuesday  | Terraform (AWS Modules)                  | CloudFormation                   |
+| Wednesday| CI/CD (Jenkins/GitHub Actions)           | AWS CodePipeline                 |
+| Thursday | Kubernetes (EKS, Helm)                   | Docker Security                  |
+| Friday   | DevSecOps (IAM, KMS, Trivy)              | Chaos Engineering                |
+| Saturday | Open Source + Cert Prep                  | Mock Exams (AWS DevOps Pro)      |
+| Sunday   | Review & Plan Next Week                  | Light Reading (SRE Book)         |
++----------+------------------------------------------+----------------------------------+
+
+# Pro Tips for Consistency  
+1. Timebox Tasks – Use a timer (Pomodoro technique: 50 mins work, 10 mins break).  
+2. Track Progress – Maintain a DevOps learning journal (Notion/Excel).  
+3. Weekends – Dedicate 2-4 hours to certifications or complex projects.  
+4. Burnout Prevention – Take Sundays *lightly* (e.g., watch AWS tutorials instead of labs).  
+
+---
+
+### Tomorrow’s Starter Plan (Day 1)  
+- 11:30 AM-12:30 PM : Read AWS IAM Best Practices.  
+- 12:30-2:30 PM : Lab – Create IAM roles/policies for EC2.  
+- 4:00-6:00 PM : Project – Deploy a static website on S3 + CloudFront.  
+- 8:00-9:00 PM : Troubleshoot a broken S3 bucket policy.
