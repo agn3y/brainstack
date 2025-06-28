@@ -1,66 +1,95 @@
-===============================
-* NEXUS 3 - BASICS & INSTALL
-===============================
+* What is Nexus?
+----------------
+- Nexus is a repository manager used to store and manage software components like JARs, npm packages, Docker images, etc.
 
-# --- WHAT IS NEXUS ---
-- Repository manager by Sonatype
-- Stores artifacts: JARs, NPM, Docker images, etc.
-- Used in CI/CD pipelines (Jenkins, Maven, etc.)
+* Why use Nexus?
+----------------
+- Stores build artifacts (e.g., JAR, WAR, ZIP)
+- Acts as a local proxy to public repos (Maven Central, npmjs)
+- Speeds up builds and allows offline use
+- Adds control and security to your builds
 
-# --- WHY USE IT ---
+Types of Repositories
+
+1. Hosted:
+   - Stores your own packages
+   - Example: Internal Maven or npm repo
+
+2. Proxy:
+   - Caches remote repo packages
+   - Example: Maven Central, npmjs
+
+3. Group:
+   - Combines multiple repos under one URL
+   - Example: all-maven, all-npm
+
+
+* Supported Formats
+-----------------
+- Maven / Gradle (Java)
+- npm / Yarn (JavaScript)
+- Docker
+- PyPI (Python)
+- NuGet (.NET)
+- RubyGems
+
+
+* Usage in DevOps / CI-CD
+-----------------------
+- Push artifacts from Jenkins to Nexus
+- Pull dependencies from Nexus in builds
+- Manage versions and security of packages
 - Central storage for build artifacts
 - Speeds up builds (cache)
 - Secures 3rd-party libs
 - Can act as Docker registry
 
 # --- EXTRACTED FOLDERS ---
-# nexus/          → Main app (bin/, lib/, etc/)
-# sonatype-work/  → Stores data, repos, logs, admin password
+- nexus/          → Main app (bin/, lib/, etc/)
+- sonatype-work/  → Stores data, repos, logs, admin password
 
-===============================
-  INSTALL ON AWS EC2 (Ubuntu)
-===============================
-
-# 1. Launch EC2 (open port 8081), SSH in
-# 2. Install Java 8+
+* INSTALL ON AWS EC2 (Ubuntu)
+-----------------------------
+1. Launch EC2 (open port 8081), SSH in
+2. Install Java 8+
 $ sudo apt update && sudo apt install openjdk-8-jdk -y
 
-# 3. Create user & download Nexus
+3. Create user & download Nexus
 $ sudo adduser nexus
 $ cd /opt && sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
 $ sudo tar -xzf latest-unix.tar.gz && sudo mv nexus-* nexus && sudo chown -R nexus:nexus nexus
 
-# 4. Set user in run config
+4. Set user in run config
 $ echo 'run_as_user="nexus"' | sudo tee /opt/nexus/bin/nexus.rc
 
-# 5. Create systemd service
+5. Create systemd service
 $ sudo tee /etc/systemd/system/nexus.service > /dev/null <<EOF
+ 
 [Unit]
-Description=nexus
-After=network.target
-[Service]
-Type=forking
-User=nexus
-ExecStart=/opt/nexus/bin/nexus start
-ExecStop=/opt/nexus/bin/nexus stop
-LimitNOFILE=65536
-Restart=on-abort
-[Install]
-WantedBy=multi-user.target
-EOF
+ Description=nexus
+ After=network.target
+ [Service]
+ Type=forking
+ User=nexus
+ ExecStart=/opt/nexus/bin/nexus start
+ ExecStop=/opt/nexus/bin/nexus stop
+ LimitNOFILE=65536
+ Restart=on-abort
+ [Install]
+ WantedBy=multi-user.target
+ EOF
 
-# 6. Start service
+6. Start service
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable --now nexus
 
-# 7. Access: http://<EC2_PUBLIC_IP>:8081
-# 8. Get admin password:
+7. Access: http://<EC2_PUBLIC_IP>:8081
+8. Get admin password:
 $ cat /opt/sonatype-work/nexus3/admin.password
 
-===============================
-  INSTALL VIA DOCKER
-===============================
 
+* INSTALL VIA DOCKER
+--------------------
 # Pull & run
 $ docker pull sonatype/nexus3
 $ docker run -d -p 8081:8081 --name nexus sonatype/nexus3
