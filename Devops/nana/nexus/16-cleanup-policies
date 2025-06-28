@@ -1,0 +1,64 @@
+===========================
+NEXUS CLEANUP POLICY NOTES
+===========================
+
+1. What is a Cleanup Policy?
+----------------------------
+- Cleanup Policies help automatically remove old or unused artifacts.
+- Useful for saving disk space, especially in snapshot or proxy repositories.
+- Policies are based on rules like age, last download, release status, etc.
+
+2. How to Create a Cleanup Policy
+---------------------------------
+- Go to: Administration > Repository > Cleanup Policies.
+- Click "Create cleanup policy".
+- Fill in:
+  - Name (e.g., `delete-old-snapshots`)
+  - Format (e.g., maven2, npm, docker)
+  - Criteria:
+    - Last downloaded before X days
+    - Released before X days
+    - Is a snapshot
+- Click "Create" to save the policy.
+
+3. How to Attach Cleanup Policy to a Repository
+-----------------------------------------------
+- Go to: Repositories > Select a repository > Edit.
+- Scroll to "Cleanup Policy" section.
+- Select the policy from the dropdown.
+- Save the repository.
+- The policy is now linked to the repository, but only runs if a task is created.
+
+4. How to Execute Cleanup Automatically (Scheduled)
+---------------------------------------------------
+- Go to: Administration > System > Tasks.
+- Click "Create task".
+- Task type: `Cleanup unused components`.
+- Fill:
+  - Name
+  - Repository to apply (or ALL)
+  - Schedule (Daily, Weekly, etc.)
+- Save the task.
+- It will now run automatically based on schedule.
+
+5. How to Run Cleanup Manually
+------------------------------
+- Go to: Administration > System > Tasks.
+- Click on the cleanup task you created.
+- Click "Run" button.
+- Nexus will now apply cleanup policy immediately.
+
+6. Notes and Best Practices
+---------------------------
+- Create separate cleanup policies for snapshots and releases.
+- Do not apply aggressive policies to release repositories unless needed.
+- Monitor disk usage and component count regularly.
+- Combine cleanup policy with Blob Store compaction for maximum space saving.
+- Cleanup does not delete blob files instantly — compaction task must run after.
+
+7. Compacting Blob Store (Optional)
+-----------------------------------
+- Go to: Administration > System > Tasks > Create Task.
+- Task type: `Compact blob store`.
+- Choose the blob store to compact.
+- Run it manually or schedule it after cleanup to free disk space.
