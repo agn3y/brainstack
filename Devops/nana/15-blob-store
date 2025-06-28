@@ -1,0 +1,60 @@
+=======================
+NEXUS BLOB STORE NOTES
+=======================
+
+1. What is a Blob Store?
+------------------------
+- Blob Store is where Nexus stores actual binary data (artifacts).
+- Examples: JARs, ZIPs, npm packages, Docker layers, etc.
+- Each repository must be connected to one Blob Store.
+
+2. Types of Blob Stores
+-----------------------
+- File: Stores blobs on the local disk.
+- S3: Stores blobs in Amazon S3 (for cloud setups).
+- Grouping: Allows grouping of multiple stores for redundancy or tiered storage.
+
+3. How to Create a Blob Store
+-----------------------------
+- Go to "Administration" > "Repository" > "Blob Stores".
+- Click "Create Blob Store".
+- Choose type: File or S3.
+- Give a name (e.g., `release-blobs`, `snapshot-blobs`).
+- For File type: set a path under `nexus-data/blobs/`.
+- Save.
+
+4. How to Connect Blob Store to Repository
+------------------------------------------
+- Go to "Repositories" > Create or Edit repository.
+- Under "Storage" section, choose the Blob Store from the dropdown.
+- Save the repository.
+- All uploaded artifacts will now be stored in that Blob Store.
+
+5. Blob Store Best Practices (Do’s)
+-----------------------------------
+- Do name blob stores clearly (e.g., `maven-releases`, `docker-store`).
+- Do create separate blob stores for different repo types or usage (release vs snapshot).
+- Do monitor disk usage and performance regularly.
+- Do backup the `nexus-data` directory frequently (includes blob files).
+- Do use S3 blob store in production-grade, cloud-hosted Nexus instances.
+
+6. Blob Store Don’ts
+--------------------
+- Don’t manually edit, move, or delete files inside blob folders.
+- Don’t assign the same blob store to repositories with very different retention policies.
+- Don’t use S3 without enabling proper encryption, lifecycle rules, and IAM access control.
+- Don’t let blob storage fill up disk — it can cause Nexus to crash or corrupt data.
+
+7. Other Common Operations (Used in Industry)
+---------------------------------------------
+- Reclaim space: Use "Admin > System > Tasks > Create task > 'Compact blob store'" to free unused space.
+- Quota monitoring: Use custom scripts or 3rd-party tools to monitor disk usage under `nexus-data/blobs/`.
+- Migration: Blob stores can be exported and reattached manually, but best done using official tools.
+- Blob integrity check: Use REST API or tasks to verify blob checksum and health.
+
+8. Blob Store Location
+----------------------
+- Default file location:
+  nexus-data/blobs/<store-name>/
+- This can be changed per store when created.
+- Do not move this manually unless you know what you're doing.
