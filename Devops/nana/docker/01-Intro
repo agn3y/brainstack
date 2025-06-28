@@ -1,0 +1,85 @@
+=================
+DOCKER COMMANDS
+=================
+
+* Pull Image
+------------
+docker pull <image>                 # latest version
+docker pull <image>:<version>       # specific version
+docker pull postgres:9.6
+
+* Run Container
+---------------
+docker run <image>                 # run image
+docker run -it <image>             # interactive terminal
+docker run -d <image>              # detached mode
+docker run --name mypg <image>     # custom container name
+docker run -p 8080:80 <image>      # port mapping host:container
+docker run -p 8000:80 -d <image>   # running in detach mode 
+docker run -v /host:/container     # volume mount
+
+* Basic Container Management
+----------------------------
+docker ps                          # running containers
+docker ps -a                       # all containers (running + stopped)
+docker stop <name/id>              # stop container
+docker start <name/id>             # start container
+docker restart <name/id>           # restart container
+docker rm <name/id>                # delete container
+docker rm -f <name/id>             # force delete
+docker exec -it <name> /bin/bash   # enter container terminal
+
+* Image Management
+------------------
+docker images                      # list local images
+docker rmi <image>                 # delete image
+docker rmi -f <image>              # force delete
+docker build -t <name>:<tag> .     # build image from Dockerfile
+docker tag <src> <repo>:<tag>      # rename/tag image
+
+* Volumes
+---------
+docker volume create <name>        # create volume
+docker volume ls                   # list volumes
+docker volume inspect <name>       # inspect volume
+docker volume rm <name>            # delete volume
+
+* Networks
+----------
+docker network ls                  # list networks
+docker network create <name>       # create network
+docker network connect <net> <ctr> # connect container to network
+docker network inspect <name>      # inspect network
+docker network rm <name>           # delete network
+
+* Logs & Info
+-------------
+docker logs <name/id>              # container logs
+docker inspect <name/id>           # full container details (JSON)
+docker stats                       # live CPU/mem usage
+docker top <name>                  # processes inside container
+
+* Dockerfile
+------------
+# Build image from Dockerfile in current dir
+docker build -t myimage:latest .
+
+* Docker Compose (if used)
+---------------------------
+docker-compose up                  # start services
+docker-compose up -d               # start in background
+docker-compose down                # stop and clean
+docker-compose logs                # view logs
+docker-compose ps                  # list services
+
+* Clean Up
+----------
+docker system df                   # disk usage
+docker system prune                # remove unused data
+docker image prune                 # remove unused images
+docker volume prune                # remove unused volumes
+
+* Copy Files
+------------
+docker cp file.txt <ctr>:/app/     # host → container
+docker cp <ctr>:/app/file.txt .    # container → host
