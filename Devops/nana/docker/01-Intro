@@ -10,13 +10,14 @@ docker pull postgres:9.6
 
 * Run Container
 ---------------
-docker run <image>                 # run image
-docker run -it <image>             # interactive terminal
-docker run -d <image>              # detached mode
-docker run --name mypg <image>     # custom container name
-docker run -p 8080:80 <image>      # port mapping host:container
-docker run -p 8000:80 -d <image>   # running in detach mode 
-docker run -v /host:/container     # volume mount
+docker run <image>                 					# run image
+docker run -it <image>             					# interactive terminal
+docker run -d <image>              					# detached mode
+docker run --name mypg <image>     					# custom container name
+docker run -p 8080:80 <image>      					# port mapping host:container
+docker run -p 8000:80 -d <image>   					# running in detach mode 
+docker run -v /host:/container     					# volume mount
+docker run -d -p6991:6378 --name bholureporter redis:4.0		# give name that you can remember
 
 * Basic Container Management
 ----------------------------
