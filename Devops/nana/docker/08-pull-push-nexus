@@ -1,0 +1,35 @@
+* Nexus Docker Repo & Push Image - Quick Guide
+
+# Create Role and User in Nexus with Docker repo permissions
+
+# Create Docker (hosted) repo in Nexus on port 8083
+
+# Docker auth saved in ~/.docker/config.json
+
+# Configure insecure registry (if using HTTP)
+# Edit /etc/docker/daemon.json and add:
+{
+   "insecure-registries": ["172.17.0.2:8083"]
+}
+
+# Restart Docker:
+sudo systemctl restart docker
+
+# Commit running container to image
+docker commit dazzling_hopper mycustomimage:nexus
+
+# Tag image for Nexus repo
+docker tag mycustomimage:nexus 172.17.0.2:8083/mycustomimage:nexus
+
+# Login to Nexus registry
+docker login 172.17.0.2:8083
+
+# Push image to Nexus
+docker push 172.17.0.2:8083/mycustomimage:nexus
+
+# Verify image pushed
+docker pull 172.17.0.2:8083/mycustomimage:nexus
+
+# To pull image from that repo
+curl -u sshman:9979 -X GET "http://172.17.0.2:8081/services/rest/v1/components?repository=docker-hosted"
+
