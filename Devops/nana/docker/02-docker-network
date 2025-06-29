@@ -1,0 +1,67 @@
+=================
+DOCKER NETWORKING
+=================
+
+1. What is Docker Network?
+--------------------------
+- Docker uses networks to allow containers to talk to each other or the outside world.
+- Each container is connected to a virtual network.
+- Default networks: bridge, host, none.
+
+2. List Networks
+----------------
+docker network ls                   # list all Docker networks
+
+3. Inspect a Network
+--------------------
+docker network inspect <name>       # detailed info about network and attached containers
+
+4. Create a Network
+-------------------
+docker network create <name>        # create custom bridge network
+docker network create --driver bridge mynet
+
+5. Connect Container to Network
+-------------------------------
+docker network connect <network> <container>
+docker network connect mynet mycontainer
+
+6. Disconnect Container
+-----------------------
+docker network disconnect <network> <container>
+
+7. Remove Network
+-----------------
+docker network rm <name>
+
+8. Types of Networks
+--------------------
+- **bridge** (default): containers get their own IP; can talk to each other
+- **host**: container shares host’s network namespace
+- **none**: no networking (fully isolated)
+- **overlay**: used in Docker Swarm for multi-host networking
+- **macvlan**: assign real MAC address from local network (advanced)
+
+9. Run Container in Custom Network
+----------------------------------
+docker run --network <name> <image>
+docker run --network mynet nginx
+
+10. DNS Between Containers
+--------------------------
+- In same custom network, containers can reach each other using container name as hostname.
+
+Example:
+  docker network create myapp-net
+  docker run --name db --network myapp-net postgres
+  docker run --name app --network myapp-net myapp-image
+
+In this case, `app` can access `db` using hostname `db`.
+
+11. Use Cases
+-------------
+- Isolate microservices into separate networks.
+- Run frontend, backend, and database with internal DNS.
+- Connect external systems via host network or published ports.
+
+
