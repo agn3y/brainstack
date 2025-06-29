@@ -1,8 +1,56 @@
-Example of dockerfile
+### What is a Dockerfile?
 
-FROM node
-ENV MONGO_DB_USERNAME=admin
+- A Dockerfile is a plain text file with instructions to **build a Docker image** layer by layer.
+
+### Commonly Used Instructions (with real-world use)
+
++---------------+----------------------------------------------------------------------------+
+| Instruction   | Purpose (How it's used)                                                    |
++---------------+----------------------------------------------------------------------------+
+| `FROM`        | Start from base image (e.g., `FROM node:18-alpine`)                        |
+| `LABEL`       | Add metadata like maintainer, version, etc.                                |
+| `WORKDIR`     | Set working directory (e.g., `/app`)                                       |
+| `COPY`        | Copy code/configs to image (`COPY package*.json ./`)                       |
+| `RUN`         | Execute commands during image build (install packages, etc.)               |
+| `ENV`         | Set environment variables (e.g., `ENV NODE_ENV=production`)                |
+| `EXPOSE`      | Document the port the app will use (e.g., `EXPOSE 3000`)                   |
+| `CMD`         | Default command to run when container starts (`CMD ["npm", "start"]`)      |
+| `ENTRYPOINT`  | Like `CMD` but preferred when running as executable wrapper                |
+| `ARG`         | Define build-time variables (`ARG APP_VERSION`)                            |
+| `VOLUME`      | Define mount points (e.g., logs, persistent data)                          |
+| `USER`        | Run container as non-root user for security (`USER node`)                  |
+| `HEALTHCHECK` | Define container health checks (e.g., check service port or HTTP response) |
++---------------+----------------------------------------------------------------------------+
+
+### Best Practices
+
+* Use a **minimal base image** (`alpine`, `slim`, etc.)
+* Use **multi-stage builds** to separate build + runtime
+* Clean up caches (`apt-get clean`, `rm -rf /var/lib/apt/lists/*`)
+* Use `.dockerignore` to skip copying unnecessary files
+* Use non-root `USER` wherever possible
+* Keep image size small, layers few, and builds fast
+
+
+
+### Example Dockerfile (Simple Node.js App)
+
+FROM node:13-alpine					# starts from here
+
+ENV MONGO_DB_USERNAME=admin \				# Set environment variables
     MONGO_DB_PASSWORD=password
-RUN mkdir -p /home/app
-COPY . /home/app
-CMD ["node","server.js"]
+
+RUN mkdir -p /home/app					# Create app directory
+
+COPY . /home/app					# Copy project files
+
+WORKDIR /home/app					# Set working directory
+
+CMD ["node", "server.js"]				# Command to run when container starts
+
+
+
+### 🔹 Build Image from Dockerfile
+
+# Build image from Dockerfile in current directory
+docker build -t my-app:v1.0.0 .

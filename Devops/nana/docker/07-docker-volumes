@@ -1,0 +1,52 @@
+WHY DOCKER VOLUMES ARE NEEDED IN FIRST PLACE
+
+- To make data persistent
+- we plug external file system in the docker file system to keep the data persistent
+
+3 types of volumes
+
+1. host volume
+- in here you decides where the data will be stoerd
+
+$ docker run -v /home/mount/data:/var/lib/mysql/data
+
+2.ANonymous volumes
+- in here for each container a folder is generated that gets mounted
+
+$ docker -v /var/lib/mysql/data
+
+3.named volumes
+- improvement of anonymous volumes
+- should be used in production
+
+$ docker -v name:/var/lib/mysql/data
+
+# to add this in docker compose we can do 
+
+volumes:
+   -db-data:/var/lib/mysql/data
+
+## docker volumes demo
+
+fire up those contaieners
+
+$ docker-compose -g name-of-contaner.yaml
+
+then add this content in dockerfile
+
+volumes:
+    - mongo-data:/data/db
+
+
+# at EOF
+volumes:
+	mongo-data:
+	  driver: local 
+
+now restart docker compose
+
+now lets see where docker stores data on the host side
+
+windows	: C:\ProgramData\docker\volumes
+linux	: /var/lib/docker/volumes
+mac	: /var/lib/docker/volumes

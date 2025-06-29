@@ -1,0 +1,164 @@
+# AWS ECR, Docker, and Docker Compose Guide
+# Last Updated: [DATE]
+# vim: set syntax=markdown:
+
+## Table of Contents
+1. Creating an AWS ECR Repository .................... |ecr-create|
+2. Configuring AWS CLI ............................. |aws-cli-config|
+3. Docker ECR Authentication ........................ |docker-auth|
+4. Pushing Images to ECR ........................... |ecr-push|
+5. Pulling Images from ECR ......................... |ecr-pull|
+6. Dockerfile Creation ............................. |dockerfile|
+7. Docker Compose Setup ............................ |docker-compose|
+
+===============================================================================
+1. Creating an AWS ECR Repository                              *ecr-create*
+
+1. Login to AWS Console:
+   - Navigate to: https://aws.amazon.com/console/
+   - Services > Containers > Elastic Container Registry
+
+2. Create Repository:
+   - Click "Create repository"
+   - Name: my-app (or your preferred name)
+   - Settings:
+     * Visibility: Private
+     * Tag immutability: Enable (recommended)
+     * Scan on push: Enable
+   - Click "Create"
+
+3. Note Repository URI:
+   Format: [account-id].dkr.ecr.[region].amazonaws.com/repo-name
+   Example: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-app
+
+===============================================================================
+2. Configuring AWS CLI                                   *aws-cli-config*
+
+# Install AWS CLI (Linux/macOS)
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Configure AWS CLI
+aws configure
+# Follow prompts to enter:
+# - AWS Access Key ID
+# - AWS Secret Access Key
+# - Default region (e.g., us-east-1)
+# - Default output format (json)
+
+# Verify configuration
+aws sts get-caller-identity
+
+===============================================================================
+3. Docker ECR Authentication                              *docker-auth*
+
+# Authenticate Docker with ECR (valid for 12 hours)
+aws ecr get-login-password --region [region] | \
+docker login --username AWS --password-stdin [account-id].dkr.ecr.[region].amazonaws.com
+
+Example:
+aws ecr get-login-password --region us-east-1 | \
+docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
+
+===============================================================================
+4. Pushing Images to ECR                                   *ecr-push*
+
+# 1. Build your Docker image
+docker build -t my-app .
+
+# 2. Tag the image for ECR
+docker tag my-app:latest [account-id].dkr.ecr.[region].amazonaws.com/my-app:latest
+
+# 3. Push to ECR
+docker push [account-id].dkr.ecr.[region].amazonaws.com/my-app:latest
+
+===============================================================================
+5. Pulling Images from ECR                                 *ecr-pull*
+
+# 1. Authenticate (see |docker-auth| section)
+# 2. Pull the image
+docker pull [account-id].dkr.ecr.[region].amazonaws.com/my-app:latest
+
+# 3. Run container
+docker run -d -p 8080:80 [account-id].dkr.ecr.[region].amazonaws.com/my-app:latest
+
+===============================================================================
+6. Dockerfile Creation                                    *dockerfile*
+
+Example Dockerfile (Node.js application):
+
+# vim: set syntax=dockerfile:
+FROM node:16-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+
+Build commands:
+docker build -t my-app .
+docker tag my-app:latest [ecr-repo-uri]:latest
+
+===============================================================================
+7. Docker Compose Setup                                *docker-compose*
+
+Example docker-compose.yml:
+
+# vim: set syntax=yaml:
+version: '3.8'
+services:
+  web:
+    image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+Common Commands:
+# Start services in detached mode
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild and restart
+docker-compose up --build -d
+
+===============================================================================
+# Additional Notes                                       *notes*
+
+1. IAM Permissions:
+   - Ensure user has AmazonEC2ContainerRegistryFullAccess or equivalent
+
+2. Lifecycle Policies:
+   - Set up in ECR to automatically clean up old images
+
+3. Security Best Practices:
+   - Use multi-stage builds
+   - Specify exact versions for base images
+   - Implement .dockerignore file
+
+4. Troubleshooting:
+   - Authentication issues: Ensure AWS CLI is configured properly
+   - Permission errors: Verify IAM policies
+   - Push errors: Check repository URI and authentication
+
+# vim: wrap
