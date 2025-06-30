@@ -1,0 +1,28 @@
+# Jenkins: Introduction and Basic Configuration
+
+## What is Jenkins?
+- Jenkins is a **CI/CD tool** (Continuous Integration / Continuous Deployment).
+- It automates:
+  - Code building
+  - Code testing
+  - Code deployment
+
+## Jenkins Architecture: Master-Slave Concept
+- Master : Controls the job flow, user interface, and job scheduling.
+- Slave (Agent) : Does the actual work like build, test, deploy.
+
+## Keeping Jenkins Data Persistent
+- By default, Jenkins data is inside the container.
+- If the container is deleted, all data (jobs, plugins) will be lost.
+- Use a **Docker volume** to store data on your host machine.
+
+
+## Install Jenkins Using Docker
+
+docker run -d \
+  -p 8080:8080 \                             # Jenkins UI
+  -p 50000:50000 \                           # Agent connection port
+  -v jenkins_home:/var/jenkins_home \        # Persistent volume
+  --name jenkins-container \
+  jenkins/jenkins:lts
+

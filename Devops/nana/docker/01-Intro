@@ -57,6 +57,7 @@ docker network rm <name>           # delete network
 -------------
 docker logs <name/id>              # container logs
 docker inspect <name/id>           # full container details (JSON)
+docker inspect <volume>		   # inspect volume information
 docker stats                       # live CPU/mem usage
 docker top <name>                  # processes inside container
 

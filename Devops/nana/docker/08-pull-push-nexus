@@ -1,35 +1,67 @@
-* Nexus Docker Repo & Push Image - Quick Guide
+# Nexus Docker Repo & Push Image – Complete Guide
 
-# Create Role and User in Nexus with Docker repo permissions
+# Step 1: Create Role & User in Nexus
+# - Open Nexus UI: http://<your-ip>:8081
+# - Create a Role with full access to Docker (hosted) repo.
+# - Create a User and assign the Role.
 
-# Create Docker (hosted) repo in Nexus on port 8083
+# Step 2: Create Docker (hosted) Repository
+# - In Nexus, go to Repositories -> Create repository
+# - Select Docker (hosted)
+# - Use port 8083
+# - Note the repo name: e.g., docker-hosted
 
-# Docker auth saved in ~/.docker/config.json
-
-# Configure insecure registry (if using HTTP)
-# Edit /etc/docker/daemon.json and add:
+# Step 3: Configure Docker for HTTP (Insecure Registry)
+# - Edit /etc/docker/daemon.json and add:
 {
-   "insecure-registries": ["172.17.0.2:8083"]
+  "insecure-registries": ["172.17.0.2:8083"]
 }
-
-# Restart Docker:
+# - Restart Docker:
 sudo systemctl restart docker
 
-# Commit running container to image
+# Step 4: Commit & Tag Docker Image
+# - Commit running container to image:
 docker commit dazzling_hopper mycustomimage:nexus
-
-# Tag image for Nexus repo
+# - Tag the image for Nexus repo:
 docker tag mycustomimage:nexus 172.17.0.2:8083/mycustomimage:nexus
 
-# Login to Nexus registry
+# Step 5: Login to Nexus Docker Registry
 docker login 172.17.0.2:8083
+# - Enter your Nexus username and password
 
-# Push image to Nexus
+# Step 6: Push Image to Nexus
 docker push 172.17.0.2:8083/mycustomimage:nexus
 
-# Verify image pushed
+# Step 7: Verify Image in Nexus
+# - Pull the image:
 docker pull 172.17.0.2:8083/mycustomimage:nexus
+# - Or use REST API:
+curl -u sshman:9979 -X GET \
+"http://172.17.0.2:8081/service/rest/v1/components?repository=docker-hosted"
 
-# To pull image from that repo
-curl -u sshman:9979 -X GET "http://172.17.0.2:8081/services/rest/v1/components?repository=docker-hosted"
+# Step 8: Setup Data Persistence (Optional)
 
+# Option 1: Use Docker named volume:
+docker volume create --name nexus-data
+docker run -d \
+  --name nexus \
+  -p 8081:8081 \
+  -v nexus-data:/nexus-data \
+  sonatype/nexus3
+
+# Option 2: Use host directory:
+mkdir -p /some/dir/nexus-data
+chown -R 200 /some/dir/nexus-data
+docker run -d \
+  --name nexus \
+  -p 8081:8081 \
+  -v /some/dir/nexus-data:/nexus-data \
+  sonatype/nexus3
+
+
+# In my case i've got nexus installed in ubuntu container so for me moves will be
+# docker volume create --name nexus-data
+# docker commit dazzling_hopper mycustomeimage:nexus
+# docker tag mycustomeimage:nexus 172.17.0.2:8083/mycustomeimage:nexus
+# docker login 172.17.0.2:8083
+# docker push 172.17.0.2:8083/mycustomeimage:nexus
