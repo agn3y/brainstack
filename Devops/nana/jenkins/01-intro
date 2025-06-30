@@ -26,3 +26,67 @@ docker run -d \
   --name jenkins-container \
   jenkins/jenkins:lts
 
+## Access Jenkins as Root (Inside Container)
+
+docker exec -u 0 -it jenkins-container /bin/bash
+
+- This logs you into the Jenkins container as the root user.
+- Useful for installing tools or fixing permission issues inside.
+
+## First Time Jenkins Setup
+
+1. Open browser and go to: http://localhost:8080
+2. Get admin password:
+
+$ docker exec jenkins-container cat /var/jenkins_home/secrets/initialAdminPassword
+
+3. Copy that password and paste into browser.
+4. Install suggested plugins.
+5. Create your admin user.
+
+## Adding GitHub SSH Key for Pipeline
+
+# On Jenkins:
+
+1. Go to: Manage Jenkins → Credentials → Global → Add Credentials
+2. Choose:
+	- Kind: SSH Username with private key
+	- Username: git (for GitHub)
+	- Private Key: Paste your private key (e.g., from ~/.ssh/id_rsa)
+
+# On GitHub:
+
+1. Go to your repo → Settings → Deploy Keys → Add Key
+2. Paste your public key (e.g., from ~/.ssh/id_rsa.pub)
+3. Enable "Allow write access" if needed.
+
+## Setting Up GitHub Pipeline in Jenkins
+
+1. Go to Jenkins Dashboard → New Item
+2. Choose Pipeline, give it a name.
+3. In the job config:
+	- Go to Pipeline → Definition → Pipeline script from SCM
+	- Choose Git
+	- Add your GitHub repo URL
+	- Choose the SSH Credential you added before
+
+4. Jenkins will now:
+	- Pull code from GitHub
+	- Run the pipeline using Jenkinsfile
+
+## Final Tips
+
+# Jenkins UI → http://localhost:8080
+
+# Admin password (first time) →
+docker exec jenkins-container cat /var/jenkins_home/secrets/initialAdminPassword
+
+# To restart Jenkins:
+docker restart jenkins-container
+
+# To stop Jenkins:
+docker stop jenkins-container
+
+# To remove Jenkins:
+docker rm -f jenkins-container
+docker volume rm jenkins_home
