@@ -4,4 +4,4 @@
 
 # In file 06-ECR-AWS contains information how to create an ECR and proceed for push and pull operation 
 
-# Another file 09 is focused on operation of nexus and docker image (pull and push)
+# Another file 08 is focused on operation of nexus and docker image (pull and push)
