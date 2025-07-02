@@ -1,0 +1,7 @@
+# This file will create containers and run it 
+# Docker compose will create network and volume automatically if not created already 
+# Here, the automatic creation happens beacuse of "external: " is set to false if it was true i would have to create manually before running this script 
+# Run it using
+$ docker compose up -d
+
+# Do not try to add volume mongo-express it is a waste of time

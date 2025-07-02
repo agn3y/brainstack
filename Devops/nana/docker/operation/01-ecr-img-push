@@ -1,0 +1,57 @@
+# ===============================================
+# Docker MongoDB + Mongo Express: ECR Push Guide
+# ===============================================
+
+# -------------------------
+# Running Containers (Info)
+# -------------------------
+# Container 1: MongoDB
+#   - Image: mongo:noble
+#   - Name: mongodb
+#   - Port: 27017
+
+# Container 2: Mongo Express UI
+#   - Image ID: d6919271028e (from `docker ps`)
+#   - Name: mongo-ui
+#   - Port: 8081
+
+# -------------------------------
+# Step 1: Tag Images for ECR Push
+# -------------------------------
+# Replace ACCOUNT_ID and REGION
+
+docker tag mongo:noble ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongodb
+docker tag d6919271028e ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongo-ui
+
+# -------------------------------------
+# Step 2: Login to AWS ECR via AWS CLI
+# -------------------------------------
+
+aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com
+
+# -----------------------------
+# Step 3: Push Images to AWS ECR
+# -----------------------------
+
+docker push ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongodb
+docker push ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongo-ui
+
+# -------------------------------
+# Optional: Sample docker-compose
+# -------------------------------
+# Save as docker-compose.yml if needed
+
+# version: "3"
+# services:
+#   mongodb:
+#     image: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongodb
+#     ports:
+#       - "27017:27017"
+
+#   mongo-ui:
+#     image: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/mongo-ui
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       - ME_CONFIG_MONGODB_SERVER=mongodb
+

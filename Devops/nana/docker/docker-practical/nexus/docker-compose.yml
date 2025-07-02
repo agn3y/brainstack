@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: nexus
+    restart: always
+    ports:
+      - "8081:8081"  # Nexus web UI
+      - "5000:5000"  # Docker registry port (you will configure it in UI)
+    volumes:
+      - nexus-data:/nexus-data
+    networks:
+      - nexus-network
+
+volumes:
+  nexus-data:
+
+networks:
+  nexus-network:
+    driver: bridge

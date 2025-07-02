@@ -1,0 +1,29 @@
+=============================================
+Push a Running Docker Container to Nexus Repo
+=============================================
+
+Container Name (running):      nexus
+Image to create:               agn3y-nexus-repo:v1
+Nexus Registry Address:        localhost:5000
+Nexus Repository Name:         agn3y-nexus-repo
+Final Image Tag on Nexus:      localhost:5000/agn3y-nexus-repo:v1
+
+-------------------------
+
+Step 1: Commit the running container to create a new image
+# "nexus" is the container name, and "agn3y-nexus-repo:v1" is your new image name
+# $ docker commit nexus image-name
+$ docker commit nexus agn3y-nexus-repo:v1
+
+Step 2: Tag the image for pushing to Nexus registry
+# This tells Docker where to send the image (registry + repo name + tag)
+# Tag with version
+# $ docker tag imagename:0.1 	(something like that)
+$ docker tag agn3y-nexus-repo:v1 localhost:5000/agn3y-nexus-repo:v1
+
+Step 3: Login to your Nexus registry (running on localhost:5000)
+$ docker login localhost:5000
+
+Step 4: Push the tagged image to Nexus
+$ docker push localhost:5000/agn3y-nexus-repo:v1
+

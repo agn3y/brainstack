@@ -5,78 +5,102 @@ MongoDB + Mongo Express Docker Setup Guide
 -------------------------------
 Step 1: Create Docker Network
 -------------------------------
+# Create a custom Docker network so both MongoDB and Mongo Express can talk to each other
 $ sudo docker network create mongo-network
 
 -------------------------------
-Step 2: Run MongoDB Container
+Step 2: Create a Volume for MongoDB
 -------------------------------
-$ sudo docker run -d \
-  --name mongodb \
-  --net mongo-network \
-  -e MONGO_INITDB_ROOT_USERNAME=admin \
-  -e MONGO_INITDB_ROOT_PASSWORD=password \
-  mongo
+# Create a Docker volume to store MongoDB data persistently
+$ sudo docker volume create mongo-data
 
 -------------------------------
-Step 3: Run Mongo Express Container
+Step 3: Run MongoDB Container with Volume
 -------------------------------
+# Start MongoDB container with volume for persistent storage
+# Volume is mounted to /data/db inside container (MongoDB stores data here)
 $ sudo docker run -d \
-  -p 8081:8081 \
-  --name mongo-express \
-  --net mongo-network \
-  -e ME_CONFIG_MONGODB_SERVER=mongodb \
-  -e ME_CONFIG_MONGODB_ENABLE_ADMIN=true \
-  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
-  -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
-  mongo-express
+  --name mongodb \                          # Container name
+  --net mongo-network \                     # Join custom network
+  -v mongo-data:/data/db \                  # Mount volume to persist MongoDB data
+  -e MONGO_INITDB_ROOT_USERNAME=admin \     # Set MongoDB admin username
+  -e MONGO_INITDB_ROOT_PASSWORD=password \  # Set MongoDB admin password
+  mongo                                     # Use official MongoDB image
 
 -------------------------------
-Step 4: Verify Containers Are Running
+Step 4: Run Mongo Express Container
 -------------------------------
+# Start Mongo Express (web interface for MongoDB)
+# Connects to the same network and uses same credentials as MongoDB
+$ sudo docker run -d \
+  -p 8081:8081 \                            # Expose port 8081 on host
+  --name mongo-express \                    # Container name
+  --net mongo-network \                     # Join the same Docker network
+  -e ME_CONFIG_MONGODB_SERVER=mongodb \     # Hostname = MongoDB container name
+  -e ME_CONFIG_MONGODB_ENABLE_ADMIN=true \  # Enable admin UI
+  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \# Same username as MongoDB
+  -e ME_CONFIG_MONGODB_ADMINPASSWORD=password \# Same password as MongoDB
+  mongo-express                             # Use official Mongo Express image
+
+-------------------------------
+Step 5: Verify Containers Are Running
+-------------------------------
+# Check if both containers are running
 $ sudo docker ps
 
 -------------------------------
-Step 5: Check Logs (Optional)
+Step 6: Check Logs (Optional)
 -------------------------------
+# View logs to see status or errors
 $ sudo docker logs mongo-express
 $ sudo docker logs mongodb
 
 -------------------------------
-Step 6: Access Web Interface
+Step 7: Access Web Interface
 -------------------------------
-Open this in your browser:
+# Open in browser to access Mongo Express UI
 http://localhost:8081
-Use login:
-Username: admin
+
+# Login with the credentials you set
+Username: admin  
 Password: password
 
 -------------------------------
-Step 7: Test Connectivity from Container
+Step 8: Test Connectivity from Container
 -------------------------------
+# Open shell inside Mongo Express container
 $ sudo docker exec -it mongo-express sh
 
-# Inside the shell:
-ping -c 3 mongodb
-nc -zv mongodb 27017
+# Test MongoDB connection from inside container
+ping -c 3 mongodb          # Check network access
+nc -zv mongodb 27017       # Check if MongoDB is accepting connections on port 27017
 
 -------------------------------
-Step 8: Test MongoDB Login via Shell
+Step 9: Test MongoDB Login via Shell
 -------------------------------
-# If mongo CLI installed on host:
+# From host system (if mongo CLI is installed)
 mongo -u admin -p password --authenticationDatabase admin --host localhost --port 27017
 
-# Or inside the container:
-sudo docker exec -it mongodb mongo -u admin -p password --authenticationDatabase admin
+# OR from inside the MongoDB container
+$ sudo docker exec -it mongodb mongo -u admin -p password --authenticationDatabase admin
 
 -------------------------------
-Step 9: Reset / Remove All
+Step 10: Reset / Remove Everything
 -------------------------------
+# Stop and remove containers
 $ sudo docker rm -f mongo-express mongodb
+
+# Remove the volume (if you want to delete MongoDB data too)
+$ sudo docker volume rm mongo-data
+
+# Optional: remove the custom network
+$ sudo docker network rm mongo-network
 
 -------------------------------
 Notes:
 -------------------------------
-- Ensure both containers use same --net option (mongo-network).
-- Mongo Express will fail if it can't reach MongoDB or if wrong credentials are given.
-- Always use container name as hostname (mongodb) inside docker network.
+- Volume `mongo-data` ensures MongoDB data persists even after container is removed.
+- Mongo Express depends on MongoDB being accessible with correct credentials.
+- Both containers must be on the same Docker network.
+- Use `mongodb` (container name) as hostname inside Docker network.
 

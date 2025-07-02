@@ -1,0 +1,48 @@
+# ==============================================
+# Configure amazon cli
+# ==============================================
+
+# Configure amazon cli
+$ aws configure
+
+
+
+# ==============================================
+# Push Docker Image to AWS ECR (Handmade Note)
+# ==============================================
+
+# Step 1: List all Docker images
+docker images
+
+# Step 2: Login to AWS ECR
+aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 285688594658.dkr.ecr.eu-north-1.amazonaws.com
+
+# Step 3: Tag the image you want to push
+docker tag mongo-express:1.0.2-20-alpine3.19 285688594658.dkr.ecr.eu-north-1.amazonaws.com/myapp-mongodb:latest
+
+# Step 4: Push the tagged image to ECR
+docker push 285688594658.dkr.ecr.eu-north-1.amazonaws.com/myapp-mongodb:latest
+
+
+
+# ===========================================
+# Build and Push Docker image to AWS ECR
+# ===========================================
+
+# Step 1: Build Docker Image from Dockerfile in current folder (.)
+# - '-t' sets the image name and tag
+docker build -t mongo-express:1.0.2-20-alpine3.19 .
+
+# Step 2: Tag the built image with your AWS ECR repository URL
+# - This tells Docker where to push the image
+docker tag mongo-express:1.0.2-20-alpine3.19 285688594658.dkr.ecr.eu-north-1.amazonaws.com/myapp-mongodb:latest
+
+# Step 3: Push the tagged image to your AWS ECR repository
+# - Uploads your image to AWS cloud for later use
+docker push 285688594658.dkr.ecr.eu-north-1.amazonaws.com/myapp-mongodb:latest
+
+# Notes:
+# - Dockerfile must be in the current folder when you run 'docker build .'
+# - Replace image name and tag if needed
+# - Replace ECR URL with your own AWS ECR repo URL
+ 
