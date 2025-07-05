@@ -1,0 +1,270 @@
+# Groovy Notes for Writing Jenkinsfile (Declarative Pipeline)
+
+## What is Groovy?
+
+* Groovy is a scripting language used by Jenkins to define pipelines.
+* Jenkinsfile uses a special Groovy-based syntax called Declarative Pipeline DSL.
+* It helps automate steps like build, test, and deploy.
+
+## Types of Pipelines
+
+### Declarative Pipeline (recommended)
+
+* Easy and readable
+* Uses `pipeline {}` block
+
+### Scripted Pipeline
+
+* Uses full Groovy language
+* Starts with `node {}` block
+* More complex, usually not required
+
+## Basic Structure of Declarative Pipeline
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+}
+
+## pipeline {}
+
+Main block that defines the pipeline.
+
+## agent
+
+Defines where the pipeline runs.
+
+Examples:
+
+agent any
+agent none
+agent { label 'linux' }
+
+## stages and stage
+
+Each stage contains steps. Stages run in order.
+
+stages {
+    stage('Example') {
+        steps {
+            echo 'Running step'
+        }
+    }
+}
+
+## steps
+
+Defines actual work to be done in the stage.
+
+Examples:
+
+steps {
+    echo 'Printing log'
+    sh 'ls -l'
+}
+
+## environment
+
+Sets environment variables to be used in the pipeline.
+
+environment {
+    ENV_VAR = "value"
+    PATH = "${env.PATH}:/custom/path"
+}
+
+## parameters
+
+Takes input before running the job.
+
+parameters {
+    string(name: 'ENV', defaultValue: 'dev', description: 'Target environment')
+    booleanParam(name: 'DEBUG', defaultValue: false, description: 'Enable debugging')
+}
+
+## post
+
+Runs after pipeline completes.
+
+post {
+    success {
+        echo 'Pipeline succeeded'
+    }
+    failure {
+        echo 'Pipeline failed'
+    }
+    always {
+        echo 'This always runs'
+    }
+}
+
+## when
+
+Conditionally run a stage.
+
+Examples:
+
+when {
+    branch 'main'
+}
+
+when {
+    environment name: 'ENV', value: 'prod'
+}
+
+when {
+    expression {
+        return params.ENV == 'staging'
+    }
+}
+
+## tools
+
+Automatically install and use tools like Maven or JDK.
+
+tools {
+    maven 'Maven 3.8.6'
+    jdk 'OpenJDK 11'
+}
+
+## script
+
+Used to write raw Groovy logic inside Declarative pipeline.
+
+steps {
+    script {
+        def name = "Shun"
+        echo "Hello ${name}"
+    }
+}
+
+## Variables
+
+def version = "1.0"
+echo "Version is ${version}"
+
+## Functions
+
+def greet(name) {
+    echo "Hello ${name}"
+}
+
+script {
+    greet('Shun')
+}
+
+## Loops and Conditions
+
+script {
+    for (int i = 0; i < 3; i++) {
+        echo "Count ${i}"
+    }
+
+    if (params.ENV == 'prod') {
+        echo 'Production deploy'
+    }
+}
+
+## retry
+
+Retries a command if it fails.
+
+retry(3) {
+    sh 'curl http://unstable-service'
+}
+
+## timeout
+
+Timeout if a step takes too long.
+
+options {
+    timeout(time: 5, unit: 'MINUTES')
+}
+
+## parallel
+
+Runs multiple stages at the same time.
+
+stage('Parallel Tasks') {
+    parallel {
+        stage('A') {
+            steps {
+                echo 'Task A'
+            }
+        }
+        stage('B') {
+            steps {
+                echo 'Task B'
+            }
+        }
+    }
+}
+
+## Full Example Jenkinsfile
+
+pipeline {
+    agent any
+
+    environment {
+        ENV_NAME = 'production'
+    }
+
+    parameters {
+        string(name: 'DEPLOY_ENV', defaultValue: 'staging')
+    }
+
+    tools {
+        maven 'Maven 3.8.6'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building for ${params.DEPLOY_ENV}"
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo "Deploying to ${params.DEPLOY_ENV}"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline finished successfully"
+        }
+        failure {
+            echo "Pipeline failed"
+        }
+    }
+}
